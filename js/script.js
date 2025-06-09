@@ -48,11 +48,46 @@
 //     });
 //   }, 3000); // Wait 3 seconds
 // });
-
+var cursor = document.querySelector(".circle");
 var log = document.querySelector(".logo");
 var list = document.querySelector(".list");
 var menu = document.querySelector(".list i");
 var tl = gsap.timeline();
+
+log.addEventListener("mouseenter", () => {
+  cursor.innerHTML = "Welcome";
+  gsap.to(cursor, {
+    scale: 2.5,
+    opacity: 0.5,
+    ease: "power1.out"
+  });
+});
+
+log.addEventListener("mouseleave", () => {
+  cursor.innerHTML = "";
+  gsap.to(cursor, {
+    scale: 1,
+    opacity: 1,
+    ease: "power1.out"
+  });
+});
+
+list.addEventListener("mouseenter", () => {
+  cursor.innerHTML = "Click me";
+  gsap.to(cursor, {
+    scale: 2.5,
+    opacity: 0.5,
+    ease: "power1.out"
+  });
+});
+list.addEventListener("mouseleave", () => {
+  cursor.innerHTML = "";
+  gsap.to(cursor, {
+    scale: 1,
+    opacity: 1,
+    ease: "power1.out"
+  });
+});
 
 tl.from(log, {
   opacity: 0,
@@ -91,5 +126,16 @@ menu.addEventListener("click", () => {
     });
   }
 });
+
+window.addEventListener("mousemove", e => {
+
+  cursor.style.left = e.pageX + "px";
+  cursor.style.top = e.pageY + "px";
+  cursor.style.opacity = 1;
+});
+
+
+
+
 
 
