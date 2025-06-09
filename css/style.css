@@ -11,12 +11,7 @@ body {
   width: 100%;
  
 }
-body{
-  /* background-image: url("../assets/images.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-}
+
 #loader-logo {
   animation: glow 2s ease-in-out infinite alternate;
 }
@@ -33,7 +28,6 @@ body{
 #loader-text {
   background: linear-gradient(270deg, #ff0080, #7928ca, #2afadf, #00ff87);
   background-size: 800% 800%;
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: rainbow-text 5s ease infinite;
   font-size: 2rem;
