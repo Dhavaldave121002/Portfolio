@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhaval Dave</title>
+    <link
+      rel="icon"
+      href="./images/dd-removebg-preview.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="./bootstrap-5.0.2-dist/css/bootstrap.min.css"
+    />
+    
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="preloader">
+      <div class="fusion-core">
+        <div class="glow-ring ring1"></div>
+        <div class="glow-ring ring2"></div>
+        <div class="glow-ring ring3"></div>
+        <img
+          src="./images/dd-removebg-preview.png"
+          class="core-logo"
+          alt="Logo"
+        />
+        <div class="flare"></div>
+      </div>
+      <h1 class="loader-title">Dhaval Dave</h1>
+    </div>
+
+    <header class="container-fluid p-0 m-0">
+      <div
+        class="row p-3 m-0 d-flex justify-content-between align-items-center"
+      >
+        <div
+          class="col-lg-4 col-8 d-flex justify-content-start align-items-center logo"
+        >
+          <img src="./images/dd-removebg-preview.png" alt="logo" />
+          <h1>Dhaval Dave</h1>
+        </div>
+
+        <div
+          class="col-2 d-flex justify-content-end align-items-center d-lg-none"
+        >
+          <div class="menu-icon">
+            <i class="ri-menu-fill open-icon"></i>
+            <i class="ri-close-fill close-icon d-none"></i>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-4 nav-md-wrapper">
+          <ul
+            class="nav main-nav d-flex flex-lg-row flex-column justify-content-center justify-content-lg-end align-items-center"
+          >
+            <li class="nav-item"><a href="#main" class="nav-link">Home</a></li>
+            <li class="nav-item">
+              <a href="#about" class="nav-link">About</a>
+            </li>
+            <li class="nav-item">
+              <a href="#services" class="nav-link">Services</a>
+            </li>
+            <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <a
+      class="btn btn-primary tog"
+      data-bs-toggle="offcanvas"
+      href="#offcanvasExample"
+      role="button"
+      aria-controls="offcanvasExample"
+    >
+      <i class="ri-arrow-right-double-fill"></i>
+    </a>
+
+    <div
+      class="offcanvas offcanvas-start"
+      tabindex="-1"
+      id="offcanvasExample"
+      aria-labelledby="offcanvasExampleLabel"
+    >
+      <div class="offcanvas-header">
+        <img
+          src="./images/dd-removebg-preview.png"
+          alt="logo"
+          class="img-fluid"
+        />
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="contact">
+          <h3>
+            <b class="p-md-2">Mobile No. :</b><i class="ri-phone-fill"></i
+            ><span>8511172099</span>
+          </h3>
+          <h3>
+            <b class="me-md-2">Email:</b><i class="ri-mail-fill"></i
+            ><span>dhavaldave121002@gmail.com</span>
+          </h3>
+          <h3>
+            <b class="me- md-2">Address :</b><i class="ri-map-pin-fill"></i
+            ><span
+              >2137, Mankodi ni pol, Nagji bhudar ni pol, Manek chowk,
+              Ahmedabad, Gujarat, India.</span
+            >
+          </h3>
+        </div>
+        <span class="social-icon">
+          <i class="ri-facebook-fill"></i>
+          <i class="ri-instagram-fill"></i>
+          <i class="ri-github-fill"></i>
+          <i class="ri-linkedin-fill"></i>
+        </span>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="container-fluid p-0 m-0">
+        <ul class="row p-0 m-0 d-flex g-5">
+          <!-- Text Section: appears second on mobile, first on larger screens -->
+          <li class="col-sm-8 col-12 order-2 order-sm-1">
+            <div class="sec1 p-lg-5 p-0">
+              <h1>Hello, I'm <span>Dhaval Dave</span></h1>
+              <h2>I'm a <span id="typed-skills"></span></h2>
+              <p>
+                Creative Web & App Developer focused on delivering seamless,
+                engaging digital experiences across all platforms.
+              </p>
+              <button>Get In Touch</button>
+              <button><a href="DD.pdf" download>CV Download</a></button>
+            </div>
+          </li>
+
+          <!-- Image Section: appears first on mobile, second on larger screens -->
+          <li
+            class="col-sm-4 col-12 d-flex justify-content-center align-items-center order-1 order-sm-2"
+          >
+            <div class="sec2">
+              <img
+                src="./images/bannerimg.png"
+                alt="hero-img"
+                class="img-fluid"
+              />
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <section id="about" class="container-fluid about-section p-5 m-0">
+      <div class="row p-5 m-0 d-flex flex-column flex-md-row align-items-center">
+        <!-- Profile Image Wrapper -->
+        <div class="col-lg-4 d-flex justify-content-center mb-4 mb-md-0 position-relative">
+          <div class="about-img-wrapper d-flex justify-content-center align-items-center">
+            <div class="image-frame"></div>
+            <img src="./images/about.png" alt="Dhaval Dave" class="about-img img-fluid" />
+            <div class="corner-decor decor-top-left"></div>
+            <div class="corner-decor decor-bottom-right"></div>
+          </div>
+        </div>
+    
+        <!-- Intro Text -->
+        <div class="col-lg-7 offset-md-1 part">
+          <h2 class="about-heading">About Me</h2>
+          <p class="about-intro">
+            Driven by passion and precision, I craft interfaces that don’t just look good—they perform. With a sharp eye for detail and a knack for clean code, I transform ideas into seamless digital experiences. Whether it’s building responsive layouts or optimizing user interactions, I thrive on solving complex problems with elegant solutions. Always learning, always creating—this is where design meets development.
+          </p>
+        </div>
+      </div>
+    
+      <!-- Roadmap Cards 2×2 Grid -->
+      <div class="container roadmap-grid py-5">
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-md-6">
+            <div class="road-map-card ">
+              <div class="map">
+              <div class="card-icon"><i class="ri-school-line"></i></div>
+              <div class="card-content">
+                <h4>SSC • 2018</h4>
+                <p>Navchetan High School — 56%</p>
+                <h4>HSC • 2020</h4>
+                <p>Commerce — 47%</p>
+              </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="col-md-6">
+            <div class="road-map-card">
+              <div class="map">
+              <div class="card-icon"><i class="ri-computer-line"></i></div>
+              <div class="card-content">
+                <h4>BCA • 2023‑24</h4>
+                <p>LJ University — CGPA 8.5</p>
+                <h4>MCA • 2024‑Present</h4>
+                <p>LJ University — CGPA 7.5</p>
+              </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="col-md-6">
+            <div class="road-map-card">
+              <div class="map">
+              <div class="card-icon"><i class="ri-briefcase-line"></i></div>
+              <div class="card-content">
+                <h4>Front‑End Developer</h4>
+                <p>Internship @ Vibrant India Tech</p>
+              </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="col-md-6">
+            <div class="road-map-card">
+              <div class="map">
+              <div class="card-icon"><i class="ri-lightbulb-flash-line"></i></div>
+              <div class="card-content">
+                <h4>Side Projects</h4>
+                <p>Portfolio websites & UI/UX mockups</p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <section id="services" class="p-5 container-fluid services-section">
+      <div class="text-center">
+        <h2 class="fw-bold">My Services</h2>
+        <p class="text-muted">What I can do for you</p>
+        <p class="lead text-center text-muted mb-4">
+          I specialize in creating seamless digital experiences through clean, efficient, and scalable code. Whether it's building responsive websites, crafting engaging frontend interfaces, or developing mobile apps, my goal is to deliver high-quality solutions that meet your needs and exceed expectations.
+        </p>
+      </div>
+      
+        <div class="row g-4">
+          
+          <!-- Web Development -->
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="neon-card  border-0 text-center p-1">
+              <div class="service-card">
+              <i class="ri-global-line display-4 text-primary mb-3"></i>
+              <h5 class="fw-bold">Web Development</h5>
+              <p class="">
+                Build modern, responsive websites using HTML, CSS, JS, and backend integration.
+              </p>
+            </div>
+            </div>
+          </div>
+    
+          <!-- Frontend Development -->
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="neon-card   border-0 text-center p-1">
+              <div class="service-card">
+              <i class="ri-layout-masonry-line display-4 text-success mb-3"></i>
+              <h5 class="fw-bold">Frontend Development</h5>
+              <p class="text-muted">
+                Create high-quality UI/UX with frameworks like React, Vue, and modern CSS.
+              </p>
+              </div>
+            </div>
+          </div>
+    
+          <!-- App Development -->
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="neon-card   border-0 text-center p-1">
+              <div class="service-card">
+              <i class="ri-smartphone-line display-4 text-warning mb-3"></i>
+              <h5 class="fw-bold">App Development</h5>
+              <p class="text-muted">
+                Build cross-platform mobile applications using Flutter or React Native.
+              </p>
+            </div>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </section>
+    
+
+    <div class="container-fluid py-5 skills-section" id="skills">
+  
+      <!-- Section Title Centered -->
+      <h2 class="section-title text-center mb-5 w-100">My <span>Skills</span></h2>
+      
+      <div class="d-flex flex-wrap justify-content-center align-items-start">
+        
+        <!-- Left Side: Skill Cards -->
+        <div class="skills-left col-12 col-lg-8 px-5">
+          <div class="row g-4 justify-content-center">
+            
+    
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="95">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                  <img src="./images/html-5-removebg-preview.png" alt="" class="skill-icon img-fluid" alt="">
+                <div class="skill-name" data-tooltip="6 Months Experience">HTML5</div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="90">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                  <img src="./images/css-3-removebg-preview.png" alt="" class="skill-icon img-fluid">
+                <div class="skill-name" data-tooltip="6 Months Experience">CSS3</div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="85">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                <i class="ri-javascript-fill skill-icon"></i>
+                <div class="skill-name" data-tooltip="6 Months Experience">JavaScript</div>
+              </div>
+            </div>
+        
+            <!-- Add more skills like this -->
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="80">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                  <img src="./images/atom-removebg-preview.png" alt="" class="skill-icon img-fluid" alt="">
+                <div class="skill-name" data-tooltip="6 Months Experience">React</div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="75">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                  <img src="./images/gsap-removebg-preview.png" alt="" class="skill-icon img-fluid">
+                <div class="skill-name" data-tooltip="6 Months Experience">Gsap</div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="70">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                <img src="./images/bootstrap-removebg-preview.png" alt="" class="skill-icon img-fluid" alt="">
+                <div class="skill-name" data-tooltip="6 Months Experience">Bootstrap5</div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="65">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                  <img src="./images/git-removebg-preview.png" alt="" class="skill-icon img-fluid">
+                <div class="skill-name" data-tooltip="6 Months Experience">Git</div>
+              </div>
+            </div>
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+              <div class="skill-card" data-percentage="60">
+                <div class="circle">
+                  <svg>
+                    <circle cx="60" cy="60" r="50"></circle>
+                    <circle class="progress" cx="60" cy="60" r="50"></circle>
+                  </svg>
+                  <span class="percentage">0%</span>
+                </div>
+                  <img src="./images/tc-removebg-preview.png" alt="" class="skill-icon img-fluid" alt="">
+                <div class="skill-name" data-tooltip="3 Months Experience">Tailwind CSS</div>
+              </div>
+            </div>
+    
+            <!-- Flutter -->
+    <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+      <div class="skill-card" data-percentage="60">
+        <div class="circle">
+          <svg>
+            <circle cx="60" cy="60" r="50"></circle>
+            <circle class="progress" cx="60" cy="60" r="50"></circle>
+          </svg>
+          <span class="percentage">0%</span>
+        </div>
+        <img src="./images/flutter-removebg-preview.png" alt="Flutter Logo" class="skill-icon img-fluid">
+        <div class="skill-name" data-tooltip="3 Months Experience">Flutter</div>
+      </div>
+    </div>
+    
+    <!-- Android -->
+    <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+      <div class="skill-card" data-percentage="65">
+        <div class="circle">
+          <svg>
+            <circle cx="60" cy="60" r="50"></circle>
+            <circle class="progress" cx="60" cy="60" r="50"></circle>
+          </svg>
+          <span class="percentage">0%</span>
+        </div>
+        <img src="./images/android-removebg-preview.png" alt="Android Logo" class="skill-icon img-fluid">
+        <div class="skill-name" data-tooltip="3 Months Experience">Android</div>
+      </div>
+    </div>
+    
+    <!-- WordPress -->
+    <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+      <div class="skill-card" data-percentage="70">
+        <div class="circle">
+          <svg>
+            <circle cx="60" cy="60" r="50"></circle>
+            <circle class="progress" cx="60" cy="60" r="50"></circle>
+          </svg>
+          <span class="percentage">0%</span>
+        </div>
+        <img src="./images/wordpress-removebg-preview.png" alt="WordPress Logo" class="skill-icon img-fluid">
+        <div class="skill-name" data-tooltip="6 Months Experience">WordPress</div>
+      </div>
+    </div>
+        
+          </div>
+        </div>
+    
+        <!-- Right Side: About List -->
+        <div class="skills-right col-12 col-lg-4 px-2 py-5 d-flex align-items-center">
+          <div class="about-points g-2">
+            <p><i class="ri-code-s-slash-line me-2"></i>I'm a <strong>Creative Developer</strong> who merges sleek UI design with seamless functionality. I believe great interfaces are built at the intersection of aesthetics and performance.</p>
+          
+            <p><i class="ri-tools-line me-2"></i>With solid expertise in <strong>HTML, CSS, JavaScript, and Flutter</strong>, I bring ideas to life across web and mobile platforms—fast, responsive, and reliable.</p>
+          
+            <p><i class="ri-device-line me-2"></i>I champion <strong>mobile-first, cross-platform design</strong>, ensuring every experience feels intuitive on any screen. Performance isn't optional—it's built-in.</p>
+          
+            <p><i class="ri-speed-line me-2"></i>Writing <strong>clean, maintainable code</strong> is more than a habit—it's my standard. I optimize for speed, scalability, and long-term readability.</p>
+          
+            <p><i class="ri-lightbulb-line me-2"></i>As a <strong>lifelong learner</strong>, I stay curious and constantly explore new technologies to stay ahead of the curve.</p>
+          
+            <p><i class="ri-team-line me-2"></i>Collaboration is key. I’m a <strong>team player</strong> who puts the user first, always aiming to deliver meaningful and human-centered solutions.</p>
+          </div>
+          
+        </div>
+    
+      </div>
+    </div>
+    
+    
+    
+    
+        
+    
+
+    <script src="./bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="index.js"></script>
+    
+   
+  </body>
+</html>

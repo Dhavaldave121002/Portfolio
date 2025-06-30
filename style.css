@@ -1,0 +1,1257 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: gilroy, sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #000;
+  scroll-behavior:smooth;
+}
+
+/* Custom Fonts */
+@font-face {
+  font-family: "abc"; /* Used for main headings and strong text */
+  src: url(./Cinzel/Cinzel-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: "def"; /* Used for secondary headings and body text */
+  src: url(./Modern_Antiqua/ModernAntiqua-Regular.ttf);
+}
+
+/* ===================== PRELOADER ===================== */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(#000 60%, #111 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.fusion-core {
+  position: relative;
+  width: 30vw;
+  max-width: 180px;
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+.core-logo {
+  width: 40%;
+  max-width: 80px;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 15px #00ffff);
+  z-index: 10;
+}
+
+.glow-ring {
+  position: absolute;
+  border: 2px solid #ff00ff; /* Pinkish-purple glow */
+  border-radius: 50%;
+  box-shadow: 0 0 25px #ff00ff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  aspect-ratio: 1;
+}
+
+.ring1 {
+  width: 80%;
+}
+
+.ring2 {
+  width: 100%;
+  animation-delay: 0.3s;
+}
+
+.ring3 {
+  width: 120%;
+  animation-delay: 0.6s;
+}
+
+.flare {
+  position: absolute;
+  width: 10%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, #ff69b4, transparent); /* Hot pink flare */
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(20px);
+  animation: flarePulse 2s infinite ease-in-out;
+}
+
+.loader-title {
+  margin-top: 20px;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  color: #ffffff;
+  text-shadow: 0 0 15px #00ffff, 0 0 25px #ff00ff; /* Cyan and pink shadow */
+  /* animation: glowPulse 2s ease-in-out infinite alternate; */
+}
+
+@keyframes flarePulse {
+  0%,
+  100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.6;
+  }
+
+  50% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 1;
+  }
+}
+
+@keyframes glow {
+  from {
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+  }
+
+  to {
+      text-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
+  }
+}
+
+/* ===================== Header Section ===================== */
+
+header {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  z-index: 11;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+}
+
+.logo img {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.logo h1 {
+  font-size: clamp(24px, 4vw, 30px); /* Adjusted with clamp */
+  font-weight: 800;
+  color: goldenrod;
+  flex-shrink: 0;
+  font-family: abc;
+}
+
+.nav-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.main-nav {
+  list-style: none;
+  gap: 20px;
+  padding: 0;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.nav-link {
+  color: rgba(245, 245, 245, 0.822);
+  font-size: clamp(12px, 1.5vw, 14px); /* Adjusted with clamp */
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.5s ease;
+  font-family: abc;
+}
+
+.nav-link:hover {
+  color: goldenrod;
+  transform: scale(1.2);
+}
+
+.nav-link:focus,
+.nav-link:active {
+  color: goldenrod !important;
+  transform: scale(1.2);
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon i {
+  font-size: 28px;
+  font-weight: bold;
+  color: rgba(245, 245, 245, 0.822);
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+}
+
+.tog {
+  position: absolute;
+  top: 200px;
+  left: -10px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: goldenrod !important;
+  text-transform: uppercase;
+  transition: all 1s ease;
+  border: none;
+  z-index: 11;
+}
+
+.offcanvas {
+  backdrop-filter: blur(10px);
+}
+
+.tog i {
+  font-size: 30px;
+  font-weight: 900;
+  color: rgba(245, 245, 245, 0.822);
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  transform: 0;
+  translate: 0;
+  z-index: 0;
+}
+
+.tog:hover {
+  transform: translateX(10px);
+  box-shadow: 0px 0px 10px goldenrod;
+  text-shadow: 0px 0px 10px #000;
+}
+
+.tog:hover i {
+  color: #000;
+}
+
+.social-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  text-shadow: 0px 0px 0px #000;
+}
+
+.social-icon i {
+  font-size: 20px;
+  font-weight: 600;
+  color: #001f3f;
+  background-color: rgba(245, 245, 245, 0.822);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px #000;
+  text-shadow: 0px 0px 0px #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.social-icon i:hover {
+  transform: scale(1.2);
+  background-color: #001f3f;
+  color: rgba(245, 245, 245, 0.822);
+  box-shadow: 0px 0px 10px #000;
+  text-shadow: 0px 0px 10px #000;
+}
+
+.btn-close {
+  background-color: rgba(245, 245, 245, 0.822);
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0px 0px 10px #000;
+  text-shadow: 0px 0px 0px #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.offcanvas {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(3px);
+}
+
+.offcanvas-header img {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+}
+
+.btn-close {
+  font-size: 18px;
+}
+
+.offcanvas-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}
+
+.offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 30px;
+  padding: 30px;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.offcanvas-body h3 {
+  font-size: clamp(1rem, 2.5vw, 1.25rem); /* Adjusted with clamp */
+  font-weight: 600;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
+  letter-spacing: 1px;
+}
+
+.offcanvas-body h3 b {
+  color: gold;
+  font-family: def;
+}
+
+.offcanvas-body h3 i {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
+}
+
+.offcanvas-body h3 span {
+  font-size: clamp(0.8rem, 2vw, 1rem); /* Adjusted with clamp */
+  font-weight: 400;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
+}
+
+/* ===================== Banner Section ===================== */
+
+main {
+  background-image: url(./images/abc.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  color: rgba(255, 255, 255, 0); /* This color doesn't seem to have an effect due to the overlay */
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 0;
+}
+
+main::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(8, 8, 8, 0.6); /* Darker overlay for better text readability */
+  backdrop-filter: blur(2px); /* Lighter blur for slight depth effect */
+  z-index: -1;
+}
+
+.sec1 {
+  gap: 20px;
+  z-index: 11;
+}
+
+.sec1 h1 {
+  font-size: clamp(1.2rem, 3vw, 1.8rem); /* Adjusted with clamp */
+  font-weight: 600;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: abc;
+}
+
+.sec1 h2 {
+  font-size: clamp(1rem, 2.5vw, 1.6rem); /* Adjusted with clamp */
+  font-weight: 600;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: abc;
+}
+
+.sec1 p {
+  font-size: clamp(0.9rem, 2vw, 1.2rem); /* Adjusted with clamp */
+  font-weight: 600;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: abc;
+}
+
+.sec1 h1 span {
+  color: gold;
+  font-size: clamp(1.8rem, 4vw, 2.5rem); /* Adjusted with clamp */
+  font-weight: 700;
+  font-family: def;
+}
+
+.sec1 h2 span {
+  color: gold;
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem); /* Adjusted with clamp */
+  font-weight: 700;
+  font-family: def;
+}
+
+.sec1 button {
+  font-size: clamp(1rem, 2vw, 1.25rem); /* Adjusted with clamp */
+  font-weight: 700;
+  background-color: gold;
+  color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  font-family: "def";
+}
+
+.sec1 button a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.7);
+  font-family: "def";
+  font-size: clamp(1rem, 2vw, 1.25rem); /* Adjusted with clamp */
+  font-weight: 700;
+}
+
+.sec2 {
+  height: 350px;
+  width: 350px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sec1 button:hover {
+  transform: scale(1.1);
+  background-color: rgba(245, 245, 245, 0.822);
+  color: goldenrod;
+}
+
+#typed-skills {
+  width: fit-content;
+  overflow: hidden;
+  color: gold;
+}
+
+.sec2 img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  background-color: rgba(46, 45, 45, 0.747);
+  backdrop-filter: blur(5px);
+}
+
+/* ===================== About Section ===================== */
+.about-section {
+  min-height: 100vh;
+  background-color: rgba(114, 109, 109, 0.233);
+}
+/* Image Wrapper 3D Frame */
+.image-frame {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border: 8px solid gold;
+  border-radius: 25%;
+  top: 5%;
+  left: 5%;
+  transform: rotate(10deg);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+  z-index: -2;
+  box-shadow: 0 0 15px rgba(255, 217, 0, 0.952);
+  transition: transform 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+/* Decorative Corner Accents */
+.corner-decor {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin: 20px;
+  border: 10px solid gold;
+}
+.decor-top-left { top: -10px; left: -10px; border-bottom: none; border-right: none; }
+.decor-bottom-right { bottom: -10px; right: -10px; border-top: none; border-left: none; }
+
+.about-img-wrapper{
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+/* Hover Effect: Lift & Rotate Frame */
+.about-img-wrapper:hover .image-frame {
+  transform: rotate(0deg) scale(1.03);
+}
+
+/* Intro Text */
+.about-intro {
+  color: rgba(245, 245, 245, 0.822);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-top: 1rem;
+  font-family: def;
+  opacity: 0;
+  animation: fadeInSlide 1s forwards 0.3s;
+}
+
+/* Roadmap Grid Cards */
+.road-map-card {
+  background-color: #111;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(30px);
+  /* animation: fadeInSlide 0.8s forwards; */
+}
+
+/* Stagger Animations */
+.roadmap-grid .road-map-card:nth-child(1) { animation-delay: 0.2s; }
+.roadmap-grid .road-map-card:nth-child(2) { animation-delay: 0.4s; }
+.roadmap-grid .road-map-card:nth-child(3) { animation-delay: 0.6s; }
+.roadmap-grid .road-map-card:nth-child(4) { animation-delay: 0.8s; }
+
+/* Hover Glow Effect */
+.road-map-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px gold;
+}
+
+/* Icon Animation */
+.card-icon {
+  background: linear-gradient(135deg, #111, #333);
+  color: gold;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+/* Fade-in + Slide Animation */
+@keyframes fadeInSlide {
+  to { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.about-heading{
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(255, 217, 0, 0.952);
+  font-family: abc;
+
+}
+.map{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  padding: 20px;
+  gap: 30px;
+  border-radius: 20px;
+  background-color: #000
+}
+.map .card-content h4{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 217, 0, 0.952);
+  font-family: abc;
+}
+.map .card-content p{
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
+}
+/* ---------------------------------------- */
+/* 🌐 Responsive Design — Media Queries */
+/* ---------------------------------------- */
+
+/* Tablet and below (≤1024px) */
+@media (max-width: 1024px) {
+  .about-heading {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .about-intro {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .map {
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.6rem;
+  }
+
+  .road-map-card {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .about-img-wrapper {
+    max-width: 300px;
+    margin: auto;
+  }
+}
+
+/* Mobile devices (≤768px) */
+@media (max-width: 768px) {
+  .about-heading {
+    font-size: 2rem;
+  }
+
+  .about-intro {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: justify;
+  }
+
+  .map {
+    flex-direction: column;
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .road-map-card {
+    padding: 0.8rem;
+  }
+
+  .map .card-content h4 {
+    font-size: 1.2rem;
+  }
+
+  .map .card-content p {
+    font-size: 0.9rem;
+  }
+
+  .card-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.4rem;
+  }
+
+  .image-frame {
+    width: 95%;
+    height: 95%;
+    border-width: 6px;
+  }
+
+  .corner-decor {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    border-width: 6px;
+  }
+
+  .about-img-wrapper {
+    max-width: 250px;
+  }
+}
+
+/* Extra small devices (≤480px) */
+@media (max-width: 480px) {
+  .about-heading {
+    font-size: 1.6rem;
+  }
+
+  .about-intro {
+    font-size: 0.85rem;
+  }
+
+  .map .card-content h4 {
+    font-size: 1.1rem;
+  }
+
+  .map .card-content p {
+    font-size: 0.85rem;
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .road-map-card {
+    gap: 1rem;
+  }
+
+  .about-img-wrapper {
+    max-width: 200px;
+  }
+}
+
+
+
+
+/* ===================== Services Section ===================== */
+.services-section {
+  min-height: 100vh; /* Changed from fixed height for better content adaptability */
+  display: flex; /* Added flex for vertical centering of content */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(114, 109, 109, 0.233);
+  overflow: hidden;
+  padding: 3rem 1rem; /* Added padding for responsiveness */
+}
+
+.services-section h2 {
+  margin-bottom: 10px;
+  font-size: clamp(2rem, 5vw, 3rem); /* Adjusted with clamp */
+  font-weight: 700;
+  color: goldenrod;
+  font-family: abc;
+  padding-top: 35px;
+}
+
+.services-section p {
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Adjusted with clamp */
+  font-weight: 600;
+  color: rgba(245, 245, 245, 0.822)!important;
+  font-family: abc;
+}
+
+/* Wrapper with rotating multicolor border */
+/* Rainbow Neon Card Border */
+.neon-card,
+.road-map-card{
+  position: relative;
+  padding: 4px;
+  border-radius: 18px;
+  background: transparent;
+  z-index: 0;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 217, 0, 0.952);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.neon-card::before,
+.neon-card::after,
+.road-map-card::before,
+.road-map-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  background: conic-gradient(from var(--angle),
+      gold,
+      whitesmoke);
+  animation: spin 6s linear infinite;
+}
+
+.neon-card::after,
+.road-map-card::after {
+  filter: blur(30px);
+  opacity: 0.3;
+}
+
+/* Inner Card */
+.service-card {
+  background: rgba(10, 10, 20, 1);
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+  height: 100%;
+  color: #eee;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.neon-card:hover,
+.road-map-card:hover {
+  box-shadow: 0 0 15px rgba(255, 217, 0, 0.952);
+}
+
+/* Icon and Text */
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: rgba(255, 217, 0, 0.952);
+  font-family: def;
+}
+
+.service-card h5 {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem); /* Adjusted with clamp */
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: rgba(255, 217, 0, 0.952);
+  font-family: def;
+}
+
+.service-card p {
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Adjusted with clamp */
+  color: rgba(245, 245, 245, 0.822);
+  line-height: 1.6;
+  font-family: abc;
+}
+
+/* Title and subtitle styling (General, reused) */
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem); /* Adjusted with clamp */
+  font-weight: 800;
+  color: #fff;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: #ccc;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Conic animation for neon border */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes spin {
+  to {
+      --angle: 360deg;
+  }
+}
+
+/* ===================== Skills Section ===================== */
+.skills-section {
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: rgba(114, 109, 109, 0.233);
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem); /* Adjusted with clamp */
+  margin-bottom: 50px;
+  color: goldenrod;
+  font-family: abc;
+}
+
+.section-title span {
+  color: gold;
+  font-family: abc;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 0.2fr));
+  justify-items: center;
+  gap: 30px; /* Added gap for better spacing */
+}
+
+.skill-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  padding: 25px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+  transition: 0.4s ease;
+  transform: translateY(30px);
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.5s ease-in-out;
+}
+
+.skill-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 15px rgba(255, 217, 0, 0.952);
+}
+
+.skill-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skill-icon {
+  font-size: 3rem; /* Adjusted for image icons */
+  margin: 20px 0 10px;
+  color: gold;
+  height: 40px; /* Fixed height for image icons */
+  width: 40px; /* Fixed width for image icons */
+  object-fit: contain; /* Ensure images fit without distortion */
+}
+
+.skill-name {
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem); /* Adjusted with clamp */
+  position: relative;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
+}
+
+.skill-name::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 2; /* Ensure tooltip appears above other elements */
+}
+.skill-name:hover::after {
+  opacity: 1;
+}
+
+.circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.circle svg {
+  width: 120px;
+  height: 120px;
+  transform: rotate(-90deg);
+}
+
+.circle svg circle {
+  fill: none;
+  stroke-width: 10;
+}
+
+.circle svg circle:first-child {
+  stroke: rgba(255, 255, 255, 0.1); /* Background circle */
+}
+
+.circle svg circle.progress {
+  stroke: gold;
+  stroke-linecap: round;
+  stroke-dasharray: 314; /* 2 * PI * R (R=50, Diameter=100) */
+  stroke-dashoffset: 314;
+}
+
+.percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: clamp(1.5rem, 3vw, 2rem); /* Adjusted with clamp */
+  color: gold;
+  font-family: abc;
+}
+.skills-right{
+    text-align: justify;
+}
+.skills-right i{
+    color: gold;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: abc;
+}
+.skills-right p{
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(245, 245, 245, 0.822);
+    font-family: def;
+}
+
+
+/* ===================== Responsive Tweaks ===================== */
+
+@media (max-width: 992px) {
+  .menu-icon {
+      display: block; /* Show menu icon */
+  }
+
+  .main-nav {
+      position: fixed;
+      top: 90px;
+      right: -100%; /* Hidden by default */
+      width: 70%;
+      height: 80vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 40px;
+      transition: right 0.3s ease;
+      z-index: 10;
+  }
+
+  .nav-link {
+      font-size: 16px;
+  }
+
+  .main-nav.active {
+      right: 0; /* Show menu */
+  }
+
+  /* About section layout change */
+  .about-content {
+      flex-direction: column;
+  }
+
+  .sec1 {
+      padding: 40px; /* Slightly more padding for tablets */
+  }
+
+  .sec2 {
+      width: 300px; /* Adjust size for tablets */
+      height: 300px;
+  }
+ 
+
+  .skills-grid {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 0.3fr)); /* Allow slightly wider columns */
+      gap: 20px; /* Reduce gap if elements are too spread out */
+  }
+
+  .skill-card {
+      padding: 15px; /* Reduce padding slightly */
+  }
+}
+
+@media (max-width: 768px) {
+  .fusion-core {
+      width: 45vw;
+  }
+
+  main {
+      position: relative;
+  }
+
+  .sec1 {
+      text-align: center;
+      padding: 30px; /* More appropriate padding for smaller screens */
+  }
+
+  .sec2 {
+      width: 200px; /* Make it smaller to fit better */
+      height: 200px;
+      margin-top: 30px; /* Add some margin from the text above */
+  }
+
+  .about-heading {
+      font-size: 2rem; /* Ensure it's readable */
+      padding-top: 50px; /* Adjust padding for heading on smaller screens */
+  }
+
+  .about-points {
+      padding: 10px; /* Reduce padding */
+  }
+
+  .road-map-card {
+      padding: 0.3rem; /* Reduce card padding */
+      gap: 1rem; /* Reduce gap between icon and content */
+  }
+
+  .map {
+      padding: 1rem; /* Reduce inner map padding */
+  }
+
+  .card-icon {
+      font-size: 1.8rem; /* Smaller icon */
+      width: 50px;
+      height: 50px;
+  }
+
+  .card-content h4 {
+      font-size: 1.1rem; /* Smaller heading */
+  }
+
+  .card-content p {
+      font-size: 0.85rem; /* Smaller paragraph text */
+  }
+
+  .services-section h2 {
+      padding-top: 20px; /* Adjust padding for heading */
+  }
+
+  .service-card {
+      padding: 20px; /* Ensure sufficient padding */
+  }
+
+  .skills-grid {
+      grid-template-columns: repeat(auto-fit, minmax(80px, 0.45fr)); /* Make skill cards a bit wider */
+      gap: 15px; /* Reduce gap to fit more */
+  }
+
+  .skill-icon {
+      font-size: 2.5rem; /* Smaller icons */
+  }
+
+  /* Roadmap line and item adjustments for smaller screens */
+  .roadmap-item,
+  .roadmap-item:nth-child(even),
+  .roadmap-item:nth-child(odd) {
+      width: 90%;
+      left: 0 !important;
+      margin: 2rem auto;
+  }
+
+  .roadmap-item::before {
+      display: none; /* Hide year label on small screens */
+  }
+
+  .roadmap-line {
+      left: 20px; /* Adjust line position */
+  }
+}
+
+@media (max-width: 576px) {
+  .logo h1 {
+      font-size: 1.2rem;
+  }
+
+  .main-nav {
+      width: 100%;
+  }
+
+  .nav-link {
+      font-size: 1.1rem;
+      padding: 15px;
+  }
+
+  .sec1 {
+      padding: 20px; /* Further reduce padding */
+  }
+
+  .sec2 {
+      width: 180px; /* Even smaller image */
+      height: 180px;
+      margin-top: 20px;
+  }
+
+  .about-img-wrapper {
+      max-height: 300px;
+      max-width: 300px;
+  }
+
+  .about-heading {
+      font-size: 1.5rem; /* Smallest heading size */
+  }
+
+  .about-points {
+      padding: 5px; /* Minimal padding */
+  }
+
+  .road-map-card {
+      flex-direction: column; /* Stacks the icon and content vertically */
+      align-items: center; /* Centers items when stacked */
+  }
+
+  .card-icon {
+      margin-bottom: 15px; /* Add space between icon and text when stacked */
+  }
+
+  .card-content {
+      text-align: center;
+  }
+
+
+
+  
+
+
+
+
+.percentage {
+    font-size: 1.2rem;
+    /* Ensure the text inside is centered too if it's separate */
+    text-align: center;
+}
+
+
+  .tog {
+      height: 30px;
+      width: 35px;
+  }
+
+  .tog i {
+      font-size: 20px;
+  }
+
+  .social-icon i {
+      height: 35px;
+      width: 35px;
+      font-size: 18px;
+  }
+
+  .btn-close {
+      font-size: 16px;
+      padding: 8px;
+  }
+}
