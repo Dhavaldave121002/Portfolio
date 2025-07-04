@@ -1,23 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Register GSAP plugins
   gsap.registerPlugin(ScrollTrigger);
 
   // 📦 Element References
   const menuIcon = document.querySelector(".menu-icon");
   const nav = document.querySelector(".main-nav");
-  const openIcon = document.querySelector(".open-icon");
-  const closeIcon = document.querySelector(".close-icon");
   const preloader = document.querySelector(".preloader");
+  const togButton = document.querySelector(".tog");
+  const togButtonIcon = document.querySelector(".tog i");
 
-  // 🌀 PRELOADER Animation
-  let loaderTimeline = gsap.timeline();
-
+  // 🌀 PRELOADER ANIMATION
+  const loaderTimeline = gsap.timeline();
+  
   loaderTimeline
-    .from(".ring1", { scale: 0, rotation: 0, opacity: 0, duration: 1, ease: "back.out(1.7)" })
-    .from(".ring2", { scale: 0, rotation: 180, opacity: 0, duration: 1, ease: "back.out(1.7)" }, "-=0.5")
-    .from(".ring3", { scale: 0, rotation: -180, opacity: 0, duration: 1, ease: "back.out(1.7)" }, "-=0.5")
-    .from(".core-logo", { scale: 0, rotateY: 360, opacity: 0, duration: 1, ease: "elastic.out(1, 0.5)" }, "-=0.5")
-    .from(".flare", { scale: 0, opacity: 0, duration: 1, ease: "power2.out" }, "-=1")
-    .from(".loader-title", { y: 40, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.8")
+    .from(".ring1", { 
+      scale: 0, 
+      rotation: 0, 
+      opacity: 0, 
+      duration: 1, 
+      ease: "back.out(1.7)" 
+    })
+    .from(".ring2", { 
+      scale: 0, 
+      rotation: 180, 
+      opacity: 0, 
+      duration: 1, 
+      ease: "back.out(1.7)" 
+    }, "-=0.5")
+    .from(".ring3", { 
+      scale: 0, 
+      rotation: -180, 
+      opacity: 0, 
+      duration: 1, 
+      ease: "back.out(1.7)" 
+    }, "-=0.5")
+    .from(".core-logo", { 
+      scale: 0, 
+      rotateY: 360, 
+      opacity: 0, 
+      duration: 1, 
+      ease: "elastic.out(1, 0.5)" 
+    }, "-=0.5")
+    .from(".flare", { 
+      scale: 0, 
+      opacity: 0, 
+      duration: 1, 
+      ease: "power2.out" 
+    }, "-=1")
+    .from(".loader-title", { 
+      y: 40, 
+      opacity: 0, 
+      duration: 0.8, 
+      ease: "power2.out" 
+    }, "-=0.8")
     .to(".preloader", {
       opacity: 0,
       duration: 1,
@@ -25,60 +60,96 @@ document.addEventListener("DOMContentLoaded", () => {
       ease: "power4.out",
       onComplete: () => {
         preloader.style.display = "none";
+        document.body.style.overflow = "auto";
         mainTimeline.play();
-      },
+      }
     });
 
-  // 🌟 MAIN Hero Animations
-  let mainTimeline = gsap.timeline({ paused: true });
+  // 🌟 MAIN TIMELINE ANIMATIONS
+  const mainTimeline = gsap.timeline({ paused: true });
 
-  mainTimeline.from(".logo", {
-    y: -80,
+  // Initial hidden state for .tog button
+  gsap.set(".tog", {
     opacity: 0,
-    duration: 2,
-    ease: "bounce.out",
-    scale: 0.5,
-  }, "start");
-
-  mainTimeline.from(".logo img", {
-    rotation: 360,
-    transformOrigin: "0% 0%",
-    duration: 1.5,
-    ease: "power2.out",
-  }, "start");
-
-  mainTimeline.from(".nav .nav-item, .open-icon", {
-    x: 80,
-    opacity: 0,
-    duration: 0.5,
-    ease: "back.out",
-    scale: 0.5,
-    stagger: 0.1,
-  }, "start");
-
-  mainTimeline.from(".tog i", {
     x: -30,
-    opacity: 1,
     scale: 0.8,
-    duration: 1.5,
-    ease: "back.out(1.7)",
-  }, "start");
+    pointerEvents: "none"
+  });
 
-  mainTimeline.from(".sec1", {
-    x: -100,
-    opacity: 0,
-    duration: 1.5,
-    ease: "power2.out",
-  }, "start");
+  // Build main animations
+  mainTimeline
+    // Logo animation
+    .from(".logo", {
+      y: -80,
+      opacity: 0,
+      duration: 2,
+      ease: "bounce.out",
+      scale: 0.5,
+    }, "start")
+    
+    // Logo image rotation
+    .from(".logo img", {
+      rotation: 360,
+      transformOrigin: "center",
+      duration: 1.5,
+      ease: "power2.out",
+    }, "start")
+    
+    // Navigation items
+    .from(".nav .nav-item", {
+      x: 80,
+      opacity: 0,
+      duration: 0.5,
+      ease: "back.out",
+      scale: 0.5,
+      stagger: 0.1,
+    }, "start")
+    
+    // Section 1
+    .from(".sec1", {
+      x: -100,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power2.out",
+    }, "start")
+    
+    // Section 2 image
+    .from(".sec2 img", {
+      x: 100,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power2.out",
+    }, "start")
+    
+    // .tog button animation (delayed)
+    .to(".tog", {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: "back.out(1.7)",
+      pointerEvents: "auto",
+      onStart: () => {
+        // Additional effects when button appears
+        gsap.to(".tog", {
+          backgroundColor: "#e6b800",
+          duration: 0.5,
+          repeat: 1,
+          yoyo: true,
+          ease: "power1.inOut"
+        });
+      }
+    }, "start+=2") // 2 seconds after timeline starts
+    
+    // .tog icon animation (slightly delayed)
+    // .from(togButtonIcon, {
+    //   rotation: 180,
+    //   opacity: 0,
+    //   duration: 0.8,
+    //   ease: "elastic.out(1, 0.5)",
+    // }, "start+=2.2");
 
-  mainTimeline.from(".sec2 img", {
-    x: 100,
-    opacity: 0,
-    duration: 1.5,
-    ease: "power2.out",
-  }, "start");
-
-  // 🔤 Typed.js Skills Typing
+  // 🔤 TYPED.JS INITIALIZATION
   const typed = new Typed("#typed-skills", {
     strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
     typeSpeed: 100,
@@ -87,164 +158,100 @@ document.addEventListener("DOMContentLoaded", () => {
     loop: true,
   });
 
-  // 📱 Menu Toggle Animation
-  menuIcon.addEventListener("click", () => {
-    nav.classList.toggle("active");
-    openIcon.classList.toggle("d-none");
-    closeIcon.classList.toggle("d-none");
+  // 📱 MENU TOGGLE FUNCTIONALITY
+  if (menuIcon && nav) {
+    menuIcon.addEventListener("click", () => {
+      nav.classList.toggle("active");
+      
+      if (nav.classList.contains("active")) {
+        // Menu open animation
+        gsap.fromTo(".nav .nav-item", 
+          { opacity: 0, x: 100 }, 
+          {
+            opacity: 1,
+            x: 0,
+            stagger: 0.2,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        document.body.style.overflow = "hidden";
+      } else {
+        // Menu close animation
+        gsap.to(".nav .nav-item", {
+          opacity: 0,
+          x: -50,
+          duration: 0.3
+        });
+        document.body.style.overflow = "auto";
+      }
+    });
+  }
 
-    if (nav.classList.contains("active")) {
-      gsap.fromTo(".nav .nav-item", { opacity: 0, x: 100 }, {
-        opacity: 1,
-        x: 0,
-        stagger: 0.2,
-        duration: 0.3,
-        ease: "power2.out"
+  // 📞 TOG BUTTON CLICK ANIMATION
+  if (togButton) {
+    togButton.addEventListener("click", () => {
+      // Button click feedback animation
+      gsap.to(togButton, {
+        scale: 0.9,
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1,
+        ease: "power1.inOut"
       });
-      document.body.style.overflow = "hidden";
-    } else {
-      gsap.to(".nav .nav-item", {
-        opacity: 0,
-        x: -50,
-        duration: 0.3
-      });
-      document.body.style.overflow = "";
-    }
+      
+      // Offcanvas animations
+      const tl = gsap.timeline();
+      tl.from(".offcanvas-body .contact h3", { 
+        x: -100, 
+        opacity: 0, 
+        duration: 1.5, 
+        ease: "power1.out" 
+      })
+      .from(".offcanvas-body .social-icon i", { 
+        x: -100, 
+        opacity: 0, 
+        duration: 1.5, 
+        ease: "power1.out", 
+        stagger: 0.1 
+      }, "-=1");
+    });
+  }
+
+  // ✨ SCROLLTRIGGER ANIMATIONS
+  // Simplified scroll animations setup
+  const scrollAnimations = [
+    { selector: ".about-img-wrapper", trigger: ".about-section", props: { x: -100, opacity: 0 } },
+    { selector: ".part", trigger: ".about-section", props: { x: 50, opacity: 0 } },
+    { selector: ".roadmap-grid", trigger: ".about-section", props: { y: 30, opacity: 0, stagger: 0.7 } },
+    { selector: ".about-points p", trigger: ".skills-section", props: { y: 50, opacity: 0, stagger: 0.4 } },
+    { selector: ".skills-left .row", trigger: ".skills-section", props: { x: -50, opacity: 0, stagger: 1 } },
+    { selector: ".services-section h2", trigger: ".services-section h2", props: { x: -40, opacity: 0 } },
+    { selector: ".services-section p", trigger: ".services-section p", props: { x: -20, opacity: 0 } },
+    { selector: ".neon-card", trigger: ".neon-card", props: { y: 50, opacity: 0, stagger: 0.1 } }
+  ];
+
+  scrollAnimations.forEach(anim => {
+    gsap.from(anim.selector, {
+      scrollTrigger: {
+        trigger: anim.trigger,
+        start: "top 80%",
+        end: "bottom 20%",
+        scrub: true,
+        markers: false // Set to true for debugging
+      },
+      duration: 1,
+      ease: "power2.out",
+      ...anim.props
+    });
   });
 
-  // 📞 Sidebar Contact Animation
-  document.querySelector(".tog").addEventListener("click", () => {
-    const tl = gsap.timeline();
-    tl.from(".contact h3", { x: -100, opacity: 0, duration: 1.5, ease: "power1.out" }, "do")
-      .from(".social-icon i", { x: -100, opacity: 0, duration: 1.5, ease: "power1.out" }, "do");
-  });
-
-  // ✅ ScrollTrigger Animations
-  gsap.from(".about-img-wrapper", {
-    scrollTrigger: {
-      trigger: ".about-section",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true,
-    },
-    x: -100,
-    opacity: 0,
-    duration: 1.5,
-    ease: "power2.out"
-  });
-
-  gsap.from(".part", {
-    scrollTrigger: {
-      trigger: ".about-section",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true,
-    },
-    x: 50,
-    opacity: 0,
-    duration: 1,
-    ease: "power2.out",
-
-  });
-  gsap.from(".roadmap-grid", {
-    scrollTrigger: {
-      trigger: ".about-section",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true,
-      markers: false // set to true if you want to debug
-    },
-    y: 30,
-    opacity: 0,
-    duration: 1,
-    ease: "power2.out",
-    stagger: 0.7 // Smooth entrance one after another
-  });
-
-  // gsap.from(".about-heading", {
-  //   scrollTrigger: {
-  //     trigger: ".about-section",
-  //     start: "top 80%",
-  //     end: "bottom 20%",
-  //     scrub: true,
-  //   },
-  //   x: 50,
-  //   opacity: 0,
-  //   ease: "power2.out"
-  // });
-
-  gsap.from(".about-points p", {
-    scrollTrigger: {
-      trigger: ".skills-section",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true,
-    },
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.4,
-    ease: "power2.out"
-  });
-  gsap.from(".skills-left .row", {
-    scrollTrigger: {
-      trigger: ".skills-section",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true,
-    },
-    x: -50,
-    opacity: 0,
-    duration: 1,
-    stagger: 1,
-    ease: "power2.out"
-  });
-
-  gsap.from(".services-section h2", {
-    scrollTrigger: {
-      trigger: ".services-section h2",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true
-    },
-    opacity: 0,
-    x: -40,
-    duration: 1,
-  });
-
-  gsap.from(".services-section p", {
-    scrollTrigger: {
-      trigger: ".services-section p",
-      start: "top 80%",
-      end: "bottom 20%",
-      scrub: true
-    },
-    opacity: 0,
-    x: -20,
-    duration: 1,
-    delay: 0.2
-  });
-
-  gsap.from(".neon-card", {
-    scrollTrigger: {
-      trigger: ".neon-card",
-      start: "top 80%",
-      end: "bottom 20%",
-    },
-    opacity: 0,
-    y: 50,
-    duration: 1,
-    stagger: 0.1,
-    ease: "power2.out"
-  });
-
+  // Roadmap cards animation
   gsap.utils.toArray(".road-map-card").forEach((card, i) => {
     gsap.to(card, {
       scrollTrigger: {
         trigger: card,
         start: "top 80%",
         end: "bottom 20%",
-        // scrub: true,
         toggleActions: "play none none reverse"
       },
       opacity: 1,
@@ -255,9 +262,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 🎯 Skill Card Observer for Circular Progress
-  const cards = document.querySelectorAll('.skill-card');
-  const observer = new IntersectionObserver(entries => {
+  // 🎯 SKILL CARDS ANIMATION
+  const skillCards = document.querySelectorAll('.skill-card');
+  const skillObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.classList.contains('in-view')) {
         const card = entry.target;
@@ -266,25 +273,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const circle = card.querySelector('circle.progress');
         const label = card.querySelector('.percentage');
 
-        let current = 0;
-        const interval = setInterval(() => {
-          if (current <= percentage) {
-            label.textContent = current + '%';
-            const offset = 314 - (314 * current / 100);
-            circle.style.strokeDashoffset = offset;
-            current++;
-          } else {
-            clearInterval(interval);
-          }
-        }, 15);
-        observer.unobserve(card);
+        if (circle && label) {
+          let current = 0;
+          const interval = setInterval(() => {
+            if (current <= percentage) {
+              label.textContent = current + '%';
+              const circumference = 2 * Math.PI * parseFloat(circle.getAttribute('r'));
+              const offset = circumference - (circumference * current / 100);
+              circle.style.strokeDasharray = circumference;
+              circle.style.strokeDashoffset = offset;
+              current++;
+            } else {
+              clearInterval(interval);
+            }
+          }, 15);
+        }
+        skillObserver.unobserve(card);
       }
     });
-  }, { paused: true });
+  }, { threshold: 0.1 });
 
-  cards.forEach(card => observer.observe(card));
+  skillCards.forEach(card => skillObserver.observe(card));
 
-  // 🔁 Infinite Animations
+  // 🔁 INFINITE ANIMATIONS
   gsap.to(".flare", {
     rotation: 360,
     duration: 6,
@@ -298,4 +309,91 @@ document.addEventListener("DOMContentLoaded", () => {
     repeat: -1,
     ease: "none"
   });
+
+  // PROJECT CARDS OBSERVER
+  const projectCards = document.querySelectorAll('.Projects-section .project-card');
+  const projectObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        projectObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  projectCards.forEach(card => projectObserver.observe(card));
+
+  // HERO TEXT ANIMATIONS (outside main timeline)
+  gsap.from(".hero h1", {
+    duration: 1.5,
+    y: -50,
+    opacity: 0,
+    ease: "power3.out",
+    delay: 0.5
+  });
+
+  gsap.from(".hero p", {
+    duration: 1,
+    delay: 1,
+    y: 30,
+    opacity: 0,
+    ease: "power2.out"
+  });
+
+  gsap.from(".btn", {
+    duration: 1,
+    delay: 1.5,
+    scale: 0.8,
+    opacity: 0,
+    ease: "back.out(1.7)"
+  });
 });
+// PROJECT MODAL FUNCTIONS
+const projects = {
+  FireApp: {
+    title: "Champion Site",
+    description: "An all-in-one platform that lets users book services (like travel, appointments), order products (food, groceries, electronics), and manage stock market investments from a single dashboard.",
+    github: "https://github.com/Dhavaldave121002/Champions_Site_Flutter"
+  },
+  IgniteUI: {
+    title: "Travel App",
+    description: "A modern travel platform that lets users search destinations, explore tour packages, and book trips — all from a beautifully designed, responsive interface built for fast performance and smooth navigation.",
+    github: "https://github.com/Dhavaldave121002/Flutter_Travel_App"
+  },
+  BlazeWeb: {
+    title: "Stock Management",
+    description: "A lightweight, high-performance web app that allows users to track stock portfolios, view performance charts, and monitor investments in real-time — all within an animated, optimized dashboard interface.",
+    github: "https://github.com/Dhavaldave121002/Stock-Management"
+  }
+};
+
+function openModal(projectKey) {
+  const p = projects[projectKey];
+  document.getElementById("modalTitle").textContent = p.title;
+  document.getElementById("modalDescription").textContent = p.description;
+  document.getElementById("modalGithub").href = p.github;
+
+  document.getElementById("projectModal").style.display = "block";
+
+  // Modal entrance animation
+  gsap.from("#projectModal .modal-content", {
+    y: 50,
+    opacity: 0,
+    duration: 0.5,
+    ease: "back.out(1.7)"
+  });
+}
+
+
+function closeModal() {
+  // Modal exit animation
+  gsap.to("#projectModal .modal-content", {
+    y: 50,
+    opacity: 0,
+    duration: 0.3,
+    ease: "power1.in",
+    onComplete: () => {
+      document.getElementById("projectModal").style.display = "none";
+    }
+  });
+}

@@ -21,6 +21,14 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="style.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+  />
   </head>
   <body>
     <div class="preloader">
@@ -70,7 +78,7 @@
               <a href="#services" class="nav-link">Services</a>
             </li>
             <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Projects</a></li>
+            <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
           </ul>
         </div>
       </div>
@@ -497,8 +505,99 @@
       </div>
     </div>
     
+    <!-- <section class="Projects-section container-fluid p-5 m-0" id="Projects">
+      <h2>My <span>Projects</span></h2>
+      <p class="description">
+        Focused on speed, responsiveness, accessibility, and SEO to ensure great performance across all devices.
+      </p>
+  
+      <div class="owl-carousel owl-theme">
+        <div class="box card-1">
+          <div class="box-shadow">
+            <div class="box-content">
+              <h2>Travel Management System</h2>
+              <p>Automates booking, itinerary planning, and expense tracking for seamless corporate or personal travel.</p>
+              <a href="#" class="btn-cta">Explore</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="box card-2">
+          <div class="box-shadow">
+            <div class="box-content">
+              <h2>Stock Management System</h2>
+              <p>Efficiently manage inventory levels, stock entries, and supplier data with real-time analytics.</p>
+              <a href="#" class="btn-cta">Explore</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="box card-3">
+          <div class="box-shadow">
+            <div class="box-content">
+              <h2>Champion Site</h2>
+              <p>A modern showcase website for sports teams, tournaments, or athletes with real-time updates.</p>
+              <a href="#" class="btn-cta">Explore</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   -->
     
-    
+   
+   
+   <!-- 🔥 Project Section -->
+   <section id="projects" class="py-5 container-fluid ">
+     <div class="container">
+       <h2 class="text-center   txtproject">My Projects</h2>
+       <p class="text-center  mb-5  txtpara">I create clean, responsive websites and user-friendly apps.
+        My projects focus on good design, smooth performance, and a great user experience.</p>
+       <div class="row g-4 justify-content-center">
+   
+         <!-- FireApp -->
+         <div class="col-md-6 col-lg-4">
+           <div class="project-card" onclick="openModal('FireApp')">
+             <img src="./images/2.png" alt="FireApp" class="project-img rounded">
+             <div class="project-title">Champion Site</div>
+           </div>
+         </div>
+   
+         <!-- Ignite UI -->
+         <div class="col-md-6 col-lg-4">
+           <div class="project-card" onclick="openModal('IgniteUI')">
+             <img src="./images/image.png" alt="Ignite UI" class="project-img rounded">
+             <div class="project-title">Travel App</div>
+           </div>
+         </div>
+   
+         <!-- BlazeWeb -->
+         <div class="col-md-6 col-lg-4">
+           <div class="project-card" onclick="openModal('BlazeWeb')">
+             <img src="./images/image1.png" alt="BlazeWeb" class="project-img rounded">
+             <div class="project-title">Stock Management</div>
+           </div>
+         </div>
+   
+       </div>
+     </div>
+   </section>
+   
+   <!-- 🔍 Modal -->
+   <div id="projectModal" class="modal-custom">
+    <div class="modal-content-custom">
+      <span class="close-modal" onclick="closeModal()">×</span>
+      <h2 id="modalTitle" class="fire-glow"></h2>
+      <p id="modalDescription"></p>
+      <!-- Removed image section here -->
+      <a id="modalGithub" class="btn btn-warning mt-4" target="_blank">
+        <i class="ri-github-fill"></i> View on GitHub
+      </a>
+    </div>
+  </div>
+  
+   
+   
     
         
     
@@ -508,6 +607,32 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+     $(document).ready(function () {
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    nav: false,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    smartSpeed: 600,
+    margin: 20, // adds space between items
+    responsive: {
+      0: {
+        items: 1
+      },
+      768: {
+        items: 1
+      }
+    },
+    // navText: ["<", ">"]
+  });
+});
+
+    </script>
     
    
   </body>

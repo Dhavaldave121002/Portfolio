@@ -11,7 +11,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   background-color: #000;
-  scroll-behavior:smooth;
+  scroll-behavior: smooth;
 }
 
 /* Custom Fonts */
@@ -109,23 +109,23 @@ body {
 @keyframes flarePulse {
   0%,
   100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
   }
 
   50% {
-      transform: translate(-50%, -50%) scale(1.5);
-      opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
   }
 }
 
 @keyframes glow {
   from {
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
   }
 
   to {
-      text-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
+    text-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
   }
 }
 
@@ -174,7 +174,7 @@ header {
   color: rgba(245, 245, 245, 0.822);
   font-size: clamp(12px, 1.5vw, 14px); /* Adjusted with clamp */
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   transition: all 0.5s ease;
   font-family: abc;
@@ -207,6 +207,10 @@ header {
 }
 
 .tog {
+  /* Remove these commented lines:
+  opacity: 1 !important;
+  opacity: 1; 
+  */
   position: absolute;
   top: 200px;
   left: -10px;
@@ -217,12 +221,15 @@ header {
   justify-content: center;
   border-radius: 50%;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   background-color: goldenrod !important;
   text-transform: uppercase;
   transition: all 1s ease;
   border: none;
-  z-index: 11;
+  cursor: pointer;
+  z-index: 9;
+  /* Add this to prevent clicks while hidden */
+  pointer-events: none;
 }
 
 .offcanvas {
@@ -234,10 +241,11 @@ header {
   font-weight: 900;
   color: rgba(245, 245, 245, 0.822);
   transition: all 0.3s ease-in-out;
-  opacity: 0;
-  transform: 0;
-  translate: 0;
-  z-index: 0;
+  /* opacity: 1 !important; */
+  /* opacity: 0;  */
+  transform: none; /* Reset any potentially hiding transforms */
+  translate: none; /* Reset any potentially hiding translations */
+  z-index: 10; /* Ensure icon is above button background */
 }
 
 .tog:hover {
@@ -256,13 +264,13 @@ header {
   align-items: center;
   gap: 20px;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   text-shadow: 0px 0px 0px #000;
 }
 
 .social-icon i {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   color: #001f3f;
   background-color: rgba(245, 245, 245, 0.822);
   height: 40px;
@@ -312,7 +320,7 @@ header {
 
 .offcanvas-title {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   color: black;
 }
 
@@ -332,7 +340,7 @@ header {
 
 .offcanvas-body h3 {
   font-size: clamp(1rem, 2.5vw, 1.25rem); /* Adjusted with clamp */
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(245, 245, 245, 0.822);
   font-family: def;
   letter-spacing: 1px;
@@ -345,7 +353,7 @@ header {
 
 .offcanvas-body h3 i {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   margin-right: 10px;
   color: rgba(245, 245, 245, 0.822);
   font-family: def;
@@ -374,7 +382,7 @@ main {
   gap: 20px;
   color: rgba(255, 255, 255, 0); /* This color doesn't seem to have an effect due to the overlay */
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 2px;
   position: relative;
@@ -400,21 +408,21 @@ main::after {
 
 .sec1 h1 {
   font-size: clamp(1.2rem, 3vw, 1.8rem); /* Adjusted with clamp */
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(245, 245, 245, 0.822);
   font-family: abc;
 }
 
 .sec1 h2 {
   font-size: clamp(1rem, 2.5vw, 1.6rem); /* Adjusted with clamp */
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(245, 245, 245, 0.822);
   font-family: abc;
 }
 
 .sec1 p {
   font-size: clamp(0.9rem, 2vw, 1.2rem); /* Adjusted with clamp */
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(245, 245, 245, 0.822);
   font-family: abc;
 }
@@ -518,10 +526,20 @@ main::after {
   margin: 20px;
   border: 10px solid gold;
 }
-.decor-top-left { top: -10px; left: -10px; border-bottom: none; border-right: none; }
-.decor-bottom-right { bottom: -10px; right: -10px; border-top: none; border-left: none; }
+.decor-top-left {
+  top: -10px;
+  left: -10px;
+  border-bottom: none;
+  border-right: none;
+}
+.decor-bottom-right {
+  bottom: -10px;
+  right: -10px;
+  border-top: none;
+  border-left: none;
+}
 
-.about-img-wrapper{
+.about-img-wrapper {
   height: 100%;
   width: 100%;
   position: relative;
@@ -558,10 +576,18 @@ main::after {
 }
 
 /* Stagger Animations */
-.roadmap-grid .road-map-card:nth-child(1) { animation-delay: 0.2s; }
-.roadmap-grid .road-map-card:nth-child(2) { animation-delay: 0.4s; }
-.roadmap-grid .road-map-card:nth-child(3) { animation-delay: 0.6s; }
-.roadmap-grid .road-map-card:nth-child(4) { animation-delay: 0.8s; }
+.roadmap-grid .road-map-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.roadmap-grid .road-map-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.roadmap-grid .road-map-card:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.roadmap-grid .road-map-card:nth-child(4) {
+  animation-delay: 0.8s;
+}
 
 /* Hover Glow Effect */
 .road-map-card:hover {
@@ -585,20 +611,26 @@ main::after {
 
 /* Fade-in + Slide Animation */
 @keyframes fadeInSlide {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
-.about-heading{
+.about-heading {
   font-size: 3rem;
   font-weight: 700;
   color: rgba(255, 217, 0, 0.952);
   font-family: abc;
-
 }
-.map{
+.map {
   height: 100%;
   width: 100%;
   display: flex;
@@ -607,15 +639,15 @@ main::after {
   padding: 20px;
   gap: 30px;
   border-radius: 20px;
-  background-color: #000
+  background-color: #000;
 }
-.map .card-content h4{
+.map .card-content h4 {
   font-size: 1.5rem;
   font-weight: 700;
   color: rgba(255, 217, 0, 0.952);
   font-family: abc;
 }
-.map .card-content p{
+.map .card-content p {
   font-size: 1rem;
   font-weight: 500;
   color: rgba(245, 245, 245, 0.822);
@@ -748,9 +780,6 @@ main::after {
   }
 }
 
-
-
-
 /* ===================== Services Section ===================== */
 .services-section {
   min-height: 100vh; /* Changed from fixed height for better content adaptability */
@@ -775,15 +804,15 @@ main::after {
 
 .services-section p {
   font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Adjusted with clamp */
-  font-weight: 600;
-  color: rgba(245, 245, 245, 0.822)!important;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.822) !important;
   font-family: abc;
 }
 
 /* Wrapper with rotating multicolor border */
 /* Rainbow Neon Card Border */
 .neon-card,
-.road-map-card{
+.road-map-card {
   position: relative;
   padding: 4px;
   border-radius: 18px;
@@ -799,14 +828,12 @@ main::after {
 .neon-card::after,
 .road-map-card::before,
 .road-map-card::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   z-index: -1;
-  background: conic-gradient(from var(--angle),
-      gold,
-      whitesmoke);
+  background: conic-gradient(from var(--angle), gold, whitesmoke);
   animation: spin 6s linear infinite;
 }
 
@@ -867,7 +894,7 @@ main::after {
 .section-subtitle {
   font-size: 1rem;
   color: #ccc;
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -880,7 +907,7 @@ main::after {
 
 @keyframes spin {
   to {
-      --angle: 360deg;
+    --angle: 360deg;
   }
 }
 
@@ -901,7 +928,7 @@ main::after {
 }
 
 .section-title span {
-  color: gold;
+  color: goldenrod;
   font-family: abc;
 }
 
@@ -960,7 +987,7 @@ main::after {
   bottom: -26px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   color: #fff;
   padding: 5px 10px;
   border-radius: 4px;
@@ -979,6 +1006,7 @@ main::after {
   position: relative;
   width: 120px;
   height: 120px;
+  /* background-color: rgba(114, 109, 109, 0.233); */
 }
 
 .circle svg {
@@ -988,7 +1016,7 @@ main::after {
 }
 
 .circle svg circle {
-  fill: none;
+  contain: none;
   stroke-width: 10;
 }
 
@@ -1013,245 +1041,443 @@ main::after {
   color: gold;
   font-family: abc;
 }
-.skills-right{
-    text-align: justify;
+.skills-right {
+  text-align: justify;
 }
-.skills-right i{
-    color: gold;
-    font-size: 2rem;
-    font-weight: 600;
-    font-family: abc;
+.skills-right i {
+  color: gold;
+  font-size: 2rem;
+  font-weight: 500;
+  font-family: abc;
 }
-.skills-right p{
-    font-size: 1rem;
-    font-weight: 500;
-    color: rgba(245, 245, 245, 0.822);
-    font-family: def;
+.skills-right p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
 }
-
 
 /* ===================== Responsive Tweaks ===================== */
 
 @media (max-width: 992px) {
   .menu-icon {
-      display: block; /* Show menu icon */
+    display: block; /* Show menu icon */
   }
 
   .main-nav {
-      position: fixed;
-      top: 90px;
-      right: -100%; /* Hidden by default */
-      width: 70%;
-      height: 80vh;
-      background-color: rgba(0, 0, 0, 0.9);
-      flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 40px;
-      transition: right 0.3s ease;
-      z-index: 10;
+    position: fixed;
+    top: 90px;
+    right: -100%; /* Hidden by default */
+    width: 70%;
+    height: 80vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 40px;
+    transition: right 0.3s ease;
+    z-index: 10;
   }
 
   .nav-link {
-      font-size: 16px;
+    font-size: 16px;
   }
 
   .main-nav.active {
-      right: 0; /* Show menu */
+    right: 0; /* Show menu */
   }
 
   /* About section layout change */
   .about-content {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .sec1 {
-      padding: 40px; /* Slightly more padding for tablets */
+    padding: 40px; /* Slightly more padding for tablets */
   }
 
   .sec2 {
-      width: 300px; /* Adjust size for tablets */
-      height: 300px;
+    width: 300px; /* Adjust size for tablets */
+    height: 300px;
   }
- 
 
   .skills-grid {
-      grid-template-columns: repeat(auto-fit, minmax(100px, 0.3fr)); /* Allow slightly wider columns */
-      gap: 20px; /* Reduce gap if elements are too spread out */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 0.3fr)); /* Allow slightly wider columns */
+    gap: 20px; /* Reduce gap if elements are too spread out */
   }
 
   .skill-card {
-      padding: 15px; /* Reduce padding slightly */
+    padding: 15px; /* Reduce padding slightly */
   }
 }
 
 @media (max-width: 768px) {
   .fusion-core {
-      width: 45vw;
+    width: 45vw;
   }
 
   main {
-      position: relative;
+    position: relative;
   }
 
   .sec1 {
-      text-align: center;
-      padding: 30px; /* More appropriate padding for smaller screens */
+    text-align: center;
+    padding: 30px; /* More appropriate padding for smaller screens */
   }
 
   .sec2 {
-      width: 200px; /* Make it smaller to fit better */
-      height: 200px;
-      margin-top: 30px; /* Add some margin from the text above */
+    width: 200px; /* Make it smaller to fit better */
+    height: 200px;
+    margin-top: 30px; /* Add some margin from the text above */
   }
 
   .about-heading {
-      font-size: 2rem; /* Ensure it's readable */
-      padding-top: 50px; /* Adjust padding for heading on smaller screens */
+    font-size: 2rem; /* Ensure it's readable */
+    padding-top: 50px; /* Adjust padding for heading on smaller screens */
   }
 
   .about-points {
-      padding: 10px; /* Reduce padding */
+    padding: 10px; /* Reduce padding */
   }
 
   .road-map-card {
-      padding: 0.3rem; /* Reduce card padding */
-      gap: 1rem; /* Reduce gap between icon and content */
+    padding: 0.3rem; /* Reduce card padding */
+    gap: 1rem; /* Reduce gap between icon and content */
   }
 
   .map {
-      padding: 1rem; /* Reduce inner map padding */
+    padding: 1rem; /* Reduce inner map padding */
   }
 
   .card-icon {
-      font-size: 1.8rem; /* Smaller icon */
-      width: 50px;
-      height: 50px;
+    font-size: 1.8rem; /* Smaller icon */
+    width: 50px;
+    height: 50px;
   }
 
   .card-content h4 {
-      font-size: 1.1rem; /* Smaller heading */
+    font-size: 1.1rem; /* Smaller heading */
   }
 
   .card-content p {
-      font-size: 0.85rem; /* Smaller paragraph text */
+    font-size: 0.85rem; /* Smaller paragraph text */
   }
 
   .services-section h2 {
-      padding-top: 20px; /* Adjust padding for heading */
+    padding-top: 20px; /* Adjust padding for heading */
   }
 
   .service-card {
-      padding: 20px; /* Ensure sufficient padding */
+    padding: 20px; /* Ensure sufficient padding */
   }
 
   .skills-grid {
-      grid-template-columns: repeat(auto-fit, minmax(80px, 0.45fr)); /* Make skill cards a bit wider */
-      gap: 15px; /* Reduce gap to fit more */
+    grid-template-columns: repeat(auto-fit, minmax(80px, 0.45fr)); /* Make skill cards a bit wider */
+    gap: 15px; /* Reduce gap to fit more */
   }
 
   .skill-icon {
-      font-size: 2.5rem; /* Smaller icons */
+    font-size: 2.5rem; /* Smaller icons */
   }
 
   /* Roadmap line and item adjustments for smaller screens */
   .roadmap-item,
   .roadmap-item:nth-child(even),
   .roadmap-item:nth-child(odd) {
-      width: 90%;
-      left: 0 !important;
-      margin: 2rem auto;
+    width: 90%;
+    left: 0 !important;
+    margin: 2rem auto;
   }
 
   .roadmap-item::before {
-      display: none; /* Hide year label on small screens */
+    display: none; /* Hide year label on small screens */
   }
 
   .roadmap-line {
-      left: 20px; /* Adjust line position */
+    left: 20px; /* Adjust line position */
   }
 }
 
 @media (max-width: 576px) {
   .logo h1 {
-      font-size: 1.2rem;
+    font-size: 1.2rem;
   }
 
   .main-nav {
-      width: 100%;
+    width: 100%;
   }
 
   .nav-link {
-      font-size: 1.1rem;
-      padding: 15px;
+    font-size: 1.1rem;
+    padding: 15px;
   }
 
   .sec1 {
-      padding: 20px; /* Further reduce padding */
+    padding: 20px; /* Further reduce padding */
   }
 
   .sec2 {
-      width: 180px; /* Even smaller image */
-      height: 180px;
-      margin-top: 20px;
+    width: 180px; /* Even smaller image */
+    height: 180px;
+    margin-top: 20px;
   }
 
   .about-img-wrapper {
-      max-height: 300px;
-      max-width: 300px;
+    max-height: 300px;
+    max-width: 300px;
   }
 
   .about-heading {
-      font-size: 1.5rem; /* Smallest heading size */
+    font-size: 1.5rem; /* Smallest heading size */
   }
 
   .about-points {
-      padding: 5px; /* Minimal padding */
+    padding: 5px; /* Minimal padding */
   }
 
   .road-map-card {
-      flex-direction: column; /* Stacks the icon and content vertically */
-      align-items: center; /* Centers items when stacked */
+    flex-direction: column; /* Stacks the icon and content vertically */
+    align-items: center; /* Centers items when stacked */
   }
 
   .card-icon {
-      margin-bottom: 15px; /* Add space between icon and text when stacked */
+    margin-bottom: 15px; /* Add space between icon and text when stacked */
   }
 
   .card-content {
-      text-align: center;
+    text-align: center;
   }
 
-
-
-  
-
-
-
-
-.percentage {
+  .percentage {
     font-size: 1.2rem;
     /* Ensure the text inside is centered too if it's separate */
     text-align: center;
-}
-
+  }
 
   .tog {
-      height: 30px;
-      width: 35px;
+    height: 30px;
+    width: 35px;
   }
 
   .tog i {
-      font-size: 20px;
+    font-size: 20px;
   }
 
   .social-icon i {
-      height: 35px;
-      width: 35px;
-      font-size: 18px;
+    height: 35px;
+    width: 35px;
+    font-size: 18px;
   }
 
   .btn-close {
-      font-size: 16px;
-      padding: 8px;
+    font-size: 16px;
+    padding: 8px;
   }
+}
+
+/* Background images
+
+ .owl-carousel .owl-nav button.owl-prev,
+    .owl-carousel .owl-nav button.owl-next {
+      position: absolute;
+      top: 50%;
+      background: rgba(255, 215, 0, 0.9);
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 1.5rem;
+      transform: translateY(-50%);
+      cursor: pointer;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+
+    .owl-carousel .owl-nav button.owl-prev {
+      left: 10px;
+    }
+
+    .owl-carousel .owl-nav button.owl-next {
+      right: 10px;
+    }
+
+    .owl-carousel .owl-nav button:hover {
+      background: #fff3b0;
+    }
+
+    .owl-carousel .owl-dots {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .owl-carousel .owl-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #ffd700;
+      margin: 5px;
+      border-radius: 50%;
+      opacity: 0.5;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .owl-carousel .owl-dot.active {
+      opacity: 1;
+    }
+
+    /* Project Boxes */
+#projects {
+  background-color: rgba(114, 109, 109, 0.233);
+}
+.txtproject {
+  font-size: 3rem;
+  font-weight: 700;
+  color: goldenrod;
+  font-family: abc;
+}
+.project-card {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  transition: transform 0.4s ease;
+  height: 300px;
+  width: 100%;
+
+  /* box-shadow: 0 0 15px rgba(114, 109, 109, 0.233); */
+}
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 217, 0, 0.952);
+}
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.project-title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: gold;
+  font-family: def;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Fire Glow Title */
+/* .fire-glow {
+      background: linear-gradient(to right, #ff6a00, #ff0000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowPulse 1.5s infinite alternate;
+    } */
+@keyframes glowPulse {
+  from {
+    text-shadow: 0 0 10px #ff6a00;
+  }
+  to {
+    text-shadow: 0 0 30px #ff0000;
+  }
+}
+
+/* 🔍 Modal Styles */
+.modal-custom {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 40px 20px;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.modal-content-custom {
+  background: #1a1a1a;
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 800px;
+  margin: auto;
+  box-shadow: 0 0 20px rgba(255, 217, 0, 0.952);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 40px;
+  right: 300px;
+  font-size: 32px;
+  cursor: pointer;
+  color: gold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@media (max-width: 768px) {
+  .close-modal {
+    top: 40px;
+    right: 40px;
+  }
+}
+
+#modalImages img {
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.project-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+#modalTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: goldenrod;
+  font-family: abc;
+}
+#modalDescription {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
+}
+#modalGithub {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: def;
+}
+#modalGithub:hover {
+  color: gold;
+  /* text-decoration: underline; */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  background-color: transparent;
+}
+/* #modalLive{
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(245, 245, 245, 0.822);
+      background-color: rgba(10, 10, 20, 1);
+    } */
+.txtpara {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 0.822);
+  font-family: def;
 }
