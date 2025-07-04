@@ -329,7 +329,8 @@ header {
   flex-direction: column;
   justify-content: space-around;
   gap: 30px;
-  padding: 30px;
+  padding: 10px;
+  text-align: justify;
 }
 
 .contact {
@@ -1480,4 +1481,105 @@ main::after {
   font-weight: 500;
   color: rgba(245, 245, 245, 0.822);
   font-family: def;
+}
+.contact-section {
+  background-color: rgba(114, 109, 109, 0.233);
+  min-height: 100vh;
+}
+
+.contact-card {
+  background: rgba(114, 109, 109, 0.233);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(255, 217, 0, 0.952);
+  animation: pulse-glow 4s infinite ease-in-out;
+ 
+}
+#contactForm{
+ font-family: def;
+ font-weight: 500;
+ font-size: 1rem;
+}
+.contact-card h2{
+  color: goldenrod;
+  font-family: abc;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 217, 0, 0.952);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 217, 0, 0.952);
+  }
+}
+
+.form-control {
+  background-color: rgba(245, 245, 245, 0.822);
+  border: none;
+  border-radius: 12px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem goldenrod;
+  background-color: rgba(245, 245, 245, 0.822);
+}
+
+.icon-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 25px;
+}
+
+.icon-links a {
+  font-size: 2rem;
+  color: gold;
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease-in-out;
+  text-decoration: none;
+  font-family: abc;
+  font-weight: 500;
+  /* font-size: 2rem; */
+}
+
+.icon-links a:hover {
+  transform: scale(1.2);
+  color: goldenrod;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.send-btn {
+  width: 100%;
+  background: rgba(255, 215, 0, 0.8);
+  color: rgba(245, 245, 245, 0.822);
+  border: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.send-btn:hover {
+  background: goldenrod;
+  color:rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 576px) {
+  .contact-card {
+    padding: 20px;
+  }
+
+  .icon-links a {
+    font-size: 1.5rem;
+  }
 }

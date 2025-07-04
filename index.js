@@ -397,3 +397,53 @@ function closeModal() {
     }
   });
 }
+gsap.from(".contact-card", {
+  y: 100,
+  opacity: 0,
+  duration: 1,
+  ease: "power3.out"
+});
+
+function openGmailWithMessage(name, email, phone, message) {
+  const subject = encodeURIComponent("Contact From Portfolio");
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`;
+  window.open(gmailUrl, "_blank");
+}
+
+// On Send Button
+document.querySelector(".send-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const message = document.getElementById("message").value.trim();
+  if (!name || !email || !phone || !message) return;
+  openGmailWithMessage(name, email, phone, message);
+});
+
+// Email Icon
+document.getElementById("emailLink").addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim() || "Visitor";
+  const email = document.getElementById("email").value.trim() || "No email";
+  const phone = document.getElementById("phone").value.trim() || "No phone";
+  const message = document.getElementById("message").value.trim() || "Hi, I’d like to connect with you.";
+  openGmailWithMessage(name, email, phone, message);
+});
+
+// WhatsApp Icon
+document.getElementById("whatsappLink").addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim() || "Visitor";
+  const phone = "918511172099"; // Remove +
+  const text = encodeURIComponent(`Hi, I'm ${name}. I saw your portfolio and want to connect.`);
+  window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+});
+
+// Call Icon
+document.getElementById("callLink").addEventListener("click", function (e) {
+  e.preventDefault();
+  const phone = "tel:8511172099"; // Replace with your number
+  window.open(phone);
+});
