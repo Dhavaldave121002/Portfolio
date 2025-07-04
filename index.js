@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "start+=2"
     ); // 2 seconds after timeline starts
 
+    
   // .tog icon animation (slightly delayed)
   // .from(togButtonIcon, {
   //   rotation: 180,
@@ -239,37 +240,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 📞 TOG BUTTON CLICK ANIMATION
-  if (togButton) {
-    togButton.addEventListener("click", () => {
-      // Button click feedback animation
-      gsap.to(togButton, {
-        scale: 0.9,
-        duration: 0.2,
-        yoyo: true,
-        repeat: 1,
-        ease: "power1.inOut",
-      });
+togButton.addEventListener("click", () => {
+  const offcanvas = document.querySelector(".offcanvas-body");
+  
+  // First make sure elements are visible before animating
+  gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
+  gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
 
-      // Offcanvas animations
-      const tl = gsap.timeline();
-      tl.from(".offcanvas-body .contact h3", {
-        x: -100,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power1.out",
-      }).from(
-        ".offcanvas-body .social-icon i",
-        {
-          x: -100,
-          opacity: 0,
-          duration: 1.5,
-          ease: "power1.out",
-          stagger: 0.1,
-        },
-        "-=1"
-      );
-    });
-  }
+  // Button animation
+  gsap.to(togButton, {
+    scale: 0.9,
+    duration: 0.2,
+    yoyo: true,
+    repeat: 1,
+    ease: "power1.inOut",
+  });
+
+  // Content animation
+  const tl = gsap.timeline();
+  tl.from(".offcanvas-body .contact h3", {
+    x: -100,
+    opacity: 0,
+    duration: 1.5,
+    ease: "power1.out",
+  })
+  .from(".offcanvas-body .social-icon i", {
+    x: -100,
+    opacity: 0,
+    duration: 1,
+    ease: "power1.out",
+    stagger: 0.1,
+  }, "-=0.5"); // Reduced overlap to 0.5 seconds
+});
 
   // ✨ SCROLLTRIGGER ANIMATIONS
   // Simplified scroll animations setup
@@ -552,4 +554,21 @@ document.getElementById("callLink").addEventListener("click", function (e) {
   e.preventDefault();
   const phone = "tel:8511172099"; // Replace with your number
   window.open(phone);
+});
+// ✨ FIX FOR ANIMATION NOT WORKING ON HEADER CLICK
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const href = link.getAttribute("href");
+    const target = document.querySelector(href);
+
+    if (target) {
+      e.preventDefault(); // Prevent default jump
+      target.scrollIntoView({ behavior: "smooth" }); // Smooth scroll
+
+      // Refresh ScrollTrigger after scroll finishes
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 500); // 500ms allows time for scroll to finish and DOM to settle
+    }
+  });
 });

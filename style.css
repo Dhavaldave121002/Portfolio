@@ -57,16 +57,16 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 0 15px #00ffff);
+  filter: drop-shadow(0 0 15px rgba(255, 217, 0, 0.952));
   z-index: 10;
 }
 
 .glow-ring {
   position: absolute;
-  border: 2px solid #ff00ff;
+  border: 2px solid rgba(245, 245, 245, 0.822);
   /* Pinkish-purple glow */
   border-radius: 50%;
-  box-shadow: 0 0 25px #ff00ff;
+  box-shadow: 0 0 25px rgba(245, 245, 245, 0.822);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -92,7 +92,7 @@ body {
   position: absolute;
   width: 10%;
   aspect-ratio: 1;
-  background: radial-gradient(circle, #ff69b4, transparent);
+  background: radial-gradient(circle,rgba(245, 245, 245, 0.822), transparent);
   /* Hot pink flare */
   border-radius: 50%;
   top: 50%;
@@ -106,7 +106,7 @@ body {
   margin-top: 20px;
   font-size: clamp(1.5rem, 2.5vw, 2.2rem);
   color: #ffffff;
-  text-shadow: 0 0 15px #00ffff, 0 0 25px #ff00ff;
+  text-shadow: 0 0 15px rgba(255, 217, 0, 0.952), 0 0 25px rgba(245, 245, 245, 0.822);
   /* Cyan and pink shadow */
   /* animation: glowPulse 2s ease-in-out infinite alternate; */
 }
@@ -127,11 +127,11 @@ body {
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+    text-shadow: 0 0 5px rgba(255, 217, 0, 0.952), 0 0 10px rgba(255, 217, 0, 0.952);
   }
 
   to {
-    text-shadow: 0 0 20px #0ff, 0 0 30px #ff00ff;
+    text-shadow: 0 0 20px rgba(255, 217, 0, 0.952), 0 0 30px rgba(245, 245, 245, 0.822);
   }
 }
 
@@ -294,6 +294,7 @@ header {
   text-shadow: 0px 0px 0px #000;
   transition: all 0.3s ease;
   cursor: pointer;
+  z-index: 10;
 }
 
 .social-icon i:hover {
@@ -338,9 +339,9 @@ header {
 .offcanvas-body {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  gap: 30px;
-  padding: 10px;
+  justify-content:center;
+  gap: 50px;
+  padding:  80px 10px;
   text-align: justify;
 }
 
