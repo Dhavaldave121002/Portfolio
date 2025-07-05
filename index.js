@@ -82,19 +82,23 @@ document.addEventListener("DOMContentLoaded", () => {
         preloader.style.display = "none";
         document.body.style.overflow = "auto";
         mainTimeline.play();
-        setupScrollAnimations(); // Initialize scroll animations after preloader
+        setupScrollAnimations();
       },
     });
 
   // 🌟 MAIN TIMELINE ANIMATIONS
   const mainTimeline = gsap.timeline({ paused: true });
 
-  // Initial hidden state for elements
-  gsap.set(".tog", { opacity: 0, x: -30, scale: 0.8, pointerEvents: "none" });
+  // Initial hidden state
+  gsap.set(".tog", {
+    opacity: 0,
+    x: -30,
+    scale: 0.8,
+    pointerEvents: "none",
+  });
 
   // Build main animations
   mainTimeline
-    // Logo animation
     .from(".logo", {
       y: -80,
       opacity: 0,
@@ -102,16 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
       ease: "bounce.out",
       scale: 0.5,
     }, "start")
-    
-    // Logo image rotation
     .from(".logo img", {
       rotation: 360,
       transformOrigin: "center",
       duration: 1.5,
       ease: "power2.out",
     }, "start")
-    
-    // Navigation items
     .from(".nav .nav-item", {
       x: 80,
       opacity: 0,
@@ -120,24 +120,18 @@ document.addEventListener("DOMContentLoaded", () => {
       scale: 0.5,
       stagger: 0.1,
     }, "start")
-    
-    // Section 1
     .from(".sec1", {
       x: -100,
       opacity: 0,
       duration: 1.5,
       ease: "power2.out",
     }, "start")
-    
-    // Section 2 image
     .from(".sec2 img", {
       x: 100,
       opacity: 0,
       duration: 1.5,
       ease: "power2.out",
     }, "start")
-    
-    // Tog button animation
     .to(".tog", {
       x: 0,
       opacity: 1,
@@ -239,28 +233,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear any existing ScrollTriggers
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     
-    // Only enable complex animations on larger screens
     const isDesktop = window.innerWidth > 768;
     
-    // Common animations that work on all devices
+    // Common animations for all devices
     const commonAnimations = [
       {
         selector: ".hero h1",
         trigger: ".hero",
         props: { y: isDesktop ? -50 : -20, opacity: 0 },
-        mobileProps: { y: -20, opacity: 0 }
       },
       {
         selector: ".hero p",
         trigger: ".hero",
         props: { y: isDesktop ? 30 : 20, opacity: 0 },
-        mobileProps: { y: 20, opacity: 0 }
       },
       {
         selector: ".btn",
         trigger: ".hero",
         props: { scale: 0.8, opacity: 0 },
-        mobileProps: { scale: 0.9, opacity: 0 }
       }
     ];
 
@@ -312,23 +302,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const allAnimations = [...commonAnimations, ...desktopAnimations];
 
     allAnimations.forEach((anim) => {
-      const props = isDesktop ? anim.props : (anim.mobileProps || anim.props);
-      
       gsap.from(anim.selector, {
         scrollTrigger: {
           trigger: anim.trigger || anim.selector,
           start: "top 80%",
           end: "bottom 20%",
-          scrub: isDesktop ? true : false,
+          scrub: isDesktop,
           markers: false,
         },
         duration: isDesktop ? 1 : 0.6,
         ease: "power2.out",
-        ...props,
+        ...anim.props,
       });
     });
 
-    // Roadmap cards animation - simplified on mobile
+    // Roadmap cards animation
     gsap.utils.toArray(".road-map-card").forEach((card, i) => {
       gsap.to(card, {
         scrollTrigger: {
@@ -346,8 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Project cards animation
-    const projectCards = document.querySelectorAll(".Projects-section .project-card");
-    projectCards.forEach((card, i) => {
+    gsap.utils.toArray(".project-card").forEach((card, i) => {
       gsap.to(card, {
         scrollTrigger: {
           trigger: card,
@@ -362,9 +349,23 @@ document.addEventListener("DOMContentLoaded", () => {
         delay: i * 0.1,
       });
     });
+
+    // Contact card animation
+    gsap.from(".contact-card", {
+      scrollTrigger: {
+        trigger: ".contact-section",
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse",
+      },
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
   }
 
-  // 🎯 SKILL CARDS ANIMATION (works on all devices)
+  // 🎯 SKILL CARDS ANIMATION
   const skillCards = document.querySelectorAll(".skill-card");
   const skillObserver = new IntersectionObserver(
     (entries) => {
@@ -400,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   skillCards.forEach((card) => skillObserver.observe(card));
 
-  // 🔁 INFINITE ANIMATIONS (keep as is)
+  // 🔁 INFINITE ANIMATIONS
   gsap.to(".flare", {
     rotation: 360,
     duration: 6,
@@ -415,6 +416,33 @@ document.addEventListener("DOMContentLoaded", () => {
     ease: "none",
   });
 
+  // Marquee scroll animation
+  function initMarqueeScroll() {
+    const marqueeTrack = document.querySelector('.marquee-track');
+    if (!marqueeTrack) return;
+
+    const marqueeAnim = gsap.to(marqueeTrack, {
+      xPercent: -50,
+      repeat: -1,
+      ease: "power4.inOut",
+      duration: 15
+    });
+
+    marqueeAnim.timeScale(1);
+
+    window.addEventListener('wheel', function (e) {
+      if (e.deltaY > 0) {
+        marqueeAnim.timeScale(1);
+        gsap.to(".marque i", { rotate: 180, duration: 0.5 });
+      } else {
+        marqueeAnim.timeScale(-1);
+        gsap.to(".marque i", { rotate: 0, duration: 0.5 });
+      }
+    });
+  }
+
+  initMarqueeScroll();
+
   // Handle window resize
   let resizeTimer;
   window.addEventListener("resize", () => {
@@ -423,6 +451,23 @@ document.addEventListener("DOMContentLoaded", () => {
       setupScrollAnimations();
       ScrollTrigger.refresh();
     }, 250);
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      const target = document.querySelector(href);
+
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth" });
+
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 500);
+      }
+    });
   });
 });
 
@@ -523,47 +568,3 @@ document.getElementById("callLink")?.addEventListener("click", function (e) {
   const phone = "tel:8511172099";
   window.open(phone);
 });
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (e) => {
-    const href = link.getAttribute("href");
-    const target = document.querySelector(href);
-
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth" });
-
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 500);
-    }
-  });
-});
-
-// Marquee scroll animation
-function initMarqueeScroll() {
-  const marqueeTrack = document.querySelector('.marquee-track');
-  if (!marqueeTrack) return;
-
-  const marqueeAnim = gsap.to(marqueeTrack, {
-    xPercent: -50,
-    repeat: -1,
-    ease: "power4.inOut",
-    duration: 15
-  });
-
-  marqueeAnim.timeScale(1);
-
-  window.addEventListener('wheel', function (e) {
-    if (e.deltaY > 0) {
-      marqueeAnim.timeScale(1);
-      gsap.to(".marque i", { rotate: 180, duration: 0.5 });
-    } else {
-      marqueeAnim.timeScale(-1);
-      gsap.to(".marque i", { rotate: 0, duration: 0.5 });
-    }
-  });
-}
-
-initMarqueeScroll();
