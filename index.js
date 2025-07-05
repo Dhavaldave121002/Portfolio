@@ -7,8 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector(".main-nav");
   const preloader = document.querySelector(".preloader");
   const togButton = document.querySelector(".tog");
-  const navLinks = document.querySelectorAll(".nav-link");
-  let isMenuOpen = false;
+  const togButtonIcon = document.querySelector(".tog i");
 
   // 🌀 PRELOADER ANIMATION
   const loaderTimeline = gsap.timeline();
@@ -90,13 +89,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🌟 MAIN TIMELINE ANIMATIONS
   const mainTimeline = gsap.timeline({ paused: true });
 
-  // Initialize elements
+  // Initial hidden state
   gsap.set(".tog", {
     opacity: 0,
     x: -30,
     scale: 0.8,
     pointerEvents: "none",
-    display: "none"
   });
 
   // Build main animations
@@ -141,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
       duration: 1.5,
       ease: "back.out(1.7)",
       pointerEvents: "auto",
-      display: "flex",
       onStart: () => {
         gsap.to(".tog", {
           backgroundColor: "#e6b800",
@@ -168,133 +165,204 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // 📱 MENU TOGGLE FUNCTIONALITY
-  function toggleMenu() {
-    isMenuOpen = !isMenuOpen;
-    
-    if (isMenuOpen) {
-      nav.classList.add("active");
-      gsap.fromTo(
-        ".nav .nav-item",
-        { opacity: 0, x: 100 },
-        {
-          opacity: 1,
-          x: 0,
-          stagger: 0.2,
-          duration: 0.3,
-          ease: "power2.out",
-        }
-      );
-      gsap.to(".tog", { opacity: 0, pointerEvents: "none", duration: 0.3 });
-      document.body.style.overflow = "hidden";
-    } else {
-      gsap.to(".nav .nav-item", {
-        opacity: 0,
-        x: -50,
-        duration: 0.3,
-        onComplete: () => {
-          nav.classList.remove("active");
-          gsap.to(".tog", { 
-            opacity: 1, 
-            pointerEvents: "auto", 
+  if (menuIcon && nav) {
+    menuIcon.addEventListener("click", () => {
+      nav.classList.toggle("active");
+
+      if (nav.classList.contains("active")) {
+        gsap.fromTo(
+          ".nav .nav-item",
+          { opacity: 0, x: 100 },
+          {
+            opacity: 1,
+            x: 0,
+            stagger: 0.2,
             duration: 0.3,
-            delay: 0.3
-          });
-        }
-      });
-      document.body.style.overflow = "auto";
-    }
-  }
-
-  if (menuIcon) menuIcon.addEventListener("click", toggleMenu);
-
-  // Handle nav link clicks
-  navLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-      if (window.innerWidth <= 992) {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute("href"));
-        if (target) {
-          toggleMenu();
-          gsap.to(window, {
-            scrollTo: target,
-            duration: 0.8,
             ease: "power2.out",
-            delay: 0.4
-          });
-        }
+          }
+        );
+        document.body.style.overflow = "hidden";
+      } else {
+        gsap.to(".nav .nav-item", {
+          opacity: 0,
+          x: -50,
+          duration: 0.3,
+        });
+        document.body.style.overflow = "auto";
       }
     });
-  });
+  }
+
+  // 📞 TOG BUTTON CLICK ANIMATION
+  if (togButton) {
+    togButton.addEventListener("click", () => {
+      const offcanvas = document.querySelector(".offcanvas-body");
+      
+      gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
+      gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
+
+      // Button animation
+      gsap.to(togButton, {
+        scale: 0.9,
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1,
+        ease: "power1.inOut",
+      });
+
+      // Content animation
+      const tl = gsap.timeline();
+      tl.from(".offcanvas-body .contact h3", {
+        x: -100,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power1.out",
+      })
+      .from(".offcanvas-body .social-icon i", {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+        stagger: 0.1,
+      }, "-=0.5");
+    });
+  }
 
   // ✨ SCROLLTRIGGER ANIMATIONS - RESPONSIVE SETUP
   function setupScrollAnimations() {
+    // Clear any existing ScrollTriggers
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     
-    const isDesktop = window.innerWidth >= 700;
-    const mobileAnimDuration = 0.8;
+    const isDesktop = window.innerWidth > 768;
     
-    // Common elements to animate
-    const elementsToAnimate = [
-      { selector: ".about-img-wrapper", props: { x: isDesktop ? -100 : -50, opacity: 0 } },
-      { selector: ".part", props: { x: isDesktop ? 50 : 30, opacity: 0 } },
-      { selector: ".roadmap-grid", props: { y: isDesktop ? 30 : 20, opacity: 0 } },
-      { selector: ".about-points p", props: { y: isDesktop ? 50 : 20, opacity: 0 } },
-      { selector: ".skills-left .row", props: { x: isDesktop ? -50 : -30, opacity: 0 } },
-      { selector: ".services-section h2", props: { x: isDesktop ? -40 : -20, opacity: 0 } },
-      { selector: ".services-section p", props: { x: isDesktop ? -20 : -10, opacity: 0 } },
-      { selector: ".neon-card", props: { y: isDesktop ? 50 : 30, opacity: 0 } },
-      { selector: ".project-card", props: { y: isDesktop ? 50 : 30, opacity: 0 } },
-      { selector: ".contact-card", props: { y: isDesktop ? 100 : 50, opacity: 0 } }
+    // Common animations for all devices
+    const commonAnimations = [
+      {
+        selector: ".hero h1",
+        trigger: ".hero",
+        props: { y: isDesktop ? -50 : -20, opacity: 0 },
+      },
+      {
+        selector: ".hero p",
+        trigger: ".hero",
+        props: { y: isDesktop ? 30 : 20, opacity: 0 },
+      },
+      {
+        selector: ".btn",
+        trigger: ".hero",
+        props: { scale: 0.8, opacity: 0 },
+      }
     ];
 
-    elementsToAnimate.forEach(element => {
-      if (isDesktop) {
-        gsap.from(element.selector, {
-          scrollTrigger: {
-            trigger: element.selector,
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: true,
-            markers: false,
-          },
-          duration: 1,
-          ease: "power2.out",
-          ...element.props
-        });
-      } else {
-        gsap.from(element.selector, {
-          ...element.props,
-          duration: mobileAnimDuration,
-          ease: "power2.out",
-          stagger: element.selector.includes("card") ? 0.1 : 0
-        });
+    // Desktop-only animations
+    const desktopAnimations = isDesktop ? [
+      {
+        selector: ".about-img-wrapper",
+        trigger: ".about-section",
+        props: { x: -100, opacity: 0 }
+      },
+      {
+        selector: ".part",
+        trigger: ".about-section",
+        props: { x: 50, opacity: 0 }
+      },
+      {
+        selector: ".roadmap-grid",
+        trigger: ".about-section",
+        props: { y: 30, opacity: 0, stagger: 0.7 }
+      },
+      {
+        selector: ".about-points p",
+        trigger: ".skills-section",
+        props: { y: 50, opacity: 0, stagger: 0.4 }
+      },
+      {
+        selector: ".skills-left .row",
+        trigger: ".skills-section",
+        props: { x: -50, opacity: 0, stagger: 1 }
+      },
+      {
+        selector: ".services-section h2",
+        trigger: ".services-section h2",
+        props: { x: -40, opacity: 0 }
+      },
+      {
+        selector: ".services-section p",
+        trigger: ".services-section p",
+        props: { x: -20, opacity: 0 }
+      },
+      {
+        selector: ".neon-card",
+        trigger: ".neon-card",
+        props: { y: 50, opacity: 0, stagger: 0.1 }
       }
+    ] : [];
+
+    // Combine animations
+    const allAnimations = [...commonAnimations, ...desktopAnimations];
+
+    allAnimations.forEach((anim) => {
+      gsap.from(anim.selector, {
+        scrollTrigger: {
+          trigger: anim.trigger || anim.selector,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: isDesktop,
+          markers: false,
+        },
+        duration: isDesktop ? 1 : 0.6,
+        ease: "power2.out",
+        ...anim.props,
+      });
     });
 
-    // Special staggered animations
-    if (isDesktop) {
-      gsap.from(".road-map-card", {
+    // Roadmap cards animation
+    gsap.utils.toArray(".road-map-card").forEach((card, i) => {
+      gsap.to(card, {
         scrollTrigger: {
-          trigger: ".roadmap-grid",
+          trigger: card,
           start: "top 80%",
           end: "bottom 20%",
           toggleActions: "play none none reverse",
         },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out"
+        opacity: 1,
+        y: isDesktop ? -100 : -30,
+        duration: isDesktop ? 1 : 0.6,
+        ease: "power3.out",
+        delay: i * (isDesktop ? 0.2 : 0.1),
       });
-    } else {
-      gsap.from(".road-map-card", {
-        y: 30,
-        opacity: 0,
-        duration: mobileAnimDuration,
-        stagger: 0.1,
-        ease: "power2.out"
+    });
+
+    // Project cards animation
+    gsap.utils.toArray(".project-card").forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 1,
+        y: isDesktop ? -50 : -20,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: i * 0.1,
       });
-    }
+    });
+
+    // Contact card animation
+    gsap.from(".contact-card", {
+      scrollTrigger: {
+        trigger: ".contact-section",
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse",
+      },
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
   }
 
   // 🎯 SKILL CARDS ANIMATION
@@ -348,36 +416,56 @@ document.addEventListener("DOMContentLoaded", () => {
     ease: "none",
   });
 
-  // Handle window resize
-  function handleResize() {
-    setupScrollAnimations();
-    ScrollTrigger.refresh();
+  // Marquee scroll animation
+  function initMarqueeScroll() {
+    const marqueeTrack = document.querySelector('.marquee-track');
+    if (!marqueeTrack) return;
+
+    const marqueeAnim = gsap.to(marqueeTrack, {
+      xPercent: -50,
+      repeat: -1,
+      ease: "power4.inOut",
+      duration: 15
+    });
+
+    marqueeAnim.timeScale(1);
+
+    window.addEventListener('wheel', function (e) {
+      if (e.deltaY > 0) {
+        marqueeAnim.timeScale(1);
+        gsap.to(".marque i", { rotate: 180, duration: 0.5 });
+      } else {
+        marqueeAnim.timeScale(-1);
+        gsap.to(".marque i", { rotate: 0, duration: 0.5 });
+      }
+    });
   }
 
+  initMarqueeScroll();
+
+  // Handle window resize
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(handleResize, 250);
+    resizeTimer = setTimeout(() => {
+      setupScrollAnimations();
+      ScrollTrigger.refresh();
+    }, 250);
   });
 
   // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", function(e) {
-      if (this.hash !== "") {
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      const target = document.querySelector(href);
+
+      if (target) {
         e.preventDefault();
-        const hash = this.hash;
-        gsap.to(window, {
-          scrollTo: hash,
-          duration: 0.8,
-          ease: "power2.out",
-          onComplete: () => {
-            if (history.pushState) {
-              history.pushState(null, null, hash);
-            } else {
-              location.hash = hash;
-            }
-          }
-        });
+        target.scrollIntoView({ behavior: "smooth" });
+
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 500);
       }
     });
   });
@@ -440,51 +528,43 @@ function openGmailWithMessage(name, email, phone, message) {
   window.open(gmailUrl, "_blank");
 }
 
-// Form submission
-document.querySelector(".send-btn")?.addEventListener("click", function(e) {
+// On Send Button
+document.querySelector(".send-btn")?.addEventListener("click", function (e) {
   e.preventDefault();
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const message = document.getElementById("message").value.trim();
-  
-  if (!name || !email || !phone || !message) {
-    // Add error animation
-    gsap.to(".form-control", {
-      x: [5, -5, 0],
-      duration: 0.3,
-      ease: "power1.out",
-      stagger: 0.05
-    });
-    return;
-  }
-  
+  if (!name || !email || !phone || !message) return;
   openGmailWithMessage(name, email, phone, message);
-  
-  // Success animation
-  gsap.to(".contact-card", {
-    backgroundColor: "rgba(0, 128, 0, 0.2)",
-    duration: 0.5,
-    yoyo: true,
-    repeat: 1
-  });
 });
 
-// Social icons animation
-document.querySelectorAll(".social-icon i").forEach(icon => {
-  icon.addEventListener("mouseenter", () => {
-    gsap.to(icon, {
-      scale: 1.2,
-      rotation: 360,
-      duration: 0.5,
-      ease: "back.out(1.7)"
-    });
-  });
-  icon.addEventListener("mouseleave", () => {
-    gsap.to(icon, {
-      scale: 1,
-      rotation: 0,
-      duration: 0.3
-    });
-  });
+// Email Icon
+document.getElementById("emailLink")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim() || "Visitor";
+  const email = document.getElementById("email").value.trim() || "No email";
+  const phone = document.getElementById("phone").value.trim() || "No phone";
+  const message =
+    document.getElementById("message").value.trim() ||
+    "Hi, I'd like to connect with you.";
+  openGmailWithMessage(name, email, phone, message);
+});
+
+// WhatsApp Icon
+document.getElementById("whatsappLink")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim() || "Visitor";
+  const phone = "918511172099";
+  const text = encodeURIComponent(
+    `Hi, I'm ${name}. I saw your portfolio and want to connect.`
+  );
+  window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+});
+
+// Call Icon
+document.getElementById("callLink")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const phone = "tel:8511172099";
+  window.open(phone);
 });
