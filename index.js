@@ -603,6 +603,3 @@ function initMarqueeScroll() {
 
 initMarqueeScroll();
 
-window.addEventListener("resize", () => {
-  ScrollTrigger.refresh();
-});
