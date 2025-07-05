@@ -183,29 +183,43 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       },
       "start+=2"
-    ); // 2 seconds after timeline starts
+    );
 
-    
-  // .tog icon animation (slightly delayed)
-  // .from(togButtonIcon, {
-  //   rotation: 180,
-  //   opacity: 0,
-  //   duration: 0.8,
-  //   ease: "elastic.out(1, 0.5)",
-  // }, "start+=2.2");
+  // 📞 TOG BUTTON CLICK ANIMATION
+  togButton.addEventListener("click", () => {
+    const offcanvas = document.querySelector(".offcanvas-body");
 
-  // 🔤 TYPED.JS INITIALIZATION
-  const typed = new Typed("#typed-skills", {
-    strings: [
-      "Web Developer",
-      "App Developer",
-      "Frontend Developer",
-      "UI/UX Designer",
-    ],
-    typeSpeed: 100,
-    backSpeed: 60,
-    backDelay: 1500,
-    loop: true,
+    // First make sure elements are visible before animating
+    gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
+    gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
+
+    // Button animation
+    gsap.to(togButton, {
+      scale: 0.9,
+      duration: 0.2,
+      yoyo: true,
+      repeat: 1,
+      ease: "power1.inOut",
+    });
+
+    // Content animation
+    const tl = gsap.timeline();
+    tl.from(".offcanvas-body .contact h3", {
+      x: -100,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power1.out",
+    }).from(
+      ".offcanvas-body .social-icon i",
+      {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+        stagger: 0.1,
+      },
+      "-=0.5"
+    );
   });
 
   // 📱 MENU TOGGLE FUNCTIONALITY
@@ -239,42 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 📞 TOG BUTTON CLICK ANIMATION
-togButton.addEventListener("click", () => {
-  const offcanvas = document.querySelector(".offcanvas-body");
-  
-  // First make sure elements are visible before animating
-  gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
-  gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
-
-  // Button animation
-  gsap.to(togButton, {
-    scale: 0.9,
-    duration: 0.2,
-    yoyo: true,
-    repeat: 1,
-    ease: "power1.inOut",
-  });
-
-  // Content animation
-  const tl = gsap.timeline();
-  tl.from(".offcanvas-body .contact h3", {
-    x: -100,
-    opacity: 0,
-    duration: 1.5,
-    ease: "power1.out",
-  })
-  .from(".offcanvas-body .social-icon i", {
-    x: -100,
-    opacity: 0,
-    duration: 1,
-    ease: "power1.out",
-    stagger: 0.1,
-  }, "-=0.5"); // Reduced overlap to 0.5 seconds
-});
-
-  // ✨ SCROLLTRIGGER ANIMATIONS
-  // Simplified scroll animations setup
+  // ✨ SCROLLTRIGGER ANIMATIONS (start/end removed)
   const scrollAnimations = [
     {
       selector: ".about-img-wrapper",
@@ -322,10 +301,9 @@ togButton.addEventListener("click", () => {
     gsap.from(anim.selector, {
       scrollTrigger: {
         trigger: anim.trigger,
-        start: "top 80%",
-        end: "bottom 20%",
         scrub: true,
-        markers: false, // Set to true for debugging
+        markers: false, // set true for debugging
+        // start/end intentionally removed
       },
       duration: 1,
       ease: "power2.out",
@@ -338,9 +316,8 @@ togButton.addEventListener("click", () => {
     gsap.to(card, {
       scrollTrigger: {
         trigger: card,
-        start: "top 80%",
-        end: "bottom 20%",
         toggleActions: "play none none reverse",
+        // start/end removed
       },
       opacity: 1,
       y: -100,
@@ -448,158 +425,45 @@ togButton.addEventListener("click", () => {
     ease: "back.out(1.7)",
   });
 });
+
 // PROJECT MODAL FUNCTIONS
 const projects = {
   FireApp: {
     title: "Champion Site",
     description:
-      "An all-in-one platform that lets users book services (like travel, appointments), order products (food, groceries, electronics), and manage stock market investments from a single dashboard.",
-    github: "https://github.com/Dhavaldave121002/Champions_Site_Flutter",
+      "An all-in-one platform that lets users create and manage projects with ease.",
+    stack: "React, Node.js, Firebase",
+    url: "https://championappfire.web.app/",
+    github: "https://github.com/yourgithub/fireapp",
+    img: "path/to/fireapp.png",
   },
-  IgniteUI: {
-    title: "Travel App",
-    description:
-      "A modern travel platform that lets users search destinations, explore tour packages, and book trips — all from a beautifully designed, responsive interface built for fast performance and smooth navigation.",
-    github: "https://github.com/Dhavaldave121002/Flutter_Travel_App",
+  Portfolio: {
+    title: "Portfolio",
+    description: "Showcase of my personal and professional work.",
+    stack: "React, CSS, JavaScript",
+    url: "https://yourportfolio.com",
+    github: "https://github.com/yourgithub/portfolio",
+    img: "path/to/portfolio.png",
   },
-  BlazeWeb: {
-    title: "Stock Management",
-    description:
-      "A lightweight, high-performance web app that allows users to track stock portfolios, view performance charts, and monitor investments in real-time — all within an animated, optimized dashboard interface.",
-    github: "https://github.com/Dhavaldave121002/Stock-Management",
-  },
+  // Add more projects here...
 };
 
-function openModal(projectKey) {
-  const p = projects[projectKey];
-  document.getElementById("modalTitle").textContent = p.title;
-  document.getElementById("modalDescription").textContent = p.description;
-  document.getElementById("modalGithub").href = p.github;
+function openProjectModal(projectKey) {
+  const modal = document.getElementById("projectModal");
+  const project = projects[projectKey];
+  if (!project) return;
 
-  document.getElementById("projectModal").style.display = "block";
+  modal.querySelector(".modal-title").textContent = project.title;
+  modal.querySelector(".modal-body img").src = project.img;
+  modal.querySelector(".modal-description").textContent = project.description;
+  modal.querySelector(".modal-stack").textContent = `Tech Stack: ${project.stack}`;
+  modal.querySelector(".modal-url").href = project.url;
+  modal.querySelector(".modal-github").href = project.github;
 
-  // Modal entrance animation
-  gsap.from("#projectModal .modal-content", {
-    y: 50,
-    opacity: 0,
-    duration: 0.5,
-    ease: "back.out(1.7)",
-  });
+  modal.style.display = "block";
 }
 
-function closeModal() {
-  // Modal exit animation
-  gsap.to("#projectModal .modal-content", {
-    y: 50,
-    opacity: 0,
-    duration: 0.3,
-    ease: "power1.in",
-    onComplete: () => {
-      document.getElementById("projectModal").style.display = "none";
-    },
-  });
+function closeProjectModal() {
+  const modal = document.getElementById("projectModal");
+  modal.style.display = "none";
 }
-gsap.from(".contact-card", {
-  y: 100,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-});
-
-function openGmailWithMessage(name, email, phone, message) {
-  const subject = encodeURIComponent("Contact From Portfolio");
-  const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`
-  );
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`;
-  window.open(gmailUrl, "_blank");
-}
-
-// On Send Button
-document.querySelector(".send-btn").addEventListener("click", function (e) {
-  e.preventDefault();
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const message = document.getElementById("message").value.trim();
-  if (!name || !email || !phone || !message) return;
-  openGmailWithMessage(name, email, phone, message);
-});
-
-// Email Icon
-document.getElementById("emailLink").addEventListener("click", function (e) {
-  e.preventDefault();
-  const name = document.getElementById("name").value.trim() || "Visitor";
-  const email = document.getElementById("email").value.trim() || "No email";
-  const phone = document.getElementById("phone").value.trim() || "No phone";
-  const message =
-    document.getElementById("message").value.trim() ||
-    "Hi, I’d like to connect with you.";
-  openGmailWithMessage(name, email, phone, message);
-});
-
-// WhatsApp Icon
-document.getElementById("whatsappLink").addEventListener("click", function (e) {
-  e.preventDefault();
-  const name = document.getElementById("name").value.trim() || "Visitor";
-  const phone = "918511172099"; // Remove +
-  const text = encodeURIComponent(
-    `Hi, I'm ${name}. I saw your portfolio and want to connect.`
-  );
-  window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
-});
-
-// Call Icon
-document.getElementById("callLink").addEventListener("click", function (e) {
-  e.preventDefault();
-  const phone = "tel:8511172099"; // Replace with your number
-  window.open(phone);
-});
-// ✨ FIX FOR ANIMATION NOT WORKING ON HEADER CLICK
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (e) => {
-    const href = link.getAttribute("href");
-    const target = document.querySelector(href);
-
-    if (target) {
-      e.preventDefault(); // Prevent default jump
-      target.scrollIntoView({ behavior: "smooth" }); // Smooth scroll
-
-      // Refresh ScrollTrigger after scroll finishes
-      setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 500); // 500ms allows time for scroll to finish and DOM to settle
-    }
-  });
-});
-function initMarqueeScroll() {
-  const marqueeTrack = document.querySelector('.marquee-track');
-
-  // Create marquee animation
-  const marqueeAnim = gsap.to(marqueeTrack, {
-    xPercent: -50,
-    repeat: -1,
-    ease: "power4.inOut",
-    duration: 15
-  });
-
-  // Default direction
-  marqueeAnim.timeScale(1);
-
-  let lastScrollY = window.scrollY;
-
-  window.addEventListener('wheel', function (e) {
-    if (e.deltaY > 0) {
-      marqueeAnim.timeScale(1); // Scroll down
-      gsap.to(".marque i", { rotate: 180, duration: 0.5 });
-    } else {
-      marqueeAnim.timeScale(-1); // Scroll up
-      gsap.to(".marque i", { rotate: 0, duration: 0.5 });
-    }
-
-    lastScrollY = window.scrollY;
-  });
-}
-
-initMarqueeScroll();
-
