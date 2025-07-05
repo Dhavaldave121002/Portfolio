@@ -82,144 +82,92 @@ document.addEventListener("DOMContentLoaded", () => {
         preloader.style.display = "none";
         document.body.style.overflow = "auto";
         mainTimeline.play();
+        setupScrollAnimations(); // Initialize scroll animations after preloader
       },
     });
 
   // 🌟 MAIN TIMELINE ANIMATIONS
   const mainTimeline = gsap.timeline({ paused: true });
 
-  // Initial hidden state for .tog button
-  gsap.set(".tog", {
-    opacity: 0,
-    x: -30,
-    scale: 0.8,
-    pointerEvents: "none",
-  });
+  // Initial hidden state for elements
+  gsap.set(".tog", { opacity: 0, x: -30, scale: 0.8, pointerEvents: "none" });
 
   // Build main animations
   mainTimeline
     // Logo animation
-    .from(
-      ".logo",
-      {
-        y: -80,
-        opacity: 0,
-        duration: 2,
-        ease: "bounce.out",
-        scale: 0.5,
-      },
-      "start"
-    )
-
+    .from(".logo", {
+      y: -80,
+      opacity: 0,
+      duration: 2,
+      ease: "bounce.out",
+      scale: 0.5,
+    }, "start")
+    
     // Logo image rotation
-    .from(
-      ".logo img",
-      {
-        rotation: 360,
-        transformOrigin: "center",
-        duration: 1.5,
-        ease: "power2.out",
-      },
-      "start"
-    )
-
+    .from(".logo img", {
+      rotation: 360,
+      transformOrigin: "center",
+      duration: 1.5,
+      ease: "power2.out",
+    }, "start")
+    
     // Navigation items
-    .from(
-      ".nav .nav-item",
-      {
-        x: 80,
-        opacity: 0,
-        duration: 0.5,
-        ease: "back.out",
-        scale: 0.5,
-        stagger: 0.1,
-      },
-      "start"
-    )
-
+    .from(".nav .nav-item", {
+      x: 80,
+      opacity: 0,
+      duration: 0.5,
+      ease: "back.out",
+      scale: 0.5,
+      stagger: 0.1,
+    }, "start")
+    
     // Section 1
-    .from(
-      ".sec1",
-      {
-        x: -100,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power2.out",
-      },
-      "start"
-    )
-
-    // Section 2 image
-    .from(
-      ".sec2 img",
-      {
-        x: 100,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power2.out",
-      },
-      "start"
-    )
-
-    // .tog button animation (delayed)
-    .to(
-      ".tog",
-      {
-        x: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1.5,
-        ease: "back.out(1.7)",
-        pointerEvents: "auto",
-        onStart: () => {
-          // Additional effects when button appears
-          gsap.to(".tog", {
-            backgroundColor: "#e6b800",
-            duration: 0.5,
-            repeat: 1,
-            yoyo: true,
-            ease: "power1.inOut",
-          });
-        },
-      },
-      "start+=2"
-    );
-
-  // 📞 TOG BUTTON CLICK ANIMATION
-  togButton.addEventListener("click", () => {
-    const offcanvas = document.querySelector(".offcanvas-body");
-
-    // First make sure elements are visible before animating
-    gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
-    gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
-
-    // Button animation
-    gsap.to(togButton, {
-      scale: 0.9,
-      duration: 0.2,
-      yoyo: true,
-      repeat: 1,
-      ease: "power1.inOut",
-    });
-
-    // Content animation
-    const tl = gsap.timeline();
-    tl.from(".offcanvas-body .contact h3", {
+    .from(".sec1", {
       x: -100,
       opacity: 0,
       duration: 1.5,
-      ease: "power1.out",
-    }).from(
-      ".offcanvas-body .social-icon i",
-      {
-        x: -100,
-        opacity: 0,
-        duration: 1,
-        ease: "power1.out",
-        stagger: 0.1,
+      ease: "power2.out",
+    }, "start")
+    
+    // Section 2 image
+    .from(".sec2 img", {
+      x: 100,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power2.out",
+    }, "start")
+    
+    // Tog button animation
+    .to(".tog", {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: "back.out(1.7)",
+      pointerEvents: "auto",
+      onStart: () => {
+        gsap.to(".tog", {
+          backgroundColor: "#e6b800",
+          duration: 0.5,
+          repeat: 1,
+          yoyo: true,
+          ease: "power1.inOut",
+        });
       },
-      "-=0.5"
-    );
+    }, "start+=2");
+
+  // 🔤 TYPED.JS INITIALIZATION
+  const typed = new Typed("#typed-skills", {
+    strings: [
+      "Web Developer",
+      "App Developer",
+      "Frontend Developer",
+      "UI/UX Designer",
+    ],
+    typeSpeed: 100,
+    backSpeed: 60,
+    backDelay: 1500,
+    loop: true,
   });
 
   // 📱 MENU TOGGLE FUNCTIONALITY
@@ -228,7 +176,6 @@ document.addEventListener("DOMContentLoaded", () => {
       nav.classList.toggle("active");
 
       if (nav.classList.contains("active")) {
-        // Menu open animation
         gsap.fromTo(
           ".nav .nav-item",
           { opacity: 0, x: 100 },
@@ -242,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         document.body.style.overflow = "hidden";
       } else {
-        // Menu close animation
         gsap.to(".nav .nav-item", {
           opacity: 0,
           x: -50,
@@ -253,89 +199,177 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✨ SCROLLTRIGGER ANIMATIONS (start/end removed)
-  const scrollAnimations = [
-    {
-      selector: ".about-img-wrapper",
-      trigger: ".about-section",
-      props: { x: -100, opacity: 0 },
-    },
-    {
-      selector: ".part",
-      trigger: ".about-section",
-      props: { x: 50, opacity: 0 },
-    },
-    {
-      selector: ".roadmap-grid",
-      trigger: ".about-section",
-      props: { y: 30, opacity: 0, stagger: 0.7 },
-    },
-    {
-      selector: ".about-points p",
-      trigger: ".skills-section",
-      props: { y: 50, opacity: 0, stagger: 0.4 },
-    },
-    {
-      selector: ".skills-left .row",
-      trigger: ".skills-section",
-      props: { x: -50, opacity: 0, stagger: 1 },
-    },
-    {
-      selector: ".services-section h2",
-      trigger: ".services-section h2",
-      props: { x: -40, opacity: 0 },
-    },
-    {
-      selector: ".services-section p",
-      trigger: ".services-section p",
-      props: { x: -20, opacity: 0 },
-    },
-    {
-      selector: ".neon-card",
-      trigger: ".neon-card",
-      props: { y: 50, opacity: 0, stagger: 0.1 },
-    },
-  ];
+  // 📞 TOG BUTTON CLICK ANIMATION
+  if (togButton) {
+    togButton.addEventListener("click", () => {
+      const offcanvas = document.querySelector(".offcanvas-body");
+      
+      gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
+      gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
 
-  scrollAnimations.forEach((anim) => {
-    gsap.from(anim.selector, {
-      scrollTrigger: {
-        trigger: anim.trigger,
-        scrub: true,
-        markers: false, // set true for debugging
-        // start/end intentionally removed
-      },
-      duration: 1,
-      ease: "power2.out",
-      ...anim.props,
+      // Button animation
+      gsap.to(togButton, {
+        scale: 0.9,
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1,
+        ease: "power1.inOut",
+      });
+
+      // Content animation
+      const tl = gsap.timeline();
+      tl.from(".offcanvas-body .contact h3", {
+        x: -100,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power1.out",
+      })
+      .from(".offcanvas-body .social-icon i", {
+        x: -100,
+        opacity: 0,
+        duration: 1,
+        ease: "power1.out",
+        stagger: 0.1,
+      }, "-=0.5");
     });
-  });
+  }
 
-  // Roadmap cards animation
-  gsap.utils.toArray(".road-map-card").forEach((card, i) => {
-    gsap.to(card, {
-      scrollTrigger: {
-        trigger: card,
-        toggleActions: "play none none reverse",
-        // start/end removed
+  // ✨ SCROLLTRIGGER ANIMATIONS - RESPONSIVE SETUP
+  function setupScrollAnimations() {
+    // Clear any existing ScrollTriggers
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    
+    // Only enable complex animations on larger screens
+    const isDesktop = window.innerWidth > 768;
+    
+    // Common animations that work on all devices
+    const commonAnimations = [
+      {
+        selector: ".hero h1",
+        trigger: ".hero",
+        props: { y: isDesktop ? -50 : -20, opacity: 0 },
+        mobileProps: { y: -20, opacity: 0 }
       },
-      opacity: 1,
-      y: -100,
-      duration: 1,
-      ease: "power3.out",
-      delay: i * 0.2,
-    });
-  });
+      {
+        selector: ".hero p",
+        trigger: ".hero",
+        props: { y: isDesktop ? 30 : 20, opacity: 0 },
+        mobileProps: { y: 20, opacity: 0 }
+      },
+      {
+        selector: ".btn",
+        trigger: ".hero",
+        props: { scale: 0.8, opacity: 0 },
+        mobileProps: { scale: 0.9, opacity: 0 }
+      }
+    ];
 
-  // 🎯 SKILL CARDS ANIMATION
+    // Desktop-only animations
+    const desktopAnimations = isDesktop ? [
+      {
+        selector: ".about-img-wrapper",
+        trigger: ".about-section",
+        props: { x: -100, opacity: 0 }
+      },
+      {
+        selector: ".part",
+        trigger: ".about-section",
+        props: { x: 50, opacity: 0 }
+      },
+      {
+        selector: ".roadmap-grid",
+        trigger: ".about-section",
+        props: { y: 30, opacity: 0, stagger: 0.7 }
+      },
+      {
+        selector: ".about-points p",
+        trigger: ".skills-section",
+        props: { y: 50, opacity: 0, stagger: 0.4 }
+      },
+      {
+        selector: ".skills-left .row",
+        trigger: ".skills-section",
+        props: { x: -50, opacity: 0, stagger: 1 }
+      },
+      {
+        selector: ".services-section h2",
+        trigger: ".services-section h2",
+        props: { x: -40, opacity: 0 }
+      },
+      {
+        selector: ".services-section p",
+        trigger: ".services-section p",
+        props: { x: -20, opacity: 0 }
+      },
+      {
+        selector: ".neon-card",
+        trigger: ".neon-card",
+        props: { y: 50, opacity: 0, stagger: 0.1 }
+      }
+    ] : [];
+
+    // Combine animations
+    const allAnimations = [...commonAnimations, ...desktopAnimations];
+
+    allAnimations.forEach((anim) => {
+      const props = isDesktop ? anim.props : (anim.mobileProps || anim.props);
+      
+      gsap.from(anim.selector, {
+        scrollTrigger: {
+          trigger: anim.trigger || anim.selector,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: isDesktop ? true : false,
+          markers: false,
+        },
+        duration: isDesktop ? 1 : 0.6,
+        ease: "power2.out",
+        ...props,
+      });
+    });
+
+    // Roadmap cards animation - simplified on mobile
+    gsap.utils.toArray(".road-map-card").forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 1,
+        y: isDesktop ? -100 : -30,
+        duration: isDesktop ? 1 : 0.6,
+        ease: "power3.out",
+        delay: i * (isDesktop ? 0.2 : 0.1),
+      });
+    });
+
+    // Project cards animation
+    const projectCards = document.querySelectorAll(".Projects-section .project-card");
+    projectCards.forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          end: "bottom 15%",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 1,
+        y: isDesktop ? -50 : -20,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: i * 0.1,
+      });
+    });
+  }
+
+  // 🎯 SKILL CARDS ANIMATION (works on all devices)
   const skillCards = document.querySelectorAll(".skill-card");
   const skillObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (
-          entry.isIntersecting &&
-          !entry.target.classList.contains("in-view")
-        ) {
+        if (entry.isIntersecting && !entry.target.classList.contains("in-view")) {
           const card = entry.target;
           card.classList.add("in-view");
           const percentage = parseInt(card.dataset.percentage);
@@ -347,8 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const interval = setInterval(() => {
               if (current <= percentage) {
                 label.textContent = current + "%";
-                const circumference =
-                  2 * Math.PI * parseFloat(circle.getAttribute("r"));
+                const circumference = 2 * Math.PI * parseFloat(circle.getAttribute("r"));
                 const offset = circumference - (circumference * current) / 100;
                 circle.style.strokeDasharray = circumference;
                 circle.style.strokeDashoffset = offset;
@@ -367,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   skillCards.forEach((card) => skillObserver.observe(card));
 
-  // 🔁 INFINITE ANIMATIONS
+  // 🔁 INFINITE ANIMATIONS (keep as is)
   gsap.to(".flare", {
     rotation: 360,
     duration: 6,
@@ -382,47 +415,14 @@ document.addEventListener("DOMContentLoaded", () => {
     ease: "none",
   });
 
-  // PROJECT CARDS OBSERVER
-  const projectCards = document.querySelectorAll(
-    ".Projects-section .project-card"
-  );
-  const projectObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          projectObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  projectCards.forEach((card) => projectObserver.observe(card));
-
-  // HERO TEXT ANIMATIONS (outside main timeline)
-  gsap.from(".hero h1", {
-    duration: 1.5,
-    y: -50,
-    opacity: 0,
-    ease: "power3.out",
-    delay: 0.5,
-  });
-
-  gsap.from(".hero p", {
-    duration: 1,
-    delay: 1,
-    y: 30,
-    opacity: 0,
-    ease: "power2.out",
-  });
-
-  gsap.from(".btn", {
-    duration: 1,
-    delay: 1.5,
-    scale: 0.8,
-    opacity: 0,
-    ease: "back.out(1.7)",
+  // Handle window resize
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      setupScrollAnimations();
+      ScrollTrigger.refresh();
+    }, 250);
   });
 });
 
@@ -430,40 +430,140 @@ document.addEventListener("DOMContentLoaded", () => {
 const projects = {
   FireApp: {
     title: "Champion Site",
-    description:
-      "An all-in-one platform that lets users create and manage projects with ease.",
-    stack: "React, Node.js, Firebase",
-    url: "https://championappfire.web.app/",
-    github: "https://github.com/yourgithub/fireapp",
-    img: "path/to/fireapp.png",
+    description: "An all-in-one platform that lets users book services (like travel, appointments), order products (food, groceries, electronics), and manage stock market investments from a single dashboard.",
+    github: "https://github.com/Dhavaldave121002/Champions_Site_Flutter",
   },
-  Portfolio: {
-    title: "Portfolio",
-    description: "Showcase of my personal and professional work.",
-    stack: "React, CSS, JavaScript",
-    url: "https://yourportfolio.com",
-    github: "https://github.com/yourgithub/portfolio",
-    img: "path/to/portfolio.png",
+  IgniteUI: {
+    title: "Travel App",
+    description: "A modern travel platform that lets users search destinations, explore tour packages, and book trips — all from a beautifully designed, responsive interface built for fast performance and smooth navigation.",
+    github: "https://github.com/Dhavaldave121002/Flutter_Travel_App",
   },
-  // Add more projects here...
+  BlazeWeb: {
+    title: "Stock Management",
+    description: "A lightweight, high-performance web app that allows users to track stock portfolios, view performance charts, and monitor investments in real-time — all within an animated, optimized dashboard interface.",
+    github: "https://github.com/Dhavaldave121002/Stock-Management",
+  },
 };
 
-function openProjectModal(projectKey) {
-  const modal = document.getElementById("projectModal");
-  const project = projects[projectKey];
-  if (!project) return;
+function openModal(projectKey) {
+  const p = projects[projectKey];
+  document.getElementById("modalTitle").textContent = p.title;
+  document.getElementById("modalDescription").textContent = p.description;
+  document.getElementById("modalGithub").href = p.github;
 
-  modal.querySelector(".modal-title").textContent = project.title;
-  modal.querySelector(".modal-body img").src = project.img;
-  modal.querySelector(".modal-description").textContent = project.description;
-  modal.querySelector(".modal-stack").textContent = `Tech Stack: ${project.stack}`;
-  modal.querySelector(".modal-url").href = project.url;
-  modal.querySelector(".modal-github").href = project.github;
+  document.getElementById("projectModal").style.display = "block";
 
-  modal.style.display = "block";
+  gsap.from("#projectModal .modal-content", {
+    y: 50,
+    opacity: 0,
+    duration: 0.5,
+    ease: "back.out(1.7)",
+  });
 }
 
-function closeProjectModal() {
-  const modal = document.getElementById("projectModal");
-  modal.style.display = "none";
+function closeModal() {
+  gsap.to("#projectModal .modal-content", {
+    y: 50,
+    opacity: 0,
+    duration: 0.3,
+    ease: "power1.in",
+    onComplete: () => {
+      document.getElementById("projectModal").style.display = "none";
+    },
+  });
 }
+
+// CONTACT FORM FUNCTIONS
+function openGmailWithMessage(name, email, phone, message) {
+  const subject = encodeURIComponent("Contact From Portfolio");
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`
+  );
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`;
+  window.open(gmailUrl, "_blank");
+}
+
+// On Send Button
+document.querySelector(".send-btn")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const message = document.getElementById("message").value.trim();
+  if (!name || !email || !phone || !message) return;
+  openGmailWithMessage(name, email, phone, message);
+});
+
+// Email Icon
+document.getElementById("emailLink")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim() || "Visitor";
+  const email = document.getElementById("email").value.trim() || "No email";
+  const phone = document.getElementById("phone").value.trim() || "No phone";
+  const message =
+    document.getElementById("message").value.trim() ||
+    "Hi, I'd like to connect with you.";
+  openGmailWithMessage(name, email, phone, message);
+});
+
+// WhatsApp Icon
+document.getElementById("whatsappLink")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim() || "Visitor";
+  const phone = "918511172099";
+  const text = encodeURIComponent(
+    `Hi, I'm ${name}. I saw your portfolio and want to connect.`
+  );
+  window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+});
+
+// Call Icon
+document.getElementById("callLink")?.addEventListener("click", function (e) {
+  e.preventDefault();
+  const phone = "tel:8511172099";
+  window.open(phone);
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const href = link.getAttribute("href");
+    const target = document.querySelector(href);
+
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth" });
+
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 500);
+    }
+  });
+});
+
+// Marquee scroll animation
+function initMarqueeScroll() {
+  const marqueeTrack = document.querySelector('.marquee-track');
+  if (!marqueeTrack) return;
+
+  const marqueeAnim = gsap.to(marqueeTrack, {
+    xPercent: -50,
+    repeat: -1,
+    ease: "power4.inOut",
+    duration: 15
+  });
+
+  marqueeAnim.timeScale(1);
+
+  window.addEventListener('wheel', function (e) {
+    if (e.deltaY > 0) {
+      marqueeAnim.timeScale(1);
+      gsap.to(".marque i", { rotate: 180, duration: 0.5 });
+    } else {
+      marqueeAnim.timeScale(-1);
+      gsap.to(".marque i", { rotate: 0, duration: 0.5 });
+    }
+  });
+}
+
+initMarqueeScroll();
