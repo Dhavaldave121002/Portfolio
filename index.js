@@ -572,3 +572,34 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     }
   });
 });
+function initMarqueeScroll() {
+  const marqueeTrack = document.querySelector('.marquee-track');
+
+  // Create marquee animation
+  const marqueeAnim = gsap.to(marqueeTrack, {
+    xPercent: -50,
+    repeat: -1,
+    ease: "power4.inOut",
+    duration: 15
+  });
+
+  // Default direction
+  marqueeAnim.timeScale(1);
+
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('wheel', function (e) {
+    if (e.deltaY > 0) {
+      marqueeAnim.timeScale(1); // Scroll down
+      gsap.to(".marque i", { rotate: 180, duration: 0.5 });
+    } else {
+      marqueeAnim.timeScale(-1); // Scroll up
+      gsap.to(".marque i", { rotate: 0, duration: 0.5 });
+    }
+
+    lastScrollY = window.scrollY;
+  });
+}
+
+initMarqueeScroll();
+
