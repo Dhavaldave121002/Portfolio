@@ -761,6 +761,8 @@ main::after {
 
   .map .card-content p {
     font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: justify;
   }
 
   .card-icon {
