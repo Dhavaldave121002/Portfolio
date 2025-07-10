@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Removed: gsap.registerPlugin(ScrollTrigger);
+    // Removed: gsap.registerPlugin(ScrollTrigger); // No longer needed as ScrollTrigger is removed
   
     // --- PRELOADER ANIMATION ---
     const preloader = document.querySelector(".preloader");
@@ -32,6 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
       .from(".nav .nav-item", { x: 80, opacity: 0, duration: 0.5, ease: "back.out", scale: 0.5, stagger: 0.1 }, "start")
       .from(".sec1", { x: -100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start")
       .from(".sec2 img", { x: 100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start")
+      // NEW: Roadmap cards animation added to main timeline
+      .from(".road-map-card", {
+          opacity: 0,
+          y: 50, // Starts 50px below and moves up
+          duration: 0.8,
+          ease: "power2.out",
+          stagger: 0.15 // Stagger effect for each card
+      }, "start+=1.5") // Starts 1.5 seconds after the "start" label of the mainTimeline
       .to(".tog", {
         x: 0,
         opacity: 1,
@@ -89,17 +97,15 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.timeline()
         .from(".offcanvas-body .contact h3", { x: -100, opacity: 0, duration: 1.5, ease: "power1.out" })
         .from(".offcanvas-body .social-icon i", { x: -100, opacity: 0, duration: 1, ease: "power1.out", stagger: 0.1 }, "-=0.5");
-      offcanvas.style.display = "block";
+      // Ensure the offcanvas is visually shown when the button is clicked if it's hidden by default.
+      // This might be handled by your CSS framework (e.g., Bootstrap's .show class for offcanvas)
+      // If not, you might need to add: offcanvas.classList.add('show'); or offcanvas.style.visibility = 'visible';
+      // The previous code had offcanvas.style.display = "block"; which is fine for direct display.
+      offcanvas.style.display = "block"; // Assuming this makes it visible
     });
   
-    // --- SCROLLTRIGGER ANIMATIONS (REMOVED) ---
+    // --- SCROLLTRIGGER ANIMATIONS (REMOVED as requested) ---
     // All `gsap.from` and `gsap.to` calls that had a `scrollTrigger` property have been removed.
-    // This includes animations for:
-    // - About Image
-    // - About Text
-    // - Roadmap Cards
-    // - About Points
-    // - Generic Section Headers, Paragraphs, Images, Cards, and List Items
   
     // --- SKILL CARD ANIMATION (IntersectionObserver based, NOT ScrollTrigger) ---
     const skillCards = document.querySelectorAll(".skill-card");
@@ -233,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: "smooth" });
-          // Removed: setTimeout(() => { ScrollTrigger.refresh(); }, 500);
         }
       });
     });
