@@ -121,18 +121,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // Roadmap Cards (staggered)
   gsap.utils.toArray('.road-map-card').forEach((card, i) => {
-    gsap.to(card, {
+    gsap.from(card, {
       scrollTrigger: {
         trigger: card,
         start: "top 20%",
         toggleActions: "play none none none",
         once: true
       },
-      opacity: 1,
+      opacity: 0,
       y: 0,
       duration: 0.7,
       ease: "power2.out",
-      delay: i * 0.13
+      delay: i * 0.1
     });
   });
   // About Points
