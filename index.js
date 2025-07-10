@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.from(card, {
       scrollTrigger: {
         trigger: card,
-        start: "top 20%",
+        start: "top 0%",
         toggleActions: "play none none none",
         once: true
       },
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   gsap.from(".about-points p", {
     scrollTrigger: {
       trigger: ".about-points",
-      start: "top 95%",
+      start: "top 75%",
       toggleActions: "play none none none",
       once: true
     },
