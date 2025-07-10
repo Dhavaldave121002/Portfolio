@@ -740,9 +740,9 @@ main::after {
   }
 
   .about-intro {
-    font-size: 0.9rem;
+    font-size: 1rem;
     line-height: 1.5;
-    text-align: justify;
+    text-align: center;
   }
 
   .map {
@@ -761,9 +761,6 @@ main::after {
 
   .map .card-content p {
     font-size: 1rem;
-    text-align: center!important;
-    padding: 0!important;
-    margin: 0!important;
   }
 
   .card-icon {
