@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
           duration: 0.5,
           repeat: 1,
           yoyo: true,
-         
           ease: "power1.inOut",
         });
       },
@@ -93,57 +92,124 @@ document.addEventListener("DOMContentLoaded", () => {
     offcanvas.style.display = "block";
   });
 
-  // --- SCROLLTRIGGER ANIMATIONS (Responsive) ---
-  ScrollTrigger.matchMedia({
-    // Desktop/tablet
-    
-      // Desktop/tablet
-      "(min-width: 601px)": function() {
-        gsap.from(".about-img-wrapper", {
-          scrollTrigger: {
-            trigger: ".about-section",
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: true,
-          
-          },
-          x: -100,
-          opacity: 0,
-          duration: 1,
-          marker: true,
-        });
-      },
-      // Mobile
-      "(max-width: 600px)": function() {
-        gsap.from(".about-img-wrapper", {
-          scrollTrigger: {
-            trigger: ".about-section",
-            start: "top 90%",
-            end: "bottom 10%",
-            scrub: true,
-            marker: true,
-          },
-          y: 50, // Animate vertically instead
-          opacity: 0,
-          duration: 1,
-         
-        });
-      }
-    });
-    
-
-  // More scroll animations (as in your code)
-  // ... (repeat for other selectors as needed)
-
-  // --- ROADMAP CARDS ---
-  gsap.utils.toArray(".road-map-card").forEach((card, i) => {
+  // --- SCROLLTRIGGER ANIMATIONS (ONE-TIME, ALL SCREENS) ---
+  // About Image
+  gsap.from(".about-img-wrapper img", {
+    scrollTrigger: {
+      trigger: ".about-section",
+      start: "top 85%",
+      toggleActions: "play none none none",
+      once: true
+    },
+    x: -60,
+    opacity: 0,
+    duration: 1.2,
+    ease: "power2.out"
+  });
+  // About Text
+  gsap.from(".about-section .part", {
+    scrollTrigger: {
+      trigger: ".about-section",
+      start: "top 90%",
+      toggleActions: "play none none none",
+      once: true
+    },
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: "power2.out"
+  });
+  // Roadmap Cards (staggered)
+  gsap.utils.toArray('.road-map-card').forEach((card, i) => {
     gsap.to(card, {
-      scrollTrigger: { trigger: card, start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse" },
-      opacity: 1, y: -100, duration: 1, ease: "power3.out", delay: i * 0.2,
+      scrollTrigger: {
+        trigger: card,
+        start: "top 92%",
+        toggleActions: "play none none none",
+        once: true
+      },
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: "power2.out",
+      delay: i * 0.13
+    });
+  });
+  // About Points
+  gsap.from(".about-points p", {
+    scrollTrigger: {
+      trigger: ".about-points",
+      start: "top 95%",
+      toggleActions: "play none none none",
+      once: true
+    },
+    y: 30,
+    opacity: 0,
+    duration: 0.7,
+    ease: "power2.out",
+    stagger: 0.08
+  });
+
+  // --- GENERIC SECTION ANIMATIONS (ONE-TIME) ---
+  gsap.utils.toArray("section").forEach(section => {
+    const header = section.querySelector('h2, h1');
+    if (header) {
+      gsap.from(header, {
+        scrollTrigger: {
+          trigger: section,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true
+        },
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out"
+      });
+    }
+    gsap.from(section.querySelectorAll('p'), {
+      scrollTrigger: {
+        trigger: section,
+        start: "top 90%",
+        toggleActions: "play none none none",
+        once: true
+      },
+      y: 30,
+      opacity: 0,
+      duration: 0.7,
+      ease: "power2.out",
+      stagger: 0.08
+    });
+    gsap.from(section.querySelectorAll('img'), {
+      scrollTrigger: {
+        trigger: section,
+        start: "top 90%",
+        toggleActions: "play none none none",
+        once: true
+      },
+      scale: 0.97,
+      y: 20,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power2.out",
+      stagger: 0.07
+    });
+    gsap.from(section.querySelectorAll('.card, .list-item'), {
+      scrollTrigger: {
+        trigger: section,
+        start: "top 92%",
+        toggleActions: "play none none none",
+        once: true
+      },
+      y: 50,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power2.out",
+      stagger: 0.07
     });
   });
 
-  // --- SKILL CARDS ---
+  // --- SKILL CARD ANIMATION ---
   const skillCards = document.querySelectorAll(".skill-card");
   const skillObserver = new IntersectionObserver(
     (entries) => {
@@ -176,18 +242,14 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   skillCards.forEach((card) => skillObserver.observe(card));
 
-  // --- INFINITE ANIMATIONS ---
-  gsap.to(".flare", { rotation: 360, duration: 6, repeat: -1, ease: "linear" });
-  gsap.to(".ring1", { rotation: 360, duration: 10, repeat: -1, ease: "none" });
-
-  // --- PROJECT CARDS OBSERVER ---
+  // --- PROJECT CARD ANIMATION ---
   const projectCards = document.querySelectorAll(".Projects-section .project-card");
   const projectObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
           gsap.to(entry.target, { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
+          entry.target.classList.add("visible");
           projectObserver.unobserve(entry.target);
         }
       });
@@ -287,6 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- MARQUEE ---
   function initMarqueeScroll() {
     const marqueeTrack = document.querySelector('.marquee-track');
+    if (!marqueeTrack) return;
     const marqueeAnim = gsap.to(marqueeTrack, { xPercent: -50, repeat: -1, ease: "power4.inOut", duration: 15 });
     marqueeAnim.timeScale(1);
     window.addEventListener('wheel', function (e) {
@@ -300,4 +363,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   initMarqueeScroll();
+
+  // --- INFINITE ANIMATIONS ---
+  gsap.to(".flare", { rotation: 360, duration: 6, repeat: -1, ease: "linear" });
+  gsap.to(".ring1", { rotation: 360, duration: 10, repeat: -1, ease: "none" });
 });
