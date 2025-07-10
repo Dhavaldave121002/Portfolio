@@ -743,6 +743,7 @@ main::after {
     font-size: 1rem;
     line-height: 1.5;
     text-align: center;
+    margin: 0 20px;
   }
 
   .map {
