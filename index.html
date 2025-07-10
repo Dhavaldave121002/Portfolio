@@ -13,11 +13,12 @@
       rel="stylesheet"
       href="./bootstrap-5.0.2-dist/css/bootstrap.min.css"
     />
-
+    
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+    
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="style.css" />
@@ -52,7 +53,6 @@
       >
         <div
           class="col-lg-4 col-8 d-flex justify-content-start align-items-center logo"
-          data-aos="fade-right"
         >
           <img src="./images/dd-removebg-preview.png" alt="logo" />
           <h1>Dhaval Dave</h1>
@@ -67,7 +67,7 @@
           </div>
         </div>
 
-        <div class="col-lg-8 col-4 nav-md-wrapper" data-aos="fade-left">
+        <div class="col-lg-8 col-4 nav-md-wrapper">
           <ul
             class="nav main-nav d-flex flex-lg-row flex-column justify-content-center justify-content-lg-end align-items-center"
           >
@@ -144,7 +144,8 @@
     <main id="main">
       <section class="container-fluid p-0 m-0">
         <ul class="row p-0 m-0 d-flex g-5">
-          <li class="col-sm-8 col-12 order-2 order-sm-1" data-aos="fade-up">
+          <!-- Text Section: appears second on mobile, first on larger screens -->
+          <li class="col-sm-8 col-12 order-2 order-sm-1">
             <div class="sec1 p-lg-5 p-0">
               <h1>Hello, I'm <span>Dhaval Dave</span></h1>
               <h2>I'm a <span id="typed-skills"></span></h2>
@@ -157,9 +158,9 @@
             </div>
           </li>
 
+          <!-- Image Section: appears first on mobile, second on larger screens -->
           <li
             class="col-sm-4 col-12 d-flex justify-content-center align-items-center order-1 order-sm-2"
-            data-aos="fade-left"
           >
             <div class="sec2">
               <img
@@ -175,7 +176,8 @@
 
     <section id="about" class="container-fluid about-section p-5 m-0">
       <div class="row p-5 m-0 d-flex flex-column flex-md-row align-items-center">
-        <div class="col-lg-4 d-flex justify-content-center mb-4 mb-md-0 position-relative" data-aos="fade-right">
+        <!-- Profile Image Wrapper -->
+        <div class="col-lg-4 d-flex justify-content-center mb-4 mb-md-0 position-relative">
           <div class="about-img-wrapper d-flex justify-content-center align-items-center">
             <div class="image-frame"></div>
             <img src="./images/about.png" alt="Dhaval Dave" class="about-img img-fluid" />
@@ -183,18 +185,21 @@
             <div class="corner-decor decor-bottom-right"></div>
           </div>
         </div>
-
-        <div class="col-lg-7 offset-md-1 part" data-aos="fade-left">
+    
+        <!-- Intro Text -->
+        <div class="col-lg-7 offset-md-1 part">
           <h2 class="about-heading">About Me</h2>
           <p class="about-intro">
             Driven by passion and precision, I craft interfaces that don’t just look good—they perform. With a sharp eye for detail and a knack for clean code, I transform ideas into seamless digital experiences. Whether it’s building responsive layouts or optimizing user interactions, I thrive on solving complex problems with elegant solutions. Always learning, always creating—this is where design meets development.
           </p>
         </div>
       </div>
-
+    
+      <!-- Roadmap Cards 2×2 Grid -->
       <div class="container roadmap-grid py-5">
         <div class="row g-4">
-          <div class="col-md-6" data-aos="fade-up">
+          <!-- Card 1 -->
+          <div class="col-md-6">
             <div class="road-map-card ">
               <div class="map">
               <div class="card-icon"><i class="ri-school-line"></i></div>
@@ -207,7 +212,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <!-- Card 2 -->
+          <div class="col-md-6">
             <div class="road-map-card">
               <div class="map">
               <div class="card-icon"><i class="ri-computer-line"></i></div>
@@ -220,7 +226,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <!-- Card 3 -->
+          <div class="col-md-6">
             <div class="road-map-card">
               <div class="map">
               <div class="card-icon"><i class="ri-briefcase-line"></i></div>
@@ -231,7 +238,8 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <!-- Card 4 -->
+          <div class="col-md-6">
             <div class="road-map-card">
               <div class="map">
               <div class="card-icon"><i class="ri-lightbulb-flash-line"></i></div>
@@ -245,22 +253,23 @@
         </div>
       </div>
     </section>
-
-
-
+    
+    
+    
     <section id="services" class="p-5 container-fluid services-section">
-      <div class="text-center" data-aos="fade-up">
+      <div class="text-center">
         <h2 class="fw-bold">My Services</h2>
         <p class="text-muted">What I can do for you</p>
         <p class="lead text-center text-muted mb-4">
           I specialize in creating seamless digital experiences through clean, efficient, and scalable code. Whether it's building responsive websites, crafting engaging frontend interfaces, or developing mobile apps, my goal is to deliver high-quality solutions that meet your needs and exceed expectations.
         </p>
       </div>
-
+      
         <div class="row g-4">
-
-          <div class="col-lg-4 col-md-6 col-sm-12" data-aos="zoom-in" data-aos-delay="100">
-            <div class="neon-card   border-0 text-center p-1">
+          
+          <!-- Web Development -->
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="neon-card  border-0 text-center p-1">
               <div class="service-card">
               <i class="ri-global-line display-4 text-primary mb-3"></i>
               <h5 class="fw-bold">Web Development</h5>
@@ -270,8 +279,9 @@
             </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-md-6 col-sm-12" data-aos="zoom-in" data-aos-delay="200">
+    
+          <!-- Frontend Development -->
+          <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="neon-card   border-0 text-center p-1">
               <div class="service-card">
               <i class="ri-layout-masonry-line display-4 text-success mb-3"></i>
@@ -282,8 +292,9 @@
               </div>
             </div>
           </div>
-
-          <div class="col-lg-4 col-md-6 col-sm-12" data-aos="zoom-in" data-aos-delay="300">
+    
+          <!-- App Development -->
+          <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="neon-card   border-0 text-center p-1">
               <div class="service-card">
               <i class="ri-smartphone-line display-4 text-warning mb-3"></i>
@@ -294,23 +305,25 @@
             </div>
             </div>
           </div>
-
+    
         </div>
       </div>
     </section>
-
+    
 
     <div class="container-fluid py-5 skills-section" id="skills">
-
-      <h2 class="section-title text-center mb-5 w-100" data-aos="fade-down">My <span>Skills</span></h2>
-
+  
+      <!-- Section Title Centered -->
+      <h2 class="section-title text-center mb-5 w-100">My <span>Skills</span></h2>
+      
       <div class="d-flex flex-wrap justify-content-center align-items-start">
-
+        
+        <!-- Left Side: Skill Cards -->
         <div class="skills-left col-12 col-lg-8 px-5">
           <div class="row g-4 justify-content-center">
-
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up">
+            
+    
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="95">
                 <div class="circle">
                   <svg>
@@ -323,8 +336,8 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">HTML5</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="50">
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="90">
                 <div class="circle">
                   <svg>
@@ -337,8 +350,8 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">CSS3</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="100">
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="85">
                 <div class="circle">
                   <svg>
@@ -351,8 +364,10 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">JavaScript</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="150">
+        
+            <!-- Add more skills like this -->
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="80">
                 <div class="circle">
                   <svg>
@@ -365,8 +380,8 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">React</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="75">
                 <div class="circle">
                   <svg>
@@ -379,8 +394,8 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">Gsap</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="250">
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="70">
                 <div class="circle">
                   <svg>
@@ -393,8 +408,8 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">Bootstrap5</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300">
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="65">
                 <div class="circle">
                   <svg>
@@ -407,8 +422,8 @@
                 <div class="skill-name" data-tooltip="6 Months Experience">Git</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="350">
+        
+            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
               <div class="skill-card" data-percentage="60">
                 <div class="circle">
                   <svg>
@@ -421,110 +436,161 @@
                 <div class="skill-name" data-tooltip="3 Months Experience">Tailwind CSS</div>
               </div>
             </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
-              <div class="skill-card" data-percentage="60">
-                <div class="circle">
-                  <svg>
-                    <circle cx="60" cy="60" r="50"></circle>
-                    <circle class="progress" cx="60" cy="60" r="50"></circle>
-                  </svg>
-                  <span class="percentage">0%</span>
-                </div>
-                <img src="./images/flutter-removebg-preview.png" alt="Flutter Logo" class="skill-icon img-fluid">
-                <div class="skill-name" data-tooltip="3 Months Experience">Flutter</div>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="450">
-              <div class="skill-card" data-percentage="65">
-                <div class="circle">
-                  <svg>
-                    <circle cx="60" cy="60" r="50"></circle>
-                    <circle class="progress" cx="60" cy="60" r="50"></circle>
-                  </svg>
-                  <span class="percentage">0%</span>
-                </div>
-                <img src="./images/android-removebg-preview.png" alt="Android Logo" class="skill-icon img-fluid">
-                <div class="skill-name" data-tooltip="3 Months Experience">Android</div>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-3 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="500">
-              <div class="skill-card" data-percentage="70">
-                <div class="circle">
-                  <svg>
-                    <circle cx="60" cy="60" r="50"></circle>
-                    <circle class="progress" cx="60" cy="60" r="50"></circle>
-                  </svg>
-                  <span class="percentage">0%</span>
-                </div>
-                <img src="./images/wordpress-removebg-preview.png" alt="WordPress Logo" class="skill-icon img-fluid">
-                <div class="skill-name" data-tooltip="6 Months Experience">WordPress</div>
-              </div>
-            </div>
-
-          </div>
+    
+            <!-- Flutter -->
+    <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+      <div class="skill-card" data-percentage="60">
+        <div class="circle">
+          <svg>
+            <circle cx="60" cy="60" r="50"></circle>
+            <circle class="progress" cx="60" cy="60" r="50"></circle>
+          </svg>
+          <span class="percentage">0%</span>
         </div>
-
-        <div class="skills-right col-12 col-lg-4 px-2 py-5 d-flex align-items-center" data-aos="fade-left">
-          <div class="about-points g-2">
-            <p><i class="ri-code-s-slash-line me-2"></i>I'm a <strong>Creative Developer</strong> who merges sleek UI design with seamless functionality. I believe great interfaces are built at the intersection of aesthetics and performance.</p>
-
-            <p><i class="ri-tools-line me-2"></i>With solid expertise in <strong>HTML, CSS, JavaScript, and Flutter</strong>, I bring ideas to life across web and mobile platforms—fast, responsive, and reliable.</p>
-
-            <p><i class="ri-device-line me-2"></i>I champion <strong>mobile-first, cross-platform design</strong>, ensuring every experience feels intuitive on any screen. Performance isn't optional—it's built-in.</p>
-
-            <p><i class="ri-speed-line me-2"></i>Writing <strong>clean, maintainable code</strong> is more than a habit—it's my standard. I optimize for speed, scalability, and long-term readability.</p>
-
-            <p><i class="ri-lightbulb-line me-2"></i>As a <strong>lifelong learner</strong>, I stay curious and constantly explore new technologies to stay ahead of the curve.</p>
-
-            <p><i class="ri-team-line me-2"></i>Collaboration is key. I’m a <strong>team player</strong> who puts the user first, always aiming to deliver meaningful and human-centered solutions.</p>
-          </div>
-
-        </div>
-
+        <img src="./images/flutter-removebg-preview.png" alt="Flutter Logo" class="skill-icon img-fluid">
+        <div class="skill-name" data-tooltip="3 Months Experience">Flutter</div>
       </div>
     </div>
-
-
-    <section id="projects" class="py-5 container-fluid ">
+    
+    <!-- Android -->
+    <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+      <div class="skill-card" data-percentage="65">
+        <div class="circle">
+          <svg>
+            <circle cx="60" cy="60" r="50"></circle>
+            <circle class="progress" cx="60" cy="60" r="50"></circle>
+          </svg>
+          <span class="percentage">0%</span>
+        </div>
+        <img src="./images/android-removebg-preview.png" alt="Android Logo" class="skill-icon img-fluid">
+        <div class="skill-name" data-tooltip="3 Months Experience">Android</div>
+      </div>
+    </div>
+    
+    <!-- WordPress -->
+    <div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+      <div class="skill-card" data-percentage="70">
+        <div class="circle">
+          <svg>
+            <circle cx="60" cy="60" r="50"></circle>
+            <circle class="progress" cx="60" cy="60" r="50"></circle>
+          </svg>
+          <span class="percentage">0%</span>
+        </div>
+        <img src="./images/wordpress-removebg-preview.png" alt="WordPress Logo" class="skill-icon img-fluid">
+        <div class="skill-name" data-tooltip="6 Months Experience">WordPress</div>
+      </div>
+    </div>
+        
+          </div>
+        </div>
+    
+        <!-- Right Side: About List -->
+        <div class="skills-right col-12 col-lg-4 px-2 py-5 d-flex align-items-center">
+          <div class="about-points g-2">
+            <p><i class="ri-code-s-slash-line me-2"></i>I'm a <strong>Creative Developer</strong> who merges sleek UI design with seamless functionality. I believe great interfaces are built at the intersection of aesthetics and performance.</p>
+          
+            <p><i class="ri-tools-line me-2"></i>With solid expertise in <strong>HTML, CSS, JavaScript, and Flutter</strong>, I bring ideas to life across web and mobile platforms—fast, responsive, and reliable.</p>
+          
+            <p><i class="ri-device-line me-2"></i>I champion <strong>mobile-first, cross-platform design</strong>, ensuring every experience feels intuitive on any screen. Performance isn't optional—it's built-in.</p>
+          
+            <p><i class="ri-speed-line me-2"></i>Writing <strong>clean, maintainable code</strong> is more than a habit—it's my standard. I optimize for speed, scalability, and long-term readability.</p>
+          
+            <p><i class="ri-lightbulb-line me-2"></i>As a <strong>lifelong learner</strong>, I stay curious and constantly explore new technologies to stay ahead of the curve.</p>
+          
+            <p><i class="ri-team-line me-2"></i>Collaboration is key. I’m a <strong>team player</strong> who puts the user first, always aiming to deliver meaningful and human-centered solutions.</p>
+          </div>
+          
+        </div>
+    
+      </div>
+    </div>
+    
+    <!-- <section class="Projects-section container-fluid p-5 m-0" id="Projects">
+      <h2>My <span>Projects</span></h2>
+      <p class="description">
+        Focused on speed, responsiveness, accessibility, and SEO to ensure great performance across all devices.
+      </p>
+  
+      <div class="owl-carousel owl-theme">
+        <div class="box card-1">
+          <div class="box-shadow">
+            <div class="box-content">
+              <h2>Travel Management System</h2>
+              <p>Automates booking, itinerary planning, and expense tracking for seamless corporate or personal travel.</p>
+              <a href="#" class="btn-cta">Explore</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="box card-2">
+          <div class="box-shadow">
+            <div class="box-content">
+              <h2>Stock Management System</h2>
+              <p>Efficiently manage inventory levels, stock entries, and supplier data with real-time analytics.</p>
+              <a href="#" class="btn-cta">Explore</a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="box card-3">
+          <div class="box-shadow">
+            <div class="box-content">
+              <h2>Champion Site</h2>
+              <p>A modern showcase website for sports teams, tournaments, or athletes with real-time updates.</p>
+              <a href="#" class="btn-cta">Explore</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+   -->
+    
+   
+   
+   <!-- 🔥 Project Section -->
+   <section id="projects" class="py-5 container-fluid ">
      <div class="container">
-       <h2 class="text-center   txtproject" data-aos="fade-down">My Projects</h2>
-       <p class="text-center   mb-5   txtpara" data-aos="fade-up">I create clean, responsive websites and user-friendly apps.
+       <h2 class="text-center   txtproject">My Projects</h2>
+       <p class="text-center  mb-5  txtpara">I create clean, responsive websites and user-friendly apps.
         My projects focus on good design, smooth performance, and a great user experience.</p>
        <div class="row g-4 justify-content-center">
-
-         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+   
+         <!-- FireApp -->
+         <div class="col-md-6 col-lg-4">
            <div class="project-card" onclick="openModal('FireApp')">
              <img src="./images/2.png" alt="FireApp" class="project-img rounded">
              <div class="project-title">Champion Site</div>
            </div>
          </div>
-
-         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+   
+         <!-- Ignite UI -->
+         <div class="col-md-6 col-lg-4">
            <div class="project-card" onclick="openModal('IgniteUI')">
              <img src="./images/image.png" alt="Ignite UI" class="project-img rounded">
              <div class="project-title">Travel App</div>
            </div>
          </div>
-
-         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+   
+         <!-- BlazeWeb -->
+         <div class="col-md-6 col-lg-4">
            <div class="project-card" onclick="openModal('BlazeWeb')">
              <img src="./images/image1.png" alt="BlazeWeb" class="project-img rounded">
              <div class="project-title">Stock Management</div>
            </div>
          </div>
-
+   
        </div>
      </div>
    </section>
-
+   
+   <!-- 🔍 Modal -->
    <div id="projectModal" class="modal-custom">
     <div class="modal-content-custom">
       <span class="close-modal" onclick="closeModal()">×</span>
       <h2 id="modalTitle" class="fire-glow"></h2>
       <p id="modalDescription"></p>
+      <!-- Removed image section here -->
       <a id="modalGithub" class="btn btn-warning mt-4" target="_blank">
         <i class="ri-github-fill"></i> View on GitHub
       </a>
@@ -540,8 +606,9 @@
         <div class="marque"><h1>Web Developer</h1><i class="ri-arrow-right-line"></i></div>
       </div>
     </div>
+    
 
-
+    <!-- Hero Intro Text -->
     <div class="intro">
       <h2>Hello, I'm <span>Dhaval Dave</span></h2>
       <p>I build clean, modern & performant web and mobile experiences.</p>
@@ -550,26 +617,26 @@
 
 
   <div id="contact" class="container-fluid contact-section d-flex justify-content-center align-items-center">
-    <div class="contact-card mt-5" data-aos="fade-up">
+    <div class="contact-card mt-5">
       <h2 class="text-center">Let's Connect</h2>
       <form id="contactForm">
-        <div class="mb-3" data-aos="fade-right">
+        <div class="mb-3">
           <input type="text" class="form-control" id="name" placeholder="Your Name" required />
         </div>
-        <div class="mb-3" data-aos="fade-left">
+        <div class="mb-3">
           <input type="email" class="form-control" id="email" placeholder="Your Email" required />
         </div>
-        <div class="mb-3" data-aos="fade-right">
+        <div class="mb-3">
           <input type="tel" class="form-control" id="phone" placeholder="Your Phone Number" required />
         </div>
-        <div class="mb-3" data-aos="fade-left">
+        <div class="mb-3">
           <textarea class="form-control" id="message" rows="4" placeholder="Your Message" required></textarea>
         </div>
-        <button type="submit" class="send-btn mb-3" data-aos="zoom-in">
+        <button type="submit" class="send-btn mb-3">
           <i class="ri-send-plane-fill me-2"></i>Send Message
         </button>
-
-        <div class="icon-links" data-aos="fade-up">
+  
+        <div class="icon-links">
           <a href="#" id="emailLink" title="Send via Email"><i class="ri-mail-send-line"></i></a>
           <a href="#" id="whatsappLink" title="Send via WhatsApp"><i class="ri-whatsapp-fill"></i></a>
           <a href="#" id="callLink" title="Call Now"><i class="ri-phone-fill"></i></a>
@@ -577,20 +644,47 @@
       </form>
     </div>
   </div>
-  <footer class="footer-copy" data-aos="fade-up">
+  <footer class="footer-copy">
     <span>©</span> 2025 Dhaval Dave. All rights reserved.
   </footer>
-
-
-
+  
+  
+  
+  
+         
 
     <script src="./bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script> <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- <script>
+     $(document).ready(function () {
+  $(".owl-carousel").owlCarousel({
+    loop: true,
+    nav: false,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    smartSpeed: 600,
+    margin: 20, // adds space between items
+    responsive: {
+      0: {
+        items: 1
+      },
+      768: {
+        items: 1
+      }
+    },
+    // navText: ["<", ">"]
+  });
+});
 
+    </script> -->
+    
+   
   </body>
 </html>
