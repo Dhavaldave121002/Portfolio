@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       opacity: 0,
       scale: 0.8,
-      duration: 0.4
+      duration: 0.1
     });
 
     gsap.from(".part", {
