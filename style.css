@@ -762,7 +762,7 @@ main::after {
   .map .card-content p {
     font-size: 0.9rem;
     line-height: 1.5;
-    text-align: justify;
+    text-align: center!important;
     padding: 0!important;
     margin: 0!important;
   }
