@@ -599,7 +599,7 @@ main::after {
   gap: 1.5rem;
   align-items: flex-start;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  opacity: 1;
+  /* opacity: 1; */
   transform: translateY(30px);
   /* animation: fadeInSlide 0.8s forwards; */
 }

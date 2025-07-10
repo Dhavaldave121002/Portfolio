@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===================== PRELOADER =====================
   const preloader = document.querySelector(".preloader");
   gsap.timeline()
-    .from(".ring1", { scale: 0, rotation: 0, opacity: 0, duration: 1, ease: "back.out(1.7)" })
-    .from(".ring2", { scale: 0, rotation: 180, opacity: 0, duration: 1, ease: "back.out(1.7)" }, "-=0.5")
-    .from(".ring3", { scale: 0, rotation: -180, opacity: 0, duration: 1, ease: "back.out(1.7)" }, "-=0.5")
-    .from(".core-logo", { scale: 0, rotateY: 360, opacity: 0, duration: 1, ease: "elastic.out(1, 0.5)" }, "-=0.5")
-    .from(".flare", { scale: 0, opacity: 0, duration: 1, ease: "power2.out" }, "-=1")
-    .from(".loader-title", { y: 40, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.8")
+    .from(".ring1", { scale: 0, rotation: 0, opacity: 0, duration: 0.6, ease: "back.out(1.7)" })
+    .from(".ring2", { scale: 0, rotation: 180, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, "-=0.3")
+    .from(".ring3", { scale: 0, rotation: -180, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, "-=0.3")
+    .from(".core-logo", { scale: 0, rotateY: 360, opacity: 0, duration: 0.6, ease: "elastic.out(1, 0.5)" }, "-=0.3")
+    .from(".flare", { scale: 0, opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.5")
+    .from(".loader-title", { y: 40, opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.5")
     .to(".preloader", {
       opacity: 0,
-      duration: 1,
-      delay: 0.5,
+      duration: 0.6,
+      delay: 0.2,
       ease: "power4.out",
       onComplete: () => {
         preloader.style.display = "none";
@@ -26,22 +26,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainTimeline = gsap.timeline({ paused: true });
   gsap.set(".tog", { opacity: 0, x: -30, scale: 0.8, pointerEvents: "none" });
   mainTimeline
-    .from(".logo", { y: -80, opacity: 0, duration: 1.2, ease: "bounce.out", scale: 0.5 }, "start")
-    .from(".logo img", { rotation: 360, transformOrigin: "center", duration: 1, ease: "power2.out" }, "start")
-    .from(".nav .nav-item", { x: 80, opacity: 0, duration: 0.5, ease: "back.out", scale: 0.5, stagger: 0.1 }, "start")
-    .from(".sec1", { x: -100, opacity: 0, duration: 1.2, ease: "power2.out" }, "start")
-    .from(".sec2 img", { x: 100, opacity: 0, duration: 1.2, ease: "power2.out" }, "start")
+    .from(".logo", { y: -80, opacity: 0, duration: 0.7, ease: "bounce.out", scale: 0.5 }, "start")
+    .from(".logo img", { rotation: 360, transformOrigin: "center", duration: 0.7, ease: "power2.out" }, "start")
+    .from(".nav .nav-item", { x: 80, opacity: 0, duration: 0.3, ease: "back.out", scale: 0.5, stagger: 0.07 }, "start")
+    .from(".sec1", { x: -100, opacity: 0, duration: 0.7, ease: "power2.out" }, "start")
+    .from(".sec2 img", { x: 100, opacity: 0, duration: 0.7, ease: "power2.out" }, "start")
     .to(".tog", {
       x: 0,
       opacity: 1,
       scale: 1,
-      duration: 1,
+      duration: 0.7,
       ease: "back.out(1.7)",
       pointerEvents: "auto",
       onStart: () => {
         gsap.to(".tog", {
           backgroundColor: "#e6b800",
-          duration: 0.5,
+          duration: 0.3,
           repeat: 1,
           yoyo: true,
           ease: "power1.inOut",
@@ -50,9 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, "start");
 
   // --- HERO TEXT (on load) ---
-  gsap.from(".hero h1", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.5 });
-  gsap.from(".hero p", { duration: 1, delay: 1, y: 30, opacity: 0, ease: "power2.out" });
-  gsap.from(".btn", { duration: 1, delay: 1.5, scale: 0.8, opacity: 0, ease: "back.out(1.7)" });
+  gsap.from(".hero h1", { duration: 0.9, y: -50, opacity: 0, ease: "power3.out", delay: 0.3 });
+  gsap.from(".hero p", { duration: 0.7, delay: 0.5, y: 30, opacity: 0, ease: "power2.out" });
+  gsap.from(".btn", { duration: 0.7, delay: 0.7, scale: 0.8, opacity: 0, ease: "back.out(1.7)" });
 
   // ===================== NAVIGATION: MOBILE TOGGLE =====================
   const menuIcon = document.querySelector(".menu-icon");
@@ -64,11 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.fromTo(
           ".nav .nav-item",
           { opacity: 0, x: 100 },
-          { opacity: 1, x: 0, stagger: 0.2, duration: 0.3, ease: "power2.out" }
+          { opacity: 1, x: 0, stagger: 0.1, duration: 0.2, ease: "power2.out" }
         );
         document.body.style.overflow = "hidden";
       } else {
-        gsap.to(".nav .nav-item", { opacity: 0, x: -50, duration: 0.3 });
+        gsap.to(".nav .nav-item", { opacity: 0, x: -50, duration: 0.2 });
         document.body.style.overflow = "auto";
       }
     });
@@ -81,10 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const offcanvas = document.querySelector(".offcanvas-body");
       gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
       gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
-      gsap.to(togButton, { scale: 0.9, duration: 0.2, yoyo: true, repeat: 1, ease: "power1.inOut" });
+      gsap.to(togButton, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1, ease: "power1.inOut" });
       gsap.timeline()
-        .from(".offcanvas-body .contact h3", { x: -100, opacity: 0, duration: 1, ease: "power1.out" })
-        .from(".offcanvas-body .social-icon i", { x: -100, opacity: 0, duration: 0.7, ease: "power1.out", stagger: 0.1 }, "-=0.5");
+        .from(".offcanvas-body .contact h3", { x: -100, opacity: 0, duration: 0.5, ease: "power1.out" })
+        .from(".offcanvas-body .social-icon i", { x: -100, opacity: 0, duration: 0.3, ease: "power1.out", stagger: 0.05 }, "-=0.3");
       offcanvas.style.display = "block";
     });
   }
@@ -93,50 +93,89 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.Typed) {
     new Typed("#typed-skills", {
       strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
-      typeSpeed: 100,
-      backSpeed: 60,
-      backDelay: 1500,
+      typeSpeed: 70,
+      backSpeed: 40,
+      backDelay: 900,
       loop: true,
     });
   }
 
-  // ===================== ABOUT & ROADMAP: ONE-TIME ANIMATION =====================
-  gsap.from(".part", {
-    scrollTrigger: {
-      trigger: ".part",
-      start: "top 85%",
-      // play only once (default)
+  // ===================== RESPONSIVE SCROLLTRIGGER ANIMATIONS =====================
+  ScrollTrigger.matchMedia({
+    // Desktop/tablet
+    "(min-width: 768px)": function() {
+      gsap.from(".part", {
+        scrollTrigger: {
+          trigger: ".part",
+          start: "top 85%",
+        },
+        opacity: 0,
+        y: 50,
+        scale: 0.97,
+        duration: 0.7,
+        ease: "power3.out"
+      });
+      gsap.utils.toArray('.road-map-card').forEach((card, i) => {
+        const icon = card.querySelector('.card-icon');
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 90%",
+          },
+          opacity: 0,
+          y: 80,
+          scale: 0.8,
+          duration: 0.7,
+          delay: i * 0.08,
+          ease: "bounce.out",
+          onStart: () => {
+            if (icon) {
+              gsap.fromTo(icon,
+                { scale: 0.6, backgroundColor: "#111" },
+                { scale: 1.1, backgroundColor: "#ffd700", duration: 0.3, yoyo: true, repeat: 1, ease: "back.inOut(2)" }
+              );
+            }
+          }
+        });
+      });
     },
-    opacity: 0,
-    y: 60,
-    scale: 0.95,
-    duration: 1,
-    ease: "power3.out"
-  });
-
-  gsap.utils.toArray('.road-map-card').forEach((card, i) => {
-    const icon = card.querySelector('.card-icon');
-    gsap.from(card, {
-      scrollTrigger: {
-        trigger: card,
-        start: "top 90%",
-        // play only once (default)
-      },
-      opacity: 1,
-      y: 120,
-      scale: 0.7,
-      duration: 1.2,
-      delay: i * 0.15,
-      ease: "bounce.out",
-      onStart: () => {
-        if (icon) {
-          gsap.fromTo(icon,
-            { scale: 0.6, backgroundColor: "#111" },
-            { scale: 1.2, backgroundColor: "#ffd700", duration: 0.6, yoyo: true, repeat: 1, ease: "back.inOut(2)" }
-          );
-        }
-      }
-    });
+    // Mobile
+    "(max-width: 767px)": function() {
+      gsap.from(".part", {
+        scrollTrigger: {
+          trigger: ".part",
+          start: "top 92%",
+        },
+        opacity: 0,
+        y: 30,
+        scale: 0.98,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+      gsap.utils.toArray('.road-map-card').forEach((card, i) => {
+        const icon = card.querySelector('.card-icon');
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 97%",
+          },
+          opacity: 0,
+          y: 40,
+          scale: 0.93,
+          duration: 0.5,
+          delay: i * 0.05,
+          ease: "power2.out",
+          onStart: () => {
+            if (icon) {
+              gsap.fromTo(icon,
+                { scale: 0.7, backgroundColor: "#111" },
+                { scale: 1.05, backgroundColor: "#ffd700", duration: 0.2, yoyo: true, repeat: 1, ease: "back.inOut(2)" }
+              );
+            }
+          }
+        });
+      });
+    }
   });
 
   // ===================== ABOUT IMAGE & HEADING =====================
@@ -147,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     opacity: 0,
     scale: 0.7,
-    duration: 1
+    duration: 0.6
   });
   gsap.from(".about-heading", {
     scrollTrigger: {
@@ -155,8 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 85%",
     },
     opacity: 0,
-    y: 40,
-    duration: 1
+    y: 30,
+    duration: 0.6
   });
   gsap.from(".about-intro", {
     scrollTrigger: {
@@ -164,8 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 90%",
     },
     opacity: 0,
-    y: 40,
-    duration: 1
+    y: 30,
+    duration: 0.6
   });
 
   // ===================== SERVICES SECTION =====================
@@ -175,8 +214,8 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 90%",
     },
     opacity: 0,
-    y: 40,
-    duration: 1
+    y: 30,
+    duration: 0.5
   });
   gsap.utils.toArray('.neon-card').forEach((card, i) => {
     gsap.from(card, {
@@ -185,10 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
         start: "top 92%",
       },
       opacity: 0,
-      y: 100,
-      scale: 0.8,
-      duration: 1,
-      delay: i * 0.1,
+      y: 60,
+      scale: 0.9,
+      duration: 0.5,
+      delay: i * 0.05,
       ease: "back.out(1.5)"
     });
   });
@@ -200,15 +239,15 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 90%",
     },
     opacity: 0,
-    y: 40,
-    duration: 1
+    y: 30,
+    duration: 0.5
   });
   gsap.utils.toArray('.skill-card').forEach((card, i) => {
     ScrollTrigger.create({
       trigger: card,
       start: "top 95%",
       onEnter: () => {
-        gsap.fromTo(card, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, delay: i * 0.08, ease: "back.out(1.7)" });
+        gsap.fromTo(card, { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.5, delay: i * 0.05, ease: "back.out(1.7)" });
         // Animate circular progress
         const percentage = parseInt(card.dataset.percentage);
         const circle = card.querySelector("circle.progress");
@@ -226,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               clearInterval(interval);
             }
-          }, 15);
+          }, 10);
         }
       }
     });
@@ -239,8 +278,8 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 90%",
     },
     opacity: 0,
-    y: 40,
-    duration: 1
+    y: 30,
+    duration: 0.5
   });
   gsap.utils.toArray('.project-card').forEach((card, i) => {
     gsap.from(card, {
@@ -249,10 +288,10 @@ document.addEventListener("DOMContentLoaded", () => {
         start: "top 92%",
       },
       opacity: 0,
-      y: 80,
-      scale: 0.85,
-      duration: 1,
-      delay: i * 0.1,
+      y: 50,
+      scale: 0.93,
+      duration: 0.5,
+      delay: i * 0.05,
       ease: "expo.out"
     });
   });
@@ -264,8 +303,8 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 90%",
     },
     opacity: 0,
-    y: 60,
-    duration: 1
+    y: 40,
+    duration: 0.5
   });
 
   // ===================== FOOTER =====================
@@ -275,8 +314,8 @@ document.addEventListener("DOMContentLoaded", () => {
       start: "top 100%",
     },
     opacity: 0,
-    y: 30,
-    duration: 1
+    y: 20,
+    duration: 0.5
   });
 
   // ===================== PROJECT MODAL FUNCTIONS =====================
@@ -304,12 +343,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("modalDescription").textContent = p.description;
     document.getElementById("modalGithub").href = p.github;
     document.getElementById("projectModal").style.display = "block";
-    gsap.from("#projectModal .modal-content", { y: 50, opacity: 0, duration: 0.5, ease: "back.out(1.7)" });
+    gsap.from("#projectModal .modal-content", { y: 30, opacity: 0, duration: 0.3, ease: "back.out(1.7)" });
   };
 
   window.closeModal = function() {
     gsap.to("#projectModal .modal-content", {
-      y: 50, opacity: 0, duration: 0.3, ease: "power1.in",
+      y: 30, opacity: 0, duration: 0.2, ease: "power1.in",
       onComplete: () => { document.getElementById("projectModal").style.display = "none"; }
     });
   };
@@ -370,22 +409,22 @@ document.addEventListener("DOMContentLoaded", () => {
       xPercent: -50,
       repeat: -1,
       ease: "power4.inOut",
-      duration: 15
+      duration: 10
     });
     marqueeAnim.timeScale(1);
     window.addEventListener('wheel', function (e) {
       if (e.deltaY > 0) {
         marqueeAnim.timeScale(1);
-        gsap.to(".marque i", { rotate: 180, duration: 0.5, ease: "power2.out" });
+        gsap.to(".marque i", { rotate: 180, duration: 0.3, ease: "power2.out" });
       } else {
         marqueeAnim.timeScale(-1);
-        gsap.to(".marque i", { rotate: 0, duration: 0.5, ease: "power2.out" });
+        gsap.to(".marque i", { rotate: 0, duration: 0.3, ease: "power2.out" });
       }
     });
   }
   initMarqueeScroll();
 
   // ===================== INFINITE ANIMATIONS =====================
-  gsap.to(".flare", { rotation: 360, duration: 6, repeat: -1, ease: "linear" });
-  gsap.to(".ring1", { rotation: 360, duration: 10, repeat: -1, ease: "none" });
+  gsap.to(".flare", { rotation: 360, duration: 4, repeat: -1, ease: "linear" });
+  gsap.to(".ring1", { rotation: 360, duration: 6, repeat: -1, ease: "none" });
 });
