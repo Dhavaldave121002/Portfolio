@@ -706,8 +706,8 @@ main::after {
 
   .about-intro {
     font-size: 0.95rem;
-    line-height: 2.5;
-    text-align: justify;
+    line-height: 1.5;
+    text-align: center;
   }
 
   .map {
