@@ -783,7 +783,7 @@ main::after {
   }
 
   .about-img-wrapper {
-    max-width: 250px;
+    max-width: 350px;
   }
 }
 
@@ -816,7 +816,7 @@ main::after {
   }
 
   .about-img-wrapper {
-    max-width: 200px;
+    max-width: 250px;
   }
 }
 
