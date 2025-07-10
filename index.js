@@ -185,11 +185,16 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.to(".part", {
           scrollTrigger: {
             trigger: ".part",
-            start: "top 80%",
+            start: "top 85%",
+            // end: "top 30%",
+            toggleActions: "play none none none",
+            markers: false
           },
-          opacity: 0,
-          scale: 0.8,
-          duration: 0.4
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out"
         });
 
         // Other mobile animations...
@@ -198,7 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
           gsap.from(card, {
             scrollTrigger: {
               trigger: card,
-              start: "top 50%",
+              start: "top 90%",
+              end:"top 50%"
             },
             opacity: 0,
             x: 40,
@@ -225,14 +231,14 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.from(".part", {
           scrollTrigger: {
             trigger: ".part",
-            start: "top 80%",
+            start: "top 85%",
           },
           opacity: 0,
-          scale: 0.8,
-          duration: 0.4
+          y: 60,
+          scale: 0.97,
+          duration: 0.5,
+          ease: "power3.out"
         });
-
-
 
         // Add other desktop-specific animations here...
       }
