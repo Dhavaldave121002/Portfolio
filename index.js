@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       opacity: 0,
       y: 40,
-      duration: 0.3
+      duration: 0.1
     });
 
     // Roadmap cards
