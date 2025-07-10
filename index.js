@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.to(card, {
       scrollTrigger: {
         trigger: card,
-        start: "top 92%",
+        start: "top 20%",
         toggleActions: "play none none none",
         once: true
       },
