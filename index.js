@@ -95,20 +95,37 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- SCROLLTRIGGER ANIMATIONS (Responsive) ---
   ScrollTrigger.matchMedia({
     // Desktop/tablet
-    "(min-width: 601px)": function() {
-      gsap.from(".about-img-wrapper", {
-        scrollTrigger: { trigger: ".about-section", start: "top 80%", end: "bottom 20%", scrub: true },
-        x: -100, opacity: 0, duration: 1
-      });
-    },
-    // Mobile
-    "(max-width: 600px)": function() {
-      gsap.from(".about-img-wrapper", {
-        scrollTrigger: { trigger: ".about-section", start: "top 90%", end: "bottom 10%", scrub: true },
-        y: 50, opacity: 0, duration: 1
-      });
-    }
-  });
+    
+      // Desktop/tablet
+      "(min-width: 601px)": function() {
+        gsap.from(".about-img-wrapper", {
+          scrollTrigger: {
+            trigger: ".about-section",
+            start: "top 80%",
+            end: "bottom 20%",
+            scrub: true,
+          },
+          x: -100,
+          opacity: 0,
+          duration: 1,
+        });
+      },
+      // Mobile
+      "(max-width: 600px)": function() {
+        gsap.from(".about-img-wrapper", {
+          scrollTrigger: {
+            trigger: ".about-section",
+            start: "top 90%",
+            end: "bottom 10%",
+            scrub: true,
+          },
+          y: 50, // Animate vertically instead
+          opacity: 0,
+          duration: 1,
+        });
+      }
+    });
+    
 
   // More scroll animations (as in your code)
   // ... (repeat for other selectors as needed)
