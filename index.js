@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
           duration: 0.8,
           ease: "power2.out",
           stagger: 0.15 // Stagger effect for each card
-      }, "start+=1.5") // Starts 1.5 seconds after the "start" label of the mainTimeline
+      }, "start") // Starts 1.5 seconds after the "start" label of the mainTimeline
       .to(".tog", {
         x: 0,
         opacity: 1,
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: "power1.inOut",
           });
         },
-      }, "start+=2");
+      }, "start");
   
     // --- TYPED.JS ---
     new Typed("#typed-skills", {
