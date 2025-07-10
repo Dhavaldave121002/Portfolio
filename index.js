@@ -201,21 +201,30 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     },
     // Mobile
-    "(max-width: 767px)": function() {
-      gsap.from(".part", {
-        scrollTrigger: {
-          trigger: ".part",
-          start: "top 70%",  // Triggers when top of element reaches 90% of viewport
-          end: "top 50%",    // Animation completes by this point
-          toggleActions: "play none none none", // Only play once
-          markers: true ,   // Set to true for debugging if needed
-        },
-        opacity: 0,         // Changed from 1 to 0 for fade-in effect
-        x: -30,
-        scale: 0.98,
-        duration: 0.1,      // Added duration (0.1s is too fast to notice)
-        ease: "power2.out"
-      });
+    ScrollTrigger.matchMedia({
+      "(max-width: 767px)": function() {
+        // First ensure the element is initially hidden
+        gsap.set(".part", { opacity: 0, x: -30, scale: 0.98 });
+        
+        // Then create the animation
+        gsap.to(".part", {
+          scrollTrigger: {
+            trigger: ".part",
+            start: "top 90%",    // When top of element hits 90% of viewport
+            end: "top 30%",      // Animation completes by 30% of viewport
+            toggleActions: "play none none none",
+            markers: true,       // Visual debugging - remove in production
+            id: "part-animation" // Unique ID for debugging
+          },
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.3,         // More reasonable duration than 0.1s
+          ease: "power2.out",
+          stagger: 0.05          // If multiple elements, stagger them slightly
+        });
+      }
+    });
       gsap.utils.toArray('.road-map-card').forEach((card, i) => {
         const icon = card.querySelector('.card-icon');
         gsap.from(card, {
