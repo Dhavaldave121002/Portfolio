@@ -208,12 +208,12 @@ document.addEventListener("DOMContentLoaded", () => {
           start: "top 90%",  // Triggers when top of element reaches 90% of viewport
           end: "top 50%",    // Animation completes by this point
           toggleActions: "play none none none", // Only play once
-          markers: false     // Set to true for debugging if needed
+          markers: true     // Set to true for debugging if needed
         },
         opacity: 0,         // Changed from 1 to 0 for fade-in effect
         x: -30,
         scale: 0.98,
-        duration: 0.4,      // Added duration (0.1s is too fast to notice)
+        duration: 0.1,      // Added duration (0.1s is too fast to notice)
         ease: "power2.out"
       });
       gsap.utils.toArray('.road-map-card').forEach((card, i) => {
