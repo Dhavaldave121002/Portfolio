@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
     gsap.to(togButton, { scale: 0.9, duration: 0.2, yoyo: true, repeat: 1, ease: "power1.inOut" });
     gsap.timeline()
-      .from(".offcanvas-body .contact h3", { x: -100, opacity: 0, duration: 1.5, ease: "power1.out" })
+      .from(".offcanvas-body .contact h3", { x: -100, opacity: 0, duration: 1, ease: "power1.out" })
       .from(".offcanvas-body .social-icon i", { x: -100, opacity: 0, duration: 1, ease: "power1.out", stagger: 0.1 }, "-=0.5");
     offcanvas.style.display = "block";
   });
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
   gsap.from(".about-img-wrapper img", {
     scrollTrigger: {
       trigger: ".about-section",
-      start: "top 85%",
+      start: "top 50%",
       toggleActions: "play none none none",
       once: true
     },
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       y: 0,
       duration: 0.7,
       ease: "power2.out",
-      delay: i * 0.1
+      // delay: i * 0.1
     });
   });
   // About Points
@@ -259,8 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- HERO TEXT ANIMATIONS ---
   gsap.from(".hero h1", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.5 });
-  gsap.from(".hero p", { duration: 1, delay: 1, y: 30, opacity: 0, ease: "power2.out" });
-  gsap.from(".btn", { duration: 1, delay: 1.5, scale: 0.8, opacity: 0, ease: "back.out(1.7)" });
+  gsap.from(".hero p", { duration: 1, y: 30, opacity: 0, ease: "power2.out" });
+  gsap.from(".btn", { duration: 1, scale: 0.8, opacity: 0, ease: "back.out(1.7)" });
 
   // --- PROJECT MODAL FUNCTIONS ---
   const projects = {
