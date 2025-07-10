@@ -227,17 +227,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Desktop/tablet animations
       "(min-width: 768px)": function() {
-        gsap.from(".part", {
-          scrollTrigger: {
-            trigger: ".part",
-            start: "top 85%",
-          },
-          opacity: 0,
-          y: 60,
-          scale: 0.97,
-          duration: 0.5,
-          ease: "power3.out"
-        });
+        // gsap.from(".part", {
+        //   scrollTrigger: {
+        //     trigger: ".part",
+        //     start: "top 85%",
+        //   },
+        //   opacity: 0,
+        //   y: 60,
+        //   scale: 0.97,
+        //   duration: 0.5,
+        //   ease: "power3.out"
+        // });
 
         // Add other desktop-specific animations here...
       }
