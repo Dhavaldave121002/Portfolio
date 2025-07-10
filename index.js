@@ -85,53 +85,51 @@ document.addEventListener("DOMContentLoaded", () => {
     offcanvas.style.display = "block";
   });
 
-  // === SMOOTH ANIMATIONS FOR ALL SECTIONS (RESPONSIVE) ===
-  ScrollTrigger.matchMedia({
-    // Desktop/tablet
-    "(min-width: 601px)": function() {
-      // About Image
-      gsap.from(".about-img-wrapper img", {
-        scrollTrigger: { trigger: ".about-section", start: "top 85%", toggleActions: "play none none reverse" },
-        x: -60, opacity: 0, duration: 1.2, ease: "power2.out"
-      });
-      // About Text
-      gsap.from(".about-section .part", {
-        scrollTrigger: { trigger: ".about-section", start: "top 90%", toggleActions: "play none none reverse" },
-        y: 40, opacity: 0, duration: 1, ease: "power2.out"
-      });
-      // Roadmap Cards
-      gsap.from(".roadmap-grid .road-map-card", {
-        scrollTrigger: { trigger: ".roadmap-grid", start: "top 90%", toggleActions: "play none none reverse" },
-        y: 60, opacity: 0, duration: 1, ease: "power2.out", stagger: 0.13
-      });
-      // About Points
-      gsap.from(".about-points p", {
-        scrollTrigger: { trigger: ".about-points", start: "top 95%", toggleActions: "play none none reverse" },
-        y: 30, opacity: 0, duration: 0.7, ease: "power2.out", stagger: 0.08
-      });
+  // === ABOUT SECTION ANIMATIONS (NO SCRUB, SMOOTH) ===
+  // About Image
+  gsap.from(".about-img-wrapper img", {
+    scrollTrigger: {
+      trigger: ".about-section",
+      start: "top 85%",
+      toggleActions: "play none none reverse"
     },
-    // Mobile
-    "(max-width: 600px)": function() {
-      gsap.from(".about-img-wrapper img", {
-        scrollTrigger: { trigger: ".about-section", start: "top 95%", toggleActions: "play none none reverse" },
-        y: 40, opacity: 0, duration: 1, ease: "power2.out"
-      });
-      gsap.from(".about-section .part", {
-        scrollTrigger: { trigger: ".about-section", start: "top 98%", toggleActions: "play none none reverse" },
-        y: 30, opacity: 0, duration: 0.8, ease: "power2.out"
-      });
-      gsap.from(".roadmap-grid .road-map-card", {
-        scrollTrigger: { trigger: ".roadmap-grid", start: "top 98%", toggleActions: "play none none reverse" },
-        y: 40, opacity: 0, duration: 0.8, ease: "power2.out", stagger: 0.1
-      });
-      gsap.from(".about-points p", {
-        scrollTrigger: { trigger: ".about-points", start: "top 99%", toggleActions: "play none none reverse" },
-        y: 20, opacity: 0, duration: 0.5, ease: "power2.out", stagger: 0.07
-      });
-    }
+    x: -60, opacity: 0, duration: 1.2, ease: "power2.out"
+  });
+  // About Text
+  gsap.from(".about-section .part", {
+    scrollTrigger: {
+      trigger: ".about-section",
+      start: "top 90%",
+      toggleActions: "play none none reverse"
+    },
+    y: 40, opacity: 0, duration: 1, ease: "power2.out"
+  });
+  // Roadmap Cards (staggered)
+  gsap.utils.toArray('.road-map-card').forEach((card, i) => {
+    gsap.to(card, {
+      scrollTrigger: {
+        trigger: card,
+        start: "top 92%",
+        toggleActions: "play none none reverse"
+      },
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: "power2.out",
+      delay: i * 0.13
+    });
+  });
+  // About Points
+  gsap.from(".about-points p", {
+    scrollTrigger: {
+      trigger: ".about-points",
+      start: "top 95%",
+      toggleActions: "play none none reverse"
+    },
+    y: 30, opacity: 0, duration: 0.7, ease: "power2.out", stagger: 0.08
   });
 
-  // === GENERIC SECTION ANIMATIONS ===
+  // === GENERIC SECTION ANIMATIONS (NO SCRUB) ===
   gsap.utils.toArray("section").forEach(section => {
     const header = section.querySelector('h2, h1');
     if (header) {
