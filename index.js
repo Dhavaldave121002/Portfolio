@@ -33,13 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .from(".sec1", { x: -100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start")
       .from(".sec2 img", { x: 100, opacity: 0, duration: 1.5, ease: "power2.out" }, "start")
       // NEW: Roadmap cards animation added to main timeline
-      .from(".road-map-card", {
-          opacity: 0,
-          y: 50, // Starts 50px below and moves up
-          duration: 0.8,
-          ease: "power2.out",
-          stagger: 0.15 // Stagger effect for each card
-      }, "start") // Starts 1.5 seconds after the "start" label of the mainTimeline
+      // .from(".road-map-card", {
+      //     opacity: 0,
+      //     y: 50, // Starts 50px below and moves up
+      //     duration: 0.8,
+      //     ease: "power2.out",
+      //     stagger: 0.15 // Stagger effect for each card
+      // }, "start") // Starts 1.5 seconds after the "start" label of the mainTimeline
       .to(".tog", {
         x: 0,
         opacity: 1,
