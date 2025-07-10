@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
           start: "top 90%",  // Triggers when top of element reaches 90% of viewport
           end: "top 50%",    // Animation completes by this point
           toggleActions: "play none none none", // Only play once
-          markers: true     // Set to true for debugging if needed
+          markers: true ,   // Set to true for debugging if needed
         },
         opacity: 0,         // Changed from 1 to 0 for fade-in effect
         x: -30,
