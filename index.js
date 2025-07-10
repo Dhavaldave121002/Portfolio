@@ -205,12 +205,12 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.from(".part", {
         scrollTrigger: {
           trigger: ".part",
-          start: "top 95%",
+          start: "top 100%",
         },
-        opacity: 0,
+        opacity: 1,
         x: -30,
         scale: 0.98,
-        duration: 0.3,
+        // duration: 0.1,
         ease: "power2.out"
       });
       gsap.utils.toArray('.road-map-card').forEach((card, i) => {
