@@ -322,8 +322,8 @@ togButton.addEventListener("click", () => {
     gsap.from(anim.selector, {
       scrollTrigger: {
         trigger: anim.trigger,
-        start: "top 0%",
-        end: "bottom 20%",
+        start: "top 100%",
+        end: "bottom 0%",
         scrub: true,
         markers: true, // Set to true for debugging
       },
