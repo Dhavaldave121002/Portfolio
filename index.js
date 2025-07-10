@@ -129,16 +129,28 @@ document.addEventListener("DOMContentLoaded", () => {
       duration: 0.1
     });
 
+    // gsap.from(".part", {
+    //   scrollTrigger: {
+    //     trigger: ".part",
+    //     start: isMobile ? "top 95%" : "top 75%",
+    //   },
+    //   opacity: 0,
+    //   y: 40,
+    //   duration: 0.1
+    // });
     gsap.from(".part", {
       scrollTrigger: {
         trigger: ".part",
-        start: isMobile ? "top 85%" : "top 75%",
+        start: "top bottom", // Triggers when top of element hits bottom of viewport
+        end: "bottom top",   // Ends when bottom of element hits top of viewport
+        toggleActions: "play none none none", // Only plays once on enter
+        markers: false // Set to true for debugging if needed
       },
       opacity: 0,
       y: 40,
-      duration: 0.1
+      duration: 0.3, // Keep this short but not too abrupt (0.1 might be too fast)
+      ease: "power1.out" // Smoother easing for immediate feel
     });
-
     // Roadmap cards
     gsap.utils.toArray('.road-map-card').forEach((card, i) => {
       gsap.from(card, {
