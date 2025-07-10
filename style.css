@@ -742,6 +742,8 @@ main::after {
   .about-intro {
     font-size: 1rem;
     line-height: 1;
+    width: 100%;
+    margin: 0 auto;
     text-align: center;
     /* margin: 0 -50px; */
   }
