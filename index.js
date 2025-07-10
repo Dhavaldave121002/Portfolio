@@ -244,21 +244,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     // --- MARQUEE ---
-    function initMarqueeScroll() {
-      const marqueeTrack = document.querySelector('.marquee-track');
-      if (!marqueeTrack) return;
-      const marqueeAnim = gsap.to(marqueeTrack, { xPercent: -50, repeat: -1, ease: "power4.inOut", duration: 15 });
-      marqueeAnim.timeScale(1);
-      window.addEventListener('wheel', function (e) {
-        if (e.deltaY > 0) {
-          marqueeAnim.timeScale(1);
-          gsap.to(".marquee i", { rotate: 180, duration: 0.5 });
-        } else {
-          marqueeAnim.timeScale(-1);
-          gsap.to(".marquee i", { rotate: 0, duration: 0.5 });
-        }
-      });
-    }
+  function initMarqueeScroll() {
+    const marqueeTrack = document.querySelector('.marquee-track');
+    if (!marqueeTrack) return;
+  
+    // Animate marquee
+    const marqueeAnim = gsap.to(marqueeTrack, {
+      xPercent: -50,
+      repeat: -1,
+      ease: "power4.inOut",
+      duration: 15
+    });
+  
+    marqueeAnim.timeScale(1); // default scroll direction
+  
+    // Scroll direction handler
+    window.addEventListener('wheel', function (e) {
+      if (e.deltaY > 0) {
+        // Scrolling down
+        marqueeAnim.timeScale(1);
+        gsap.to(".marque i", { rotate: 180, duration: 0.5, ease: "power2.out" });
+      } else {
+        // Scrolling up
+        marqueeAnim.timeScale(-1);
+        gsap.to(".marque i", { rotate: 0, duration: 0.5, ease: "power2.out" });
+      }
+    });
+  }
+  
+  
     initMarqueeScroll();
   
     // --- INFINITE ANIMATIONS ---
