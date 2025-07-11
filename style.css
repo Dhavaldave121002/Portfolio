@@ -1362,11 +1362,13 @@ main::after {
   .tog {
     height: 40px;
     width: 40px;
-    left: -15px;
+    left: -18px;
+    border-radius: 20%;
+
   }
 
   .tog i {
-    font-size: 20px;
+    font-size: 25px;
   }
 
   .social-icon a i {
