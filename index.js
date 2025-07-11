@@ -3,50 +3,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
   const debounce = (func, wait = 100) => {
     let timeout;
-    return (...args) => {
+    return function (...args) {
       clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
   };
 
-  // ===================== INIT TYPED SKILLS =====================
-  const initTypedSkills = () => {
-    const elems = document.querySelectorAll(".typed-skills");
-    if (!elems.length || typeof Typed === "undefined") return;
-    elems.forEach(el => {
-      const items = JSON.parse(el.getAttribute("data-typed-items") || "[]");
-      if (items.length) {
-        new Typed(el, {
-          strings: items,
-          typeSpeed: 50,
+  // ===================== TYPED SKILLS =====================
+  function initTypedSkills() {
+    if (window.Typed) {
+      try {
+        new Typed("#typed-skills", {
+          strings: [
+            "Web Developer",
+            "App Developer",
+            "Frontend Developer",
+            "UI/UX Designer"
+          ],
+          typeSpeed: 60,
           backSpeed: 30,
-          backDelay: 1500,
-          startDelay: 500,
+          backDelay: 700,
           loop: true,
-          showCursor: true,
-          cursorChar: "|",
-          smartBackspace: true
         });
+      } catch (e) {
+        console.error("Typed.js initialization error:", e);
       }
-    });
-  };
+    }
+  }
 
   // ===================== GSAP SETUP =====================
-  if (!isMobile()) {
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && !isMobile()) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
   // ===================== PRELOADER =====================
   const preloader = document.querySelector(".preloader");
-  const runInit = () => {
+  let mainTimeline;
+
+  function runInit() {
     if (preloader) preloader.style.display = "none";
     document.body.style.overflow = "auto";
     if (!isMobile() && mainTimeline) mainTimeline.play();
     initTypedSkills();
-  };
+  }
 
-  let mainTimeline;
-  if (!isMobile()) {
+  if (!isMobile() && typeof gsap !== "undefined") {
     mainTimeline = gsap.timeline({ paused: true });
     gsap.set(".tog", { opacity: 0, x: -30, scale: 0.8, pointerEvents: "none" });
     mainTimeline
@@ -63,11 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .from(".btn", { scale: 0.8, opacity: 0, duration: 0.4, ease: "back.out(1.7)", delay: 0.5 }, "start");
   }
 
-  if (preloader) {
-    const timeline = gsap.timeline({
-      onComplete: runInit
-    });
-
+  if (preloader && typeof gsap !== "undefined") {
+    const timeline = gsap.timeline({ onComplete: runInit });
     if (isMobile()) {
       timeline
         .set(".preloader", { opacity: 1, display: "flex" })
@@ -87,6 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .from(".loader-title", { y: 40, opacity: 0, duration: 0.4, ease: "power2.out" }, "-=0.3")
         .to(".preloader", { opacity: 0, duration: 0.5, delay: 0.1, ease: "power4.out" });
     }
+  } else {
+    runInit();
   }
 
   // ===================== NAVIGATION MENU =====================
@@ -107,12 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
       nav.classList.toggle("active");
       document.body.style.overflow = nav.classList.contains("active") && isMobile() ? "hidden" : "auto";
 
-      if (!isMobile() && nav.classList.contains("active")) {
+      if (!isMobile() && nav.classList.contains("active") && typeof gsap !== "undefined") {
         gsap.fromTo(".nav .nav-item", { opacity: 0, x: 100 }, {
           opacity: 1, x: 0, stagger: 0.08, duration: 0.15, ease: "power2.out"
         });
         document.body.style.overflow = "hidden";
-      } else if (!isMobile()) {
+      } else if (!isMobile() && typeof gsap !== "undefined") {
         gsap.to(".nav .nav-item", { opacity: 0, x: -50, duration: 0.15 });
       }
     });
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
-        if (isMobile() && nav.classList.contains("active")) {
+        if (isMobile() && nav && nav.classList.contains("active")) {
           nav.classList.remove("active");
           document.body.style.overflow = "auto";
         }
@@ -143,8 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===================== SCROLL & MOBILE ANIMATIONS =====================
-  const setupScroll = () => {
+  function setupScroll() {
+    if (typeof gsap === "undefined") return;
+
     if (isMobile()) {
+      // Intersection Observer for mobile reveal
       const ioAnimate = (els, { x = 0, y = 30, scale = 1, duration = 0.5, delay = 0 } = {}) => {
         const obs = new IntersectionObserver(entries => {
           entries.forEach(e => {
@@ -198,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
         obs.observe(card);
       });
     } else {
+      // Desktop GSAP/ScrollTrigger animations
       gsap.utils.toArray(".road-map-card").forEach((card, i) => {
         const icon = card.querySelector(".card-icon");
         gsap.from(card, {
@@ -258,11 +262,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     }
-  };
-
+  }
   setupScroll();
   window.addEventListener("resize", debounce(() => {
-    if (!isMobile()) ScrollTrigger.refresh();
+    if (typeof ScrollTrigger !== "undefined" && !isMobile()) ScrollTrigger.refresh();
     setupScroll();
   }));
 
@@ -273,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
     BlazeWeb: { title: "Stock Management", description: "...", github: "https://github.com/..." }
   };
 
-  const openModal = key => {
+  window.openModal = function(key) {
     const p = projects[key];
     const modal = document.getElementById("projectModal");
     if (p && modal) {
@@ -281,17 +284,16 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("modalDescription").textContent = p.description;
       document.getElementById("modalGithub").href = p.github;
       modal.style.display = "block";
-      if (!isMobile()) {
+      if (!isMobile() && typeof gsap !== "undefined") {
         gsap.from("#projectModal .modal-content", { y: 20, opacity: 0, duration: 0.2, ease: "back.out(1.7)" });
       }
     }
   };
-  window.openModal = openModal;
 
-  window.closeModal = () => {
+  window.closeModal = function() {
     const modal = document.getElementById("projectModal");
     if (!modal) return;
-    if (isMobile()) {
+    if (isMobile() || typeof gsap === "undefined") {
       modal.style.display = "none";
     } else {
       gsap.to("#projectModal .modal-content", { y: 20, opacity: 0, duration: 0.15, ease: "power1.in", onComplete: () => {
@@ -308,11 +310,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===================== CONTACT FORM =====================
-  const openGmailWithMessage = (name, email, phone, message) => {
+  function openGmailWithMessage(name, email, phone, message) {
     const subject = encodeURIComponent("Contact From Portfolio");
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`, "_blank");
-  };
+  }
 
   document.querySelector(".send-btn")?.addEventListener("click", e => {
     e.preventDefault();
@@ -345,30 +347,33 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===================== MARQUEE & INFINITE ANIM =====================
-  const initMarquee = () => {
+  function initMarquee() {
     const track = document.querySelector(".marquee-track");
     if (!track) return;
     if (isMobile()) {
       track.style.animation = "marquee 20s linear infinite";
-      const style = document.createElement("style");
-      style.textContent = `@keyframes marquee { 0% {transform: translateX(0);}100% {transform: translateX(-50%);} }`;
-      document.head.appendChild(style);
-    } else {
+      if (!document.getElementById("marquee-style")) {
+        const style = document.createElement("style");
+        style.id = "marquee-style";
+        style.textContent = `@keyframes marquee { 0% {transform: translateX(0);}100% {transform: translateX(-50%);} }`;
+        document.head.appendChild(style);
+      }
+    } else if (typeof gsap !== "undefined") {
       const anim = gsap.to(track, { xPercent: -50, repeat: -1, ease: "none", duration: 20 });
       window.addEventListener("wheel", e => {
         gsap.to(anim, { timeScale: e.deltaY > 0 ? 1 : -1, duration: 0.5 });
         gsap.to(".marque i", { rotate: e.deltaY > 0 ? 180 : 0, duration: 0.2 });
       });
     }
-  };
+  }
   initMarquee();
 
-  if (!isMobile()) {
+  if (!isMobile() && typeof gsap !== "undefined") {
     gsap.to(".flare", { rotation: 360, duration: 4, repeat: -1, ease: "linear" });
     gsap.to(".ring1", { rotation: 360, duration: 6, repeat: -1, ease: "none" });
     window.addEventListener("beforeunload", () => {
       gsap.globalTimeline.getChildren().forEach(a => a.kill());
-      ScrollTrigger.getAll().forEach(st => st.kill());
+      if (typeof ScrollTrigger !== "undefined") ScrollTrigger.getAll().forEach(st => st.kill());
     });
   }
 
