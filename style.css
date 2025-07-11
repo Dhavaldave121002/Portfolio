@@ -247,6 +247,7 @@ header {
 }
 .social-icon a {
   text-decoration: none;
+  color: inherit; /* Optional: keeps the icon color consistent */
 }
 
 .tog i {
