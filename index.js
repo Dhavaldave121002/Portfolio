@@ -1,538 +1,388 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Register plugins
+document.addEventListener("DOMContentLoaded", function() {
+  // Check for required features
+  if (!('IntersectionObserver' in window) || !window.gsap) {
+    console.warn("Required features not supported - applying simplified animations");
+    applyFallbackAnimations();
+    return;
+  }
+
+  // Register GSAP plugins
   gsap.registerPlugin(ScrollTrigger);
 
   // ===================== PRELOADER =====================
   const preloader = document.querySelector(".preloader");
-  const preloaderTL = gsap.timeline();
-  
-  preloaderTL
-    .from(".ring1", { 
-      scale: 0, 
-      rotation: 0, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "back.out(1.7)" 
-    })
-    .from(".ring2", { 
-      scale: 0, 
-      rotation: 180, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "back.out(1.7)" 
-    }, "-=0.2")
-    .from(".ring3", { 
-      scale: 0, 
-      rotation: -180, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "back.out(1.7)" 
-    }, "-=0.2")
-    .from(".core-logo", { 
-      scale: 0, 
-      rotateY: 360, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "elastic.out(1, 0.5)" 
-    }, "-=0.2")
-    .from(".flare", { 
-      scale: 0, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "power2.out" 
-    }, "-=0.4")
-    .from(".loader-title", { 
-      y: 40, 
-      opacity: 0, 
-      duration: 0.4, 
-      ease: "power2.out" 
-    }, "-=0.3")
-    .to(".preloader", {
+  if (preloader) {
+    const preloaderTL = gsap.timeline();
+    
+    preloaderTL
+      .from(".ring1", { 
+        scale: 0, 
+        rotation: 0, 
+        opacity: 0, 
+        duration: 0.6, 
+        ease: "back.out(1.7)" 
+      })
+      .from(".ring2", { 
+        scale: 0, 
+        rotation: 180, 
+        opacity: 0, 
+        duration: 0.6, 
+        ease: "back.out(1.7)" 
+      }, "-=0.25")
+      .from(".ring3", { 
+        scale: 0, 
+        rotation: -180, 
+        opacity: 0, 
+        duration: 0.6, 
+        ease: "back.out(1.7)" 
+      }, "-=0.25")
+      .from(".core-logo", { 
+        scale: 0, 
+        rotateY: 360, 
+        opacity: 0, 
+        duration: 0.7, 
+        ease: "elastic.out(1, 0.5)" 
+      }, "-=0.3")
+      .from(".flare", { 
+        scale: 0, 
+        opacity: 0, 
+        duration: 0.6, 
+        ease: "power3.out" 
+      }, "-=0.4")
+      .from(".loader-title", { 
+        y: 50, 
+        opacity: 0, 
+        duration: 0.5, 
+        ease: "power3.out" 
+      }, "-=0.3")
+      .to(".preloader", {
+        opacity: 0,
+        duration: 0.7,
+        delay: 0.2,
+        ease: "power4.out",
+        onComplete: () => {
+          preloader.style.display = "none";
+          document.body.style.overflow = "auto";
+          initMainAnimations();
+        }
+      });
+  }
+
+  // ===================== MAIN ANIMATIONS =====================
+  function initMainAnimations() {
+    // Header animations
+    gsap.from(".logo", {
+      y: -80,
+      opacity: 0,
+      duration: 0.8,
+      ease: "bounce.out",
+      scale: 0.5,
+      delay: 0.2
+    });
+
+    gsap.from(".logo img", {
+      rotation: 360,
+      transformOrigin: "center",
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.2
+    });
+
+    gsap.from(".nav .nav-item", {
+      x: 80,
+      opacity: 0,
+      duration: 0.3,
+      ease: "back.out",
+      scale: 0.8,
+      stagger: 0.08,
+      delay: 0.3
+    });
+
+    // Hero section animations
+    gsap.from(".hero h1", {
+      y: -60,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power3.out",
+      delay: 0.4
+    });
+
+    gsap.from(".hero p", {
+      y: 40,
+      opacity: 0,
+      duration: 0.7,
+      ease: "power2.out",
+      delay: 0.6
+    });
+
+    gsap.from(".hero-btn", {
+      scale: 0.8,
       opacity: 0,
       duration: 0.5,
-      delay: 0.1,
-      ease: "power4.out",
-      onComplete: () => {
-        preloader.style.display = "none";
-        document.body.style.overflow = "auto";
-        mainTimeline.play();
-      },
-    });
-
-  // ===================== MAIN TIMELINE (on load) =====================
-  const mainTimeline = gsap.timeline({ paused: true });
-  
-  // Initial setup
-  gsap.set(".tog", { 
-    opacity: 0, 
-    x: -30, 
-    scale: 0.8, 
-    pointerEvents: "none" 
-  });
-  
-  mainTimeline
-    .from(".logo", { 
-      y: -80, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "bounce.out", 
-      scale: 0.5 
-    }, "start")
-    .from(".logo img", { 
-      rotation: 360, 
-      transformOrigin: "center", 
-      duration: 0.5, 
-      ease: "power2.out" 
-    }, "start")
-    .from(".nav .nav-item", { 
-      x: 80, 
-      opacity: 0, 
-      duration: 0.2, 
-      ease: "back.out", 
-      scale: 0.5, 
-      stagger: 0.05 
-    }, "start")
-    .from(".sec1", { 
-      x: -100, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "power2.out" 
-    }, "start")
-    .from(".sec2 img", { 
-      x: 100, 
-      opacity: 0, 
-      duration: 0.5, 
-      ease: "power2.out" 
-    }, "start")
-    .to(".tog", {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 0.5,
       ease: "back.out(1.7)",
-      pointerEvents: "auto",
-      onStart: () => {
-        gsap.to(".tog", {
-          backgroundColor: "#e6b800",
-          duration: 0.2,
-          repeat: 1,
-          yoyo: true,
-          ease: "power1.inOut",
-        });
-      },
-    }, "start");
-
-  // Hero section animations
-  gsap.from(".hero h1", { 
-    duration: 0.6, 
-    y: -50, 
-    opacity: 0, 
-    ease: "power3.out", 
-    delay: 0.2 
-  });
-  
-  gsap.from(".hero p", { 
-    duration: 0.4, 
-    delay: 0.3, 
-    y: 30, 
-    opacity: 0, 
-    ease: "power2.out" 
-  });
-  
-  gsap.from(".btn", { 
-    duration: 0.4, 
-    delay: 0.5, 
-    scale: 0.8, 
-    opacity: 0, 
-    ease: "back.out(1.7)" 
-  });
-
-  // ===================== NAVIGATION: MOBILE TOGGLE =====================
-  const menuIcon = document.querySelector(".menu-icon");
-  const nav = document.querySelector(".main-nav");
-  
-  if (menuIcon && nav) {
-    menuIcon.addEventListener("click", () => {
-      nav.classList.toggle("active");
-      
-      if (nav.classList.contains("active")) {
-        gsap.fromTo(
-          ".nav .nav-item",
-          { opacity: 0, x: 100 },
-          { 
-            opacity: 1, 
-            x: 0, 
-            stagger: 0.08, 
-            duration: 0.15, 
-            ease: "power2.out" 
-          }
-        );
-        document.body.style.overflow = "hidden";
-      } else {
-        gsap.to(".nav .nav-item", { 
-          opacity: 0, 
-          x: -50, 
-          duration: 0.15 
-        });
-        document.body.style.overflow = "auto";
-      }
+      delay: 0.8
     });
+
+    // Initialize scroll animations
+    setupScrollAnimations();
+    setupInteractiveElements();
   }
 
-  // ===================== TOG BUTTON (OFFCANVAS) =====================
-  const togButton = document.querySelector(".tog");
-  
-  if (togButton) {
-    togButton.addEventListener("click", () => {
-      const offcanvas = document.querySelector(".offcanvas-body");
-      
-      gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
-      gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
-      
-      gsap.to(togButton, { 
-        scale: 0.9, 
-        duration: 0.1, 
-        yoyo: true, 
-        repeat: 1, 
-        ease: "power1.inOut" 
-      });
-      
-      gsap.timeline()
-        .from(".offcanvas-body .contact h3", { 
-          x: -100, 
-          opacity: 0, 
-          duration: 0.3, 
-          ease: "power1.out" 
-        })
-        .from(".offcanvas-body .social-icon i", { 
-          x: -100, 
-          opacity: 0, 
-          duration: 0.2, 
-          ease: "power1.out", 
-          stagger: 0.05 
-        }, "-=0.2");
-      
-      offcanvas.style.display = "block";
-    });
-  }
-
-  // ===================== TYPED.JS =====================
-  if (window.Typed) {
-    new Typed("#typed-skills", {
-      strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
-      typeSpeed: 60,
-      backSpeed: 30,
-      backDelay: 700,
-      loop: true,
-    });
-  }
-
-  // ===================== UNIVERSAL SCROLL ANIMATIONS =====================
-  // This function creates consistent AOS-like animations for all sections
+  // ===================== SCROLL ANIMATIONS =====================
   function setupScrollAnimations() {
-    // Animation settings for different elements
-    const animationSettings = {
-      // Section headings
-      "section-heading": {
-        from: { y: 40, opacity: 0 },
-        to: { y: 0, opacity: 1 },
-        duration: 0.6,
-        ease: "power2.out",
-        start: "top 85%"
-      },
-      
-      // Text content
-      "text-content": {
-        from: { y: 30, opacity: 0 },
-        to: { y: 0, opacity: 1 },
-        duration: 0.5,
-        ease: "power2.out",
+    // Section headings
+    gsap.utils.toArray(".section-heading").forEach((heading, i) => {
+      ScrollTrigger.create({
+        trigger: heading,
         start: "top 80%",
-        stagger: 0.05
-      },
-      
-      // Cards (services, projects, etc.)
-      "card": {
-        from: { y: 50, opacity: 0, scale: 0.95 },
-        to: { y: 0, opacity: 1, scale: 1 },
-        duration: 0.5,
-        ease: "back.out(1.5)",
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(heading,
+            { y: 60, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power3.out",
+              delay: i * 0.1
+            }
+          );
+        }
+      });
+    });
+
+    // About section
+    gsap.utils.toArray(".about-content").forEach((content, i) => {
+      ScrollTrigger.create({
+        trigger: content,
+        start: "top 75%",
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(content,
+            { y: 50, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.7,
+              ease: "power2.out",
+              delay: i * 0.15
+            }
+          );
+        }
+      });
+    });
+
+    // Cards (services, projects, etc.)
+    gsap.utils.toArray(".animated-card").forEach((card, i) => {
+      ScrollTrigger.create({
+        trigger: card,
         start: "top 85%",
-        stagger: 0.1
-      },
-      
-      // Images
-      "image": {
-        from: { opacity: 0, scale: 0.9 },
-        to: { opacity: 1, scale: 1 },
-        duration: 0.6,
-        ease: "power2.out",
-        start: "top 80%"
-      },
-      
-      // Special cards (with icon animations)
-      "special-card": {
-        from: { y: 60, opacity: 0, scale: 0.9 },
-        to: { y: 0, opacity: 1, scale: 1 },
-        duration: 0.5,
-        ease: "bounce.out",
-        start: "top 90%",
-        stagger: 0.06,
-        onEnter: (element) => {
-          const icon = element.querySelector('.card-icon');
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(card,
+            { y: 70, opacity: 0, scale: 0.95 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.6,
+              ease: "back.out(1.7)",
+              delay: i * 0.1
+            }
+          );
+
+          // Special icon animation if present
+          const icon = card.querySelector('.card-icon');
           if (icon) {
             gsap.fromTo(icon,
-              { scale: 0.6, backgroundColor: "#111" },
-              { 
-                scale: 1.15, 
-                backgroundColor: "#ffd700", 
-                duration: 0.2, 
-                yoyo: true, 
-                repeat: 1, 
-                ease: "back.inOut(2)" 
-              }
-            );
-          }
-        }
-      },
-      
-      // Skill cards with progress animation
-      "skill-card": {
-        from: { opacity: 0, rotateY: 90 },
-        to: { opacity: 1, rotateY: 0 },
-        duration: 0.4,
-        ease: "back.out(1.7)",
-        start: "top 95%",
-        stagger: 0.04,
-        onEnter: (element) => {
-          const percentage = parseInt(element.dataset.percentage);
-          const circle = element.querySelector("circle.progress");
-          const label = element.querySelector(".percentage");
-          
-          if (circle && label) {
-            let current = 0;
-            const circumference = 2 * Math.PI * parseFloat(circle.getAttribute("r"));
-            circle.style.strokeDasharray = circumference;
-            
-            const interval = setInterval(() => {
-              if (current <= percentage) {
-                label.textContent = current + "%";
-                const offset = circumference - (circumference * current) / 100;
-                circle.style.strokeDashoffset = offset;
-                current++;
-              } else {
-                clearInterval(interval);
-              }
-            }, 7);
-          }
-        }
-      }
-    };
-
-    // Apply animations based on element classes
-    for (const [className, settings] of Object.entries(animationSettings)) {
-      const elements = document.querySelectorAll(`.${className}`);
-      
-      elements.forEach((element, index) => {
-        ScrollTrigger.create({
-          trigger: element,
-          start: settings.start,
-          once: true,
-          onEnter: () => {
-            gsap.fromTo(element, 
-              settings.from, 
+              { scale: 0.7, opacity: 0 },
               {
-                ...settings.to,
-                duration: settings.duration,
-                ease: settings.ease,
-                delay: settings.stagger ? index * settings.stagger : 0,
-                onComplete: () => {
-                  if (settings.onEnter) {
-                    settings.onEnter(element);
-                  }
-                }
+                scale: 1,
+                opacity: 1,
+                duration: 0.4,
+                ease: "elastic.out(1, 0.5)",
+                delay: 0.3
               }
             );
           }
-        });
+        }
+      });
+    });
+
+    // Skill cards with progress animation
+    gsap.utils.toArray(".skill-card").forEach((card, i) => {
+      ScrollTrigger.create({
+        trigger: card,
+        start: "top 90%",
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(card,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out",
+              delay: i * 0.08,
+              onComplete: animateSkillProgress.bind(null, card)
+            }
+          );
+        }
+      });
+    });
+  }
+
+  // ===================== SKILL PROGRESS ANIMATION =====================
+  function animateSkillProgress(card) {
+    const percentage = parseInt(card.dataset.percentage) || 0;
+    const circle = card.querySelector("circle.progress");
+    const label = card.querySelector(".percentage");
+    
+    if (circle && label) {
+      const radius = circle.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      circle.style.strokeDasharray = circumference;
+      
+      gsap.to(card, {
+        progress: 0,
+        duration: 2,
+        ease: "power2.out",
+        onUpdate: function() {
+          const progress = this.progress() * percentage;
+          const offset = circumference - (circumference * progress) / 100;
+          circle.style.strokeDashoffset = offset;
+          label.textContent = Math.round(progress) + "%";
+        }
       });
     }
   }
 
-  // Initialize all scroll animations
-  setupScrollAnimations();
-
-  // ===================== PROJECT MODAL FUNCTIONS =====================
-  const projects = {
-    FireApp: {
-      title: "Champion Site",
-      description: "An all-in-one platform that lets users book services (like travel, appointments), order products (food, groceries, electronics), and manage stock market investments from a single dashboard.",
-      github: "https://github.com/Dhavaldave121002/Champions_Site_Flutter",
-    },
-    IgniteUI: {
-      title: "Travel App",
-      description: "A modern travel platform that lets users search destinations, explore tour packages, and book trips — all from a beautifully designed, responsive interface built for fast performance and smooth navigation.",
-      github: "https://github.com/Dhavaldave121002/Flutter_Travel_App",
-    },
-    BlazeWeb: {
-      title: "Stock Management",
-      description: "A lightweight, high-performance web app that allows users to track stock portfolios, view performance charts, and monitor investments in real-time — all within an animated, optimized dashboard interface.",
-      github: "https://github.com/Dhavaldave121002/Stock-Management",
-    },
-  };
-
-  window.openModal = function(projectKey) {
-    const p = projects[projectKey];
-    document.getElementById("modalTitle").textContent = p.title;
-    document.getElementById("modalDescription").textContent = p.description;
-    document.getElementById("modalGithub").href = p.github;
-    document.getElementById("projectModal").style.display = "block";
+  // ===================== INTERACTIVE ELEMENTS =====================
+  function setupInteractiveElements() {
+    // Mobile menu toggle
+    const menuIcon = document.querySelector(".menu-icon");
+    const nav = document.querySelector(".main-nav");
     
-    gsap.from("#projectModal .modal-content", { 
-      y: 20, 
-      opacity: 0, 
-      duration: 0.2, 
-      ease: "back.out(1.7)" 
-    });
-  };
+    if (menuIcon && nav) {
+      menuIcon.addEventListener("click", function() {
+        nav.classList.toggle("active");
+        
+        if (nav.classList.contains("active")) {
+          gsap.from(".nav .nav-item", {
+            x: 50,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.out",
+            stagger: 0.08
+          });
+          document.body.style.overflow = "hidden";
+        } else {
+          gsap.to(".nav .nav-item", {
+            x: -30,
+            opacity: 0,
+            duration: 0.2
+          });
+          document.body.style.overflow = "auto";
+        }
+      });
+    }
 
-  window.closeModal = function() {
-    gsap.to("#projectModal .modal-content", {
-      y: 20, 
-      opacity: 0, 
-      duration: 0.15, 
-      ease: "power1.in",
-      onComplete: () => { 
-        document.getElementById("projectModal").style.display = "none"; 
-      }
-    });
-  };
-
-  // ===================== CONTACT FORM & ICONS =====================
-  function openGmailWithMessage(name, email, phone, message) {
-    const subject = encodeURIComponent("Contact From Portfolio");
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`;
-    window.open(gmailUrl, "_blank");
-  }
-
-  document.querySelector(".send-btn").addEventListener("click", function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const message = document.getElementById("message").value.trim();
-    
-    if (!name || !email || !phone || !message) return;
-    
-    openGmailWithMessage(name, email, phone, message);
-  });
-
-  document.getElementById("emailLink").addEventListener("click", function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim() || "Visitor";
-    const email = document.getElementById("email").value.trim() || "No email";
-    const phone = document.getElementById("phone").value.trim() || "No phone";
-    const message = document.getElementById("message").value.trim() || "Hi, I'd like to connect with you.";
-    
-    openGmailWithMessage(name, email, phone, message);
-  });
-
-  document.getElementById("whatsappLink").addEventListener("click", function (e) {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim() || "Visitor";
-    const phone = "918511172099";
-    const text = encodeURIComponent(`Hi, I'm ${name}. I saw your portfolio and want to connect.`);
-    
-    window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
-  });
-
-  document.getElementById("callLink").addEventListener("click", function (e) {
-    e.preventDefault();
-    window.open("tel:8511172099");
-  });
-
-  // ===================== SMOOTH SCROLL FOR ANCHORS =====================
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const href = link.getAttribute("href");
-      const target = document.querySelector(href);
+    // Project modals
+    window.openModal = function(projectId) {
+      const modal = document.getElementById("projectModal");
+      if (!modal) return;
       
-      if (target) {
+      modal.style.display = "block";
+      gsap.from(".modal-content", {
+        y: 50,
+        opacity: 0,
+        duration: 0.4,
+        ease: "back.out(1.7)"
+      });
+    };
+
+    window.closeModal = function() {
+      const modal = document.getElementById("projectModal");
+      if (!modal) return;
+      
+      gsap.to(".modal-content", {
+        y: 50,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => {
+          modal.style.display = "none";
+        }
+      });
+    };
+
+    // Contact form
+    const contactForm = document.querySelector(".contact-form");
+    if (contactForm) {
+      contactForm.addEventListener("submit", function(e) {
         e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
-
-  // ===================== MARQUEE =====================
-  function initMarqueeScroll() {
-    const marqueeTrack = document.querySelector('.marquee-track');
-    if (!marqueeTrack) return;
-    
-    const marqueeAnim = gsap.to(marqueeTrack, {
-      xPercent: -50,
-      repeat: -1,
-      ease: "power4.inOut",
-      duration: 10
-    });
-    
-    marqueeAnim.timeScale(1);
-    
-    window.addEventListener('wheel', function (e) {
-      if (e.deltaY > 0) {
-        marqueeAnim.timeScale(1);
-        gsap.to(".marque i", { 
-          rotate: 180, 
-          duration: 0.2, 
-          ease: "power2.out" 
-        });
-      } else {
-        marqueeAnim.timeScale(-1);
-        gsap.to(".marque i", { 
-          rotate: 0, 
-          duration: 0.2, 
-          ease: "power2.out" 
-        });
-      }
-    });
+        // Form submission logic here
+      });
+    }
   }
-  
-  initMarqueeScroll();
 
-  // ===================== INFINITE ANIMATIONS =====================
-  gsap.to(".flare", { 
-    rotation: 360, 
-    duration: 4, 
-    repeat: -1, 
-    ease: "linear" 
-  });
-  
-  gsap.to(".ring1", { 
-    rotation: 360, 
-    duration: 6, 
-    repeat: -1, 
-    ease: "none" 
-  });
+  // ===================== FALLBACK ANIMATIONS =====================
+  function applyFallbackAnimations() {
+    // Simple fade-in for all elements
+    gsap.utils.toArray("section, .card, .section-heading").forEach(el => {
+      gsap.from(el, {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        ease: "power2.out",
+        delay: Math.random() * 0.5
+      });
+    });
+
+    // Make sure preloader is hidden
+    const preloader = document.querySelector(".preloader");
+    if (preloader) {
+      preloader.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  }
 
   // ===================== RESPONSIVE ADJUSTMENTS =====================
   function handleResponsiveChanges() {
     const isMobile = window.innerWidth < 768;
     
-    // Adjust animation settings based on screen size
     ScrollTrigger.getAll().forEach(trigger => {
       if (isMobile) {
-        // Make animations trigger earlier on mobile
-        trigger.vars.start = trigger.vars.start.replace("85%", "90%")
-          .replace("80%", "85%")
-          .replace("90%", "95%");
+        // Adjust trigger points for mobile
+        trigger.vars.start = trigger.vars.start.replace("80%", "85%")
+          .replace("75%", "80%")
+          .replace("85%", "90%");
       }
     });
   }
 
   // Initialize responsive adjustments
-  handleResponsiveChanges();
-  
-  // Update on resize
+  window.addEventListener('load', handleResponsiveChanges);
   window.addEventListener('resize', handleResponsiveChanges);
+
+  // ===================== INFINITE ANIMATIONS =====================
+  if (document.querySelector(".flare")) {
+    gsap.to(".flare", {
+      rotation: 360,
+      duration: 8,
+      repeat: -1,
+      ease: "none",
+      transformOrigin: "center"
+    });
+  }
+
+  if (document.querySelector(".ring1")) {
+    gsap.to(".ring1", {
+      rotation: 360,
+      duration: 12,
+      repeat: -1,
+      ease: "none",
+      transformOrigin: "center"
+    });
+  }
 });
