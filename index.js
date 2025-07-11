@@ -45,10 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "auto";
     if (!isMobile() && mainTimeline) mainTimeline.play();
     initTypedSkills();
-    animateTogDesktop(); // ensure .tog is always visible and animated
+    animateTogDesktop();
+    animateAboutImageFrame();
   }
 
-  // ========== DESKTOP MAIN TIMELINE ==========
+  // ========== .tog DESKTOP ANIMATION ==========
   function animateTogDesktop() {
     if (!isMobile() && typeof gsap !== "undefined") {
       const togs = document.querySelectorAll(".tog");
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
       });
-      // Add a subtle floating effect
+      // Floating and glowing
       gsap.to(togs, {
         y: "+=6",
         repeat: -1,
@@ -85,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 1.2,
         ease: "sine.inOut"
       });
-      // Add a glowing effect
       gsap.to(togs, {
         boxShadow: "0 0 16px 4px #ffd70066",
         repeat: -1,
@@ -96,6 +96,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // ========== ABOUT IMAGE FRAME ANIMATION ==========
+  function animateAboutImageFrame() {
+    // Assumes .about-img-frame wraps your about image
+    const frame = document.querySelector(".about-img-frame");
+    if (frame) {
+      frame.style.opacity = "1";
+      frame.style.visibility = "visible";
+      if (typeof gsap !== "undefined") {
+        gsap.set(frame, { scale: 0.85, filter: "blur(6px)", opacity: 0 });
+        gsap.to(frame, {
+          scrollTrigger: {
+            trigger: frame,
+            start: isMobile() ? "top 90%" : "top 85%",
+            toggleActions: "play none none none"
+          },
+          scale: 1,
+          filter: "blur(0px)",
+          opacity: 1,
+          boxShadow: "0 8px 32px 0 #ffd70033",
+          duration: 1.1,
+          ease: "elastic.out(1, 0.6)"
+        });
+        // Subtle rotation/floating for attractiveness
+        gsap.to(frame, {
+          rotate: 2,
+          y: "+=8",
+          repeat: -1,
+          yoyo: true,
+          duration: 2.6,
+          ease: "sine.inOut"
+        });
+      }
+    }
+  }
+
+  // ========== MAIN TIMELINE ==========
   if (!isMobile() && typeof gsap !== "undefined") {
     mainTimeline = gsap.timeline({ paused: true });
     mainTimeline
@@ -107,7 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
       .from(".hero h1", { y: -50, opacity: 0, duration: 0.7, ease: "power3.out", delay: 0.1 }, "start+=0.4")
       .from(".hero p", { y: 30, opacity: 0, duration: 0.5, ease: "power2.out", delay: 0.15 }, "start+=0.5")
       .from(".btn", { scale: 0.8, opacity: 0, duration: 0.6, ease: "back.out(1.7)", delay: 0.2 }, "start+=0.6")
-      .add(animateTogDesktop, "start+=0.7");
+      .add(animateTogDesktop, "start+=0.7")
+      .add(animateAboutImageFrame, "start+=0.8");
   }
 
   if (preloader && typeof gsap !== "undefined") {
@@ -152,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
     menuIcon.addEventListener("click", () => {
       nav.classList.toggle("active");
       document.body.style.overflow = nav.classList.contains("active") && isMobile() ? "hidden" : "auto";
-
       if (!isMobile() && nav.classList.contains("active") && typeof gsap !== "undefined") {
         gsap.fromTo(".nav .nav-item", { opacity: 0, x: 100 }, {
           opacity: 1, x: 0, stagger: 0.08, duration: 0.15, ease: "power2.out"
@@ -193,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof gsap === "undefined") return;
 
     if (isMobile()) {
-      // Intersection Observer for mobile reveal
+      // Mobile: Intersection Observer
       const ioAnimate = (els, { x = 0, y = 30, scale = 1, duration = 0.5, delay = 0 } = {}) => {
         const obs = new IntersectionObserver(entries => {
           entries.forEach(e => {
@@ -307,13 +343,19 @@ document.addEventListener("DOMContentLoaded", () => {
           opacity: 0, y: 20, duration: 0.5, ease: "power2.out"
         });
       });
+
+      // Animate about image frame on scroll
+      animateAboutImageFrame();
     }
   }
   setupScroll();
   window.addEventListener("resize", debounce(() => {
     if (typeof ScrollTrigger !== "undefined" && !isMobile()) ScrollTrigger.refresh();
     setupScroll();
-    if (!isMobile()) animateTogDesktop();
+    if (!isMobile()) {
+      animateTogDesktop();
+      animateAboutImageFrame();
+    }
   }));
 
   // ========== PROJECT MODAL ==========
@@ -430,5 +472,11 @@ document.addEventListener("DOMContentLoaded", () => {
       el.style.opacity = "1";
       el.style.transform = "none";
     });
+    // About image frame on mobile
+    const frame = document.querySelector(".about-img-frame");
+    if (frame) {
+      frame.style.opacity = "1";
+      frame.style.visibility = "visible";
+    }
   }
 });
