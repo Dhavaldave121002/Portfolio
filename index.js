@@ -220,19 +220,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===================== RESPONSIVE SCROLLTRIGGER ANIMATIONS =====================
   function setupDesktopAnimations() {
     // About text
-    gsap.from(".part", {
-      scrollTrigger: {
-        trigger: ".part",
-        start: "top 85%",
-        toggleActions: "play none none none",
-        markers: false
-      },
-      opacity: 0,
-      y: 60,
-      scale: 0.97,
-      duration: 0.5,
-      ease: "power3.out"
-    });
+    // gsap.from(".part", {
+    //   scrollTrigger: {
+    //     trigger: ".part",
+    //     // start: "top 85%",
+    //     toggleActions: "play none none none",
+    //     markers: false
+    //   },
+    //   opacity: 0,
+    //   y: 60,
+    //   scale: 0.97,
+    //   duration: 0.5,
+    //   ease: "power3.out"
+    // });
 
     // Roadmap cards
     gsap.utils.toArray('.road-map-card').forEach((card, i) => {
@@ -347,20 +347,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setupMobileAnimations() {
     // About text
-    gsap.from(".part", {
-      scrollTrigger: {
-        trigger: ".part",
-        start: "top 90%",
-        end: "top 50%",
-        toggleActions: "play none none none",
-        markers: false
-      },
-      opacity: 0,
-      x: -30,
-      scale: 0.98,
-      duration: 0.3,
-      ease: "power2.out"
-    });
+    // gsap.from(".part", {
+    //   scrollTrigger: {
+    //     trigger: ".part",
+    //     start: "top 90%",
+    //     end: "top 50%",
+    //     toggleActions: "play none none none",
+    //     markers: false
+    //   },
+    //   opacity: 0,
+    //   x: -30,
+    //   scale: 0.98,
+    //   duration: 0.3,
+    //   ease: "power2.out"
+    // });
 
     // Roadmap cards
     gsap.utils.toArray('.road-map-card').forEach((card, i) => {
@@ -487,16 +487,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===================== COMMON ANIMATIONS =====================
   // About image & heading
-  gsap.from(".about-img-wrapper", {
-    scrollTrigger: {
-      trigger: ".about-img-wrapper",
-      start: "top 85%",
-      toggleActions: "play none none none"
-    },
-    opacity: 0,
-    scale: 0.7,
-    duration: 0.4
-  });
+  // gsap.from(".about-img-wrapper", {
+  //   scrollTrigger: {
+  //     trigger: ".about-img-wrapper",
+  //     start: "top 85%",
+  //     toggleActions: "play none none none"
+  //   },
+  //   opacity: 0,
+  //   scale: 0.7,
+  //   duration: 0.4
+  // });
 
   gsap.from(".about-heading", {
     scrollTrigger: {
