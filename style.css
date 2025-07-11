@@ -1360,9 +1360,9 @@ main::after {
   }
 
   .tog {
-    height: 50px;
-    width: 50px;
-    left: -20px;
+    height: 40px;
+    width: 40px;
+    left: -15px;
   }
 
   .tog i {
