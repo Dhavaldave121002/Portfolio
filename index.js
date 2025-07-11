@@ -204,11 +204,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "(max-width: 767px)": function() {
       gsap.from(".part", {
         scrollTrigger: {
-          trigger: "body",
+          trigger: ".part",
           start: "top 90%",  // Triggers when top of element reaches 90% of viewport
           end: "top 50%",    // Animation completes by this point
           toggleActions: "play none none none", // Only play once
-          markers: true, 
+          // markers: true,/ 
           stagger:0.5,   // Set to true for debugging if needed
         },
         opacity: 0,         // Changed from 1 to 0 for fade-in effect
