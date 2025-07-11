@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===================== UTILITY FUNCTIONS =====================
+  // ========== UTILITY FUNCTIONS ==========
   const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
   const debounce = (func, wait = 100) => {
     let timeout;
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // ===================== TYPED SKILLS =====================
+  // ========== TYPED SKILLS ==========
   function initTypedSkills() {
     if (window.Typed) {
       try {
@@ -31,12 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===================== GSAP SETUP =====================
+  // ========== GSAP SETUP ==========
   if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && !isMobile()) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  // ===================== PRELOADER =====================
+  // ========== PRELOADER ==========
   const preloader = document.querySelector(".preloader");
   let mainTimeline;
 
@@ -45,23 +45,69 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "auto";
     if (!isMobile() && mainTimeline) mainTimeline.play();
     initTypedSkills();
+    animateTogDesktop(); // ensure .tog is always visible and animated
+  }
+
+  // ========== DESKTOP MAIN TIMELINE ==========
+  function animateTogDesktop() {
+    if (!isMobile() && typeof gsap !== "undefined") {
+      const togs = document.querySelectorAll(".tog");
+      gsap.set(togs, { opacity: 1, x: 0, scale: 1, pointerEvents: "auto" });
+      gsap.fromTo(togs, {
+        opacity: 0,
+        scale: 0.5,
+        y: -40,
+        filter: "blur(6px)",
+        backgroundColor: "#fff0"
+      }, {
+        opacity: 1,
+        scale: 1.1,
+        y: 0,
+        filter: "blur(0px)",
+        backgroundColor: "#ffd700",
+        duration: 0.7,
+        ease: "elastic.out(1, 0.6)",
+        stagger: 0.1,
+        onComplete: () => {
+          gsap.to(togs, {
+            scale: 1,
+            backgroundColor: "#fff",
+            duration: 0.4,
+            ease: "power2.out"
+          });
+        }
+      });
+      // Add a subtle floating effect
+      gsap.to(togs, {
+        y: "+=6",
+        repeat: -1,
+        yoyo: true,
+        duration: 1.2,
+        ease: "sine.inOut"
+      });
+      // Add a glowing effect
+      gsap.to(togs, {
+        boxShadow: "0 0 16px 4px #ffd70066",
+        repeat: -1,
+        yoyo: true,
+        duration: 2.5,
+        ease: "sine.inOut"
+      });
+    }
   }
 
   if (!isMobile() && typeof gsap !== "undefined") {
     mainTimeline = gsap.timeline({ paused: true });
-    gsap.set(".tog", { opacity: 0, x: -30, scale: 0.8, pointerEvents: "none" });
     mainTimeline
-      .from(".logo", { y: -80, opacity: 0, duration: 0.5, ease: "bounce.out", scale: 0.5 }, "start")
-      .from(".logo img", { rotation: 360, duration: 0.5, ease: "power2.out" }, "start")
-      .from(".nav .nav-item", { x: 80, opacity: 0, duration: 0.2, ease: "back.out", scale: 0.5, stagger: 0.05 }, "start")
-      .from(".sec1", { x: -100, opacity: 0, duration: 0.5, ease: "power2.out" }, "start")
-      .from(".sec2 img", { x: 100, opacity: 0, duration: 0.5, ease: "power2.out" }, "start")
-      .to(".tog", { x: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)", pointerEvents: "auto", onStart: () => {
-        gsap.to(".tog", { backgroundColor: "#e6b800", duration: 0.2, repeat: 1, yoyo: true, ease: "power1.inOut" });
-      } }, "start")
-      .from(".hero h1", { y: -50, opacity: 0, duration: 0.6, ease: "power3.out", delay: 0.2 }, "start")
-      .from(".hero p", { y: 30, opacity: 0, duration: 0.4, ease: "power2.out", delay: 0.3 }, "start")
-      .from(".btn", { scale: 0.8, opacity: 0, duration: 0.4, ease: "back.out(1.7)", delay: 0.5 }, "start");
+      .from(".logo", { y: -80, opacity: 0, duration: 0.7, ease: "bounce.out", scale: 0.5 }, "start")
+      .from(".logo img", { rotation: 360, duration: 0.7, ease: "power2.out" }, "start")
+      .from(".nav .nav-item", { x: 80, opacity: 0, duration: 0.3, ease: "back.out", scale: 0.5, stagger: 0.07 }, "start+=0.2")
+      .from(".sec1", { x: -100, opacity: 0, duration: 0.7, ease: "power2.out" }, "start+=0.2")
+      .from(".sec2 img", { x: 100, opacity: 0, duration: 0.6, ease: "power2.out" }, "start+=0.3")
+      .from(".hero h1", { y: -50, opacity: 0, duration: 0.7, ease: "power3.out", delay: 0.1 }, "start+=0.4")
+      .from(".hero p", { y: 30, opacity: 0, duration: 0.5, ease: "power2.out", delay: 0.15 }, "start+=0.5")
+      .from(".btn", { scale: 0.8, opacity: 0, duration: 0.6, ease: "back.out(1.7)", delay: 0.2 }, "start+=0.6")
+      .add(animateTogDesktop, "start+=0.7");
   }
 
   if (preloader && typeof gsap !== "undefined") {
@@ -89,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     runInit();
   }
 
-  // ===================== NAVIGATION MENU =====================
+  // ========== NAVIGATION MENU ==========
   const menuIcon = document.querySelector(".menu-icon");
   const nav = document.querySelector(".main-nav");
   const togs = document.querySelectorAll(".tog");
@@ -127,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===================== SMOOTH SCROLL =====================
+  // ========== SMOOTH SCROLL ==========
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener("click", e => {
       const target = document.querySelector(link.getAttribute("href"));
@@ -142,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ===================== SCROLL & MOBILE ANIMATIONS =====================
+  // ========== SECTION ANIMATIONS ==========
   function setupScroll() {
     if (typeof gsap === "undefined") return;
 
@@ -206,10 +252,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const icon = card.querySelector(".card-icon");
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" },
-          opacity: 0, y: 80, scale: 0.8, duration: 0.5, delay: i * 0.06, ease: "bounce.out",
+          opacity: 0, y: 80, scale: 0.8, duration: 0.6, delay: i * 0.06, ease: "elastic.out(1, 0.4)",
           onStart: () => {
             if (icon) gsap.fromTo(icon, { scale: 0.6, backgroundColor: "#111" }, {
-              scale: 1.15, backgroundColor: "#ffd700", duration: 0.2, yoyo: true, repeat: 1, ease: "back.inOut(2)"
+              scale: 1.18, backgroundColor: "#ffd700", duration: 0.2, yoyo: true, repeat: 1, ease: "back.inOut(2)"
             });
           }
         });
@@ -218,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.utils.toArray(".neon-card").forEach((card, i) => {
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: "top 92%", toggleActions: "play none none none" },
-          opacity: 0, y: 60, scale: 0.9, duration: 0.4, delay: i * 0.04, ease: "back.out(1.5)"
+          opacity: 0, y: 60, scale: 0.9, duration: 0.5, delay: i * 0.04, ease: "back.out(1.5)"
         });
       });
 
@@ -227,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
           trigger: card, start: "top 95%", toggleActions: "play none none none",
           onEnter: () => {
             gsap.fromTo(card, { opacity: 0, rotateY: 90 }, {
-              opacity: 1, rotateY: 0, duration: 0.4, delay: i * 0.04, ease: "back.out(1.7)"
+              opacity: 1, rotateY: 0, duration: 0.5, delay: i * 0.04, ease: "back.out(1.7)"
             });
             const pct = parseInt(card.dataset.percentage) || 0;
             const circle = card.querySelector("circle.progress");
@@ -251,14 +297,14 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.utils.toArray(".project-card").forEach((card, i) => {
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: "top 92%", toggleActions: "play none none none" },
-          opacity: 0, y: 50, scale: 0.93, duration: 0.4, delay: i * 0.04, ease: "expo.out"
+          opacity: 0, y: 50, scale: 0.93, duration: 0.5, delay: i * 0.04, ease: "expo.out"
         });
       });
 
       ["about-heading", "about-intro", "contact-card", "footer-copy"].forEach(sel => {
         gsap.from(`.${sel}`, {
           scrollTrigger: { trigger: `.${sel}`, start: sel === "footer-copy" ? "top 100%" : "top 90%", toggleActions: "play none none none" },
-          opacity: 0, y: 20, duration: 0.4
+          opacity: 0, y: 20, duration: 0.5, ease: "power2.out"
         });
       });
     }
@@ -267,9 +313,10 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", debounce(() => {
     if (typeof ScrollTrigger !== "undefined" && !isMobile()) ScrollTrigger.refresh();
     setupScroll();
+    if (!isMobile()) animateTogDesktop();
   }));
 
-  // ===================== PROJECT MODAL =====================
+  // ========== PROJECT MODAL ==========
   const projects = {
     FireApp: { title: "Champion Site", description: "...", github: "https://github.com/..." },
     IgniteUI: { title: "Travel App", description: "...", github: "https://github.com/..." },
@@ -309,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===================== CONTACT FORM =====================
+  // ========== CONTACT FORM ==========
   function openGmailWithMessage(name, email, phone, message) {
     const subject = encodeURIComponent("Contact From Portfolio");
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
@@ -346,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open("tel:8511172099");
   });
 
-  // ===================== MARQUEE & INFINITE ANIM =====================
+  // ========== MARQUEE & INFINITE ANIM ==========
   function initMarquee() {
     const track = document.querySelector(".marquee-track");
     if (!track) return;
@@ -377,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===================== INITIAL MOBILE SETUP =====================
+  // ========== INITIAL MOBILE SETUP ==========
   if (isMobile()) {
     document.querySelectorAll(".part").forEach(el => {
       el.style.opacity = "1";
