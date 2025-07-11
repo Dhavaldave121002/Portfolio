@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ===================== UTILITY FUNCTIONS =====================
   const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
-  const isTablet = () => window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches;
   
-  // Debounce function for resize events
   const debounce = (func, wait = 100) => {
     let timeout;
     return (...args) => {
@@ -21,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const preloader = document.querySelector(".preloader");
   let mainTimeline;
 
+  // Initialize main timeline for desktop
   if (!isMobile()) {
-    // Initialize main timeline for desktop
     mainTimeline = gsap.timeline({ paused: true });
     gsap.set(".tog", { opacity: 0, x: -30, scale: 0.8, pointerEvents: "none" });
     
@@ -102,16 +100,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Handle preloader for all devices
   if (preloader) {
     if (isMobile()) {
-      // Mobile preloader
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-          preloader.style.display = 'none';
-          document.body.style.overflow = 'auto';
-        }, 300);
-      }, 1500);
+      // Mobile preloader with simple fade but still animated
+      gsap.set(".preloader", { opacity: 1, display: "flex" });
+      gsap.set([".ring1", ".ring2", ".ring3"], { scale: 0.8, opacity: 0 });
+      gsap.set(".core-logo", { scale: 0.8, opacity: 0 });
+      gsap.set(".loader-title", { y: 20, opacity: 0 });
+
+      // Mobile animation sequence
+      gsap.timeline()
+        .to(".ring1", {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        })
+        .to(".ring2", {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        }, "-=0.3")
+        .to(".ring3", {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        }, "-=0.3")
+        .to(".core-logo", {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out"
+        }, "-=0.3")
+        .to(".loader-title", {
+          y: 0,
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.out"
+        }, "-=0.2")
+        .to(".preloader", {
+          opacity: 0,
+          duration: 0.5,
+          delay: 0.5,
+          ease: "power2.out",
+          onComplete: () => {
+            preloader.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        });
     } else {
       // Desktop preloader with GSAP
       gsap.timeline()
@@ -215,158 +254,100 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ===================== TOG BUTTON (OFFCANVAS) =====================
-  const togButton = document.querySelector(".tog");
-  if (togButton) {
-    togButton.addEventListener("click", () => {
-      const offcanvas = document.querySelector(".offcanvas-body");
-      if (offcanvas) {
-        if (isMobile()) {
-          offcanvas.style.display = offcanvas.style.display === 'block' ? 'none' : 'block';
-        } else {
-          if (offcanvas.style.display !== 'block') {
-            gsap.set(".offcanvas-body .social-icon i", { opacity: 1, x: 0 });
-            gsap.set(".offcanvas-body .contact h3", { opacity: 1, x: 0 });
-            gsap.to(togButton, { 
-              scale: 0.9, 
-              duration: 0.1, 
-              yoyo: true, 
-              repeat: 1, 
-              ease: "power1.inOut" 
-            });
-            
-            gsap.timeline()
-              .from(".offcanvas-body .contact h3", { 
-                x: -100, 
-                opacity: 0, 
-                duration: 0.3, 
-                ease: "power1.out" 
-              })
-              .from(".offcanvas-body .social-icon i", { 
-                x: -100, 
-                opacity: 0, 
-                duration: 0.2, 
-                ease: "power1.out", 
-                stagger: 0.05 
-              }, "-=0.2");
-            
-            offcanvas.style.display = "block";
-          } else {
-            offcanvas.style.display = "none";
-          }
-        }
-      }
-    });
-  }
-
-  // ===================== TYPED.JS =====================
-  if (window.Typed && !isMobile()) {
-    try {
-      new Typed("#typed-skills", {
-        strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
-        typeSpeed: 60,
-        backSpeed: 30,
-        backDelay: 700,
-        loop: true,
-      });
-    } catch (e) {
-      console.error("Typed.js initialization error:", e);
-    }
-  }
-
   // ===================== SCROLL ANIMATIONS =====================
   const setupScrollAnimations = () => {
-    // Common elements to animate
-    const animateElements = [
-      { selector: '.road-map-card, .neon-card, .project-card', options: { y: 50, opacity: 0 } },
-      { selector: '.about-heading, .about-intro', options: { y: 20, opacity: 0 } },
-      { selector: '.contact-card', options: { y: 20, opacity: 0 } },
-      { selector: '.footer-copy', options: { y: 10, opacity: 0 } }
-    ];
-
     if (isMobile()) {
       // Mobile animations with Intersection Observer
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target;
-            el.style.transition = 'all 0.4s ease-out';
-            el.style.opacity = '1';
-            el.style.transform = 'translateY(0)';
-            observer.unobserve(el);
-          }
-        });
-      }, { threshold: 0.1 });
-
-      animateElements.forEach(item => {
-        document.querySelectorAll(item.selector).forEach(el => {
-          el.style.opacity = item.options.opacity;
-          el.style.transform = `translateY(${item.options.y}px)`;
-          observer.observe(el);
-        });
-      });
-
-      // Special handling for skill cards
-      document.querySelectorAll('.skill-card').forEach(card => {
-        const cardObserver = new IntersectionObserver((entries) => {
+      const animateOnScroll = (elements, options) => {
+        const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              const card = entry.target;
-              card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-              card.style.opacity = '1';
-              card.style.transform = 'translateY(0)';
-              
-              // Animate progress circle
-              const percentage = parseInt(card.dataset.percentage) || 0;
-              const circle = card.querySelector("circle.progress");
-              const label = card.querySelector(".percentage");
-              
-              if (circle && label) {
-                let current = 0;
-                const circumference = 2 * Math.PI * parseFloat(circle.getAttribute("r"));
-                circle.style.strokeDasharray = circumference;
-                
-                const interval = setInterval(() => {
-                  if (current <= percentage) {
-                    label.textContent = current + "%";
-                    const offset = circumference - (circumference * current) / 100;
-                    circle.style.strokeDashoffset = offset;
-                    current++;
-                  } else {
-                    clearInterval(interval);
-                  }
-                }, 10);
-              }
-              
-              cardObserver.unobserve(card);
+              const el = entry.target;
+              gsap.to(el, {
+                opacity: 1,
+                y: 0,
+                x: 0,
+                scale: 1,
+                duration: options.duration || 0.4,
+                ease: "power2.out",
+                delay: options.delay || 0
+              });
+              observer.unobserve(el);
             }
           });
         }, { threshold: 0.1 });
 
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(40px)';
-        cardObserver.observe(card);
+        elements.forEach(el => {
+          gsap.set(el, { 
+            opacity: 0, 
+            y: options.y || 30,
+            x: options.x || 0,
+            scale: options.scale || 1
+          });
+          observer.observe(el);
+        });
+      };
+
+      // Animate sections
+      animateOnScroll(document.querySelectorAll('.road-map-card, .neon-card, .project-card'), {
+        y: 30,
+        duration: 0.5
+      });
+
+      animateOnScroll(document.querySelectorAll('.about-heading, .about-intro'), {
+        y: 20,
+        duration: 0.4
+      });
+
+      animateOnScroll(document.querySelectorAll('.contact-card'), {
+        y: 20,
+        duration: 0.3
+      });
+
+      // Special handling for skill cards with progress animation
+      document.querySelectorAll('.skill-card').forEach(card => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              gsap.to(card, {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                ease: "power2.out",
+                onComplete: () => {
+                  // Animate progress circle
+                  const percentage = parseInt(card.dataset.percentage) || 0;
+                  const circle = card.querySelector("circle.progress");
+                  const label = card.querySelector(".percentage");
+                  
+                  if (circle && label) {
+                    let current = 0;
+                    const circumference = 2 * Math.PI * parseFloat(circle.getAttribute("r"));
+                    circle.style.strokeDasharray = circumference;
+                    
+                    const interval = setInterval(() => {
+                      if (current <= percentage) {
+                        label.textContent = current + "%";
+                        const offset = circumference - (circumference * current) / 100;
+                        circle.style.strokeDashoffset = offset;
+                        current++;
+                      } else {
+                        clearInterval(interval);
+                      }
+                    }, 10);
+                  }
+                }
+              });
+              observer.unobserve(card);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        gsap.set(card, { opacity: 0, y: 40 });
+        observer.observe(card);
       });
     } else {
       // Desktop animations with GSAP ScrollTrigger
-      animateElements.forEach(item => {
-        gsap.utils.toArray(item.selector).forEach((el, i) => {
-          gsap.from(el, {
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none none"
-            },
-            y: item.options.y,
-            opacity: 0,
-            duration: 0.4,
-            delay: i * 0.05,
-            ease: "power2.out"
-          });
-        });
-      });
-
-      // Roadmap cards with bounce effect
       gsap.utils.toArray('.road-map-card').forEach((card, i) => {
         const icon = card.querySelector('.card-icon');
         gsap.from(card, {
@@ -399,7 +380,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // Skills cards with 3D rotation
+      gsap.utils.toArray('.neon-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 92%",
+            toggleActions: "play none none none"
+          },
+          opacity: 0,
+          y: 60,
+          scale: 0.9,
+          duration: 0.4,
+          delay: i * 0.04,
+          ease: "back.out(1.5)"
+        });
+      });
+
       gsap.utils.toArray('.skill-card').forEach((card, i) => {
         ScrollTrigger.create({
           trigger: card,
@@ -441,15 +437,77 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       });
+
+      gsap.utils.toArray('.project-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 92%",
+            toggleActions: "play none none none"
+          },
+          opacity: 0,
+          y: 50,
+          scale: 0.93,
+          duration: 0.4,
+          delay: i * 0.04,
+          ease: "expo.out"
+        });
+      });
+
+      gsap.from(".about-heading", {
+        scrollTrigger: {
+          trigger: ".about-heading",
+          start: "top 85%",
+          toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.4
+      });
+
+      gsap.from(".about-intro", {
+        scrollTrigger: {
+          trigger: ".about-intro",
+          start: "top 90%",
+          toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.4
+      });
+
+      gsap.from(".contact-card", {
+        scrollTrigger: {
+          trigger: ".contact-card",
+          start: "top 90%",
+          toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.3
+      });
+
+      gsap.from(".footer-copy", {
+        scrollTrigger: {
+          trigger: ".footer-copy",
+          start: "top 100%",
+          toggleActions: "play none none none"
+        },
+        opacity: 0,
+        y: 10,
+        duration: 0.3
+      });
     }
   };
 
   // Initialize scroll animations
   setupScrollAnimations();
 
-  // Re-run setup on resize (with debounce)
+  // Refresh on resize
   window.addEventListener('resize', debounce(() => {
-    ScrollTrigger.refresh();
+    if (!isMobile()) {
+      ScrollTrigger.refresh();
+    }
     setupScrollAnimations();
   }));
 
@@ -548,39 +606,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Contact icons functionality
-  const setupContactIcons = () => {
-    const emailLink = document.getElementById("emailLink");
-    if (emailLink) {
-      emailLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        const name = document.getElementById("name")?.value.trim() || "Visitor";
-        const email = document.getElementById("email")?.value.trim() || "No email";
-        const phone = document.getElementById("phone")?.value.trim() || "No phone";
-        const message = document.getElementById("message")?.value.trim() || "Hi, I'd like to connect with you.";
-        openGmailWithMessage(name, email, phone, message);
-      });
-    }
+  const emailLink = document.getElementById("emailLink");
+  if (emailLink) {
+    emailLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name")?.value.trim() || "Visitor";
+      const email = document.getElementById("email")?.value.trim() || "No email";
+      const phone = document.getElementById("phone")?.value.trim() || "No phone";
+      const message = document.getElementById("message")?.value.trim() || "Hi, I'd like to connect with you.";
+      openGmailWithMessage(name, email, phone, message);
+    });
+  }
 
-    const whatsappLink = document.getElementById("whatsappLink");
-    if (whatsappLink) {
-      whatsappLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        const name = document.getElementById("name")?.value.trim() || "Visitor";
-        const phone = "918511172099";
-        const text = encodeURIComponent(`Hi, I'm ${name}. I saw your portfolio and want to connect.`);
-        window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
-      });
-    }
+  const whatsappLink = document.getElementById("whatsappLink");
+  if (whatsappLink) {
+    whatsappLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name")?.value.trim() || "Visitor";
+      const phone = "918511172099";
+      const text = encodeURIComponent(`Hi, I'm ${name}. I saw your portfolio and want to connect.`);
+      window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+    });
+  }
 
-    const callLink = document.getElementById("callLink");
-    if (callLink) {
-      callLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        window.open("tel:8511172099");
-      });
-    }
-  };
-  setupContactIcons();
+  const callLink = document.getElementById("callLink");
+  if (callLink) {
+    callLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.open("tel:8511172099");
+    });
+  }
 
   // ===================== SMOOTH SCROLL =====================
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -597,7 +652,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         
         // Close mobile menu if open
-        if (isMobile() && nav.classList.contains('active')) {
+        if (isMobile() && nav && nav.classList.contains('active')) {
           nav.classList.remove('active');
           document.body.style.overflow = 'auto';
         }
@@ -675,8 +730,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===================== RESPONSIVE ADJUSTMENTS =====================
-  // Ensure part sections are visible on mobile
+  // ===================== INITIAL MOBILE SETUP =====================
   if (isMobile()) {
     document.querySelectorAll('.part').forEach(section => {
       section.style.opacity = '1';
