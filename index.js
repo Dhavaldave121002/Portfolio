@@ -363,37 +363,37 @@ document.addEventListener("DOMContentLoaded", () => {
     // });
 
     // Roadmap cards
-    gsap.utils.toArray('.road-map-card').forEach((card, i) => {
-      const icon = card.querySelector('.card-icon');
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: "top 98%",
-          toggleActions: "play none none none"
-        },
-        opacity: 0,
-        x: 40,
-        scale: 0.93,
-        duration: 0.3,
-        delay: i * 0.03,
-        ease: "power2.out",
-        onStart: () => {
-          if (icon) {
-            gsap.fromTo(icon,
-              { scale: 0.7, backgroundColor: "#111" },
-              { 
-                scale: 1, 
-                backgroundColor: "#ffd700", 
-                duration: 0.15, 
-                yoyo: true, 
-                repeat: 1, 
-                ease: "back.inOut(2)" 
-              }
-            );
-          }
-        }
-      });
-    });
+    // gsap.utils.toArray('.road-map-card').forEach((card, i) => {
+    //   const icon = card.querySelector('.card-icon');
+    //   gsap.from(card, {
+    //     scrollTrigger: {
+    //       trigger: card,
+    //       start: "top 98%",
+    //       toggleActions: "play none none none"
+    //     },
+    //     opacity: 0,
+    //     x: 40,
+    //     scale: 0.93,
+    //     duration: 0.3,
+    //     delay: i * 0.03,
+    //     ease: "power2.out",
+    //     onStart: () => {
+    //       if (icon) {
+    //         gsap.fromTo(icon,
+    //           { scale: 0.7, backgroundColor: "#111" },
+    //           { 
+    //             scale: 1, 
+    //             backgroundColor: "#ffd700", 
+    //             duration: 0.15, 
+    //             yoyo: true, 
+    //             repeat: 1, 
+    //             ease: "back.inOut(2)" 
+    //           }
+    //         );
+    //       }
+    //     }
+    //   });
+    // });
 
     // Services
     gsap.utils.toArray('.neon-card').forEach((card, i) => {
