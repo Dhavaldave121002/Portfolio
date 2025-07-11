@@ -409,10 +409,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Attach click listeners to project cards (data-project attribute)
+  document.querySelectorAll('.project-card[data-project]').forEach(card => {
+    card.addEventListener('click', function(e) {
+      // Prevent bubbling if the card contains links/buttons
+      if (e.target.closest('a,button')) return;
+      const key = card.dataset.project;
+      window.openModal(key);
+    });
+  });
+
   // Close modal when clicking outside content
   document.addEventListener("click", (e) => {
     const modal = document.getElementById("projectModal");
-    if (modal && modal.style.display === "block" && !e.target.closest(".modal-content")) {
+    if (modal && modal.style.display === "block" && !e.target.closest(".modal-content") && !e.target.closest('.project-card')) {
       window.closeModal();
     }
   });
