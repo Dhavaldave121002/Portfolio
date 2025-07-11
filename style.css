@@ -1368,7 +1368,7 @@ main::after {
     height: 35px;
     width: 35px;
     font-size: 18px;
-    text-decoration: none;
+   text-decoration: none!important;
   }
 
   .btn-close {
