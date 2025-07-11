@@ -149,6 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
           onComplete: () => {
             preloader.style.display = "none";
             document.body.style.overflow = "auto";
+            // Initialize typed skills after preloader completes
+            initTypedSkills();
           }
         });
     } else {
@@ -203,15 +205,56 @@ document.addEventListener("DOMContentLoaded", () => {
             preloader.style.display = "none";
             document.body.style.overflow = "auto";
             if (mainTimeline) mainTimeline.play();
+            // Initialize typed skills after preloader completes
+            initTypedSkills();
           },
         });
     }
   }
 
+  // ===================== TYPED SKILLS INITIALIZATION =====================
+  function initTypedSkills() {
+    const typedElements = document.querySelectorAll('.typed-skills');
+    if (!typedElements.length) return;
+
+    // Check if Typed.js is loaded
+    if (typeof Typed === 'undefined') {
+      console.warn('Typed.js not loaded - skipping skills animation');
+      return;
+    }
+
+    typedElements.forEach(element => {
+      const strings = JSON.parse(element.getAttribute('data-typed-items') || '[]');
+      if (!strings.length) return;
+
+      new Typed(element, {
+        strings: strings,
+        typeSpeed: 50,
+        backSpeed: 30,
+        backDelay: 1500,
+        startDelay: 500,
+        loop: true,
+        showCursor: true,
+        cursorChar: '|',
+        smartBackspace: true
+      });
+    });
+  }
+
   // ===================== NAVIGATION =====================
   const menuIcon = document.querySelector(".menu-icon");
   const nav = document.querySelector(".main-nav");
+  const togElements = document.querySelectorAll(".tog");
   
+  // Initialize .tog elements for mobile
+  if (isMobile() && togElements.length) {
+    togElements.forEach(tog => {
+      tog.style.opacity = "1";
+      tog.style.transform = "none";
+      tog.style.pointerEvents = "auto";
+    });
+  }
+
   if (menuIcon && nav) {
     menuIcon.addEventListener("click", () => {
       nav.classList.toggle("active");
@@ -247,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Close mobile menu when clicking on nav items
   document.querySelectorAll('.nav-item a').forEach(item => {
     item.addEventListener('click', () => {
-      if (isMobile() && nav.classList.contains('active')) {
+      if (isMobile() && nav && nav.classList.contains('active')) {
         nav.classList.remove('active');
         document.body.style.overflow = 'auto';
       }
