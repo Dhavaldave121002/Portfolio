@@ -208,8 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
           start: "top 90%",  // Triggers when top of element reaches 90% of viewport
           end: "top 50%",    // Animation completes by this point
           toggleActions: "play none none none", // Only play once
-          // markers: true,/ 
-          stagger:0.5,   // Set to true for debugging if needed
+          markers: true,    // Set to true for debugging if needed
         },
         opacity: 0,         // Changed from 1 to 0 for fade-in effect
         x: -30,
@@ -217,43 +216,43 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 0.1,      // Added duration (0.1s is too fast to notice)
         ease: "power2.out"
       });
-      // gsap.utils.toArray('.road-map-card').forEach((card, i) => {
-      //   const icon = card.querySelector('.card-icon');
-      //   gsap.from(card, {
-      //     scrollTrigger: {
-      //       trigger: card,
-      //       start: "top 98%",
-      //     },
-      //     opacity: 0,
-      //     x: 40,
-      //     scale: 0.93,
-      //     duration: 0.3,
-      //     delay: i * 0.03,
-      //     ease: "power2.out",
-      //     onStart: () => {
-      //       if (icon) {
-      //         gsap.fromTo(icon,
-      //           { scale: 0.7, backgroundColor: "#111" },
-      //           { scale: 1, backgroundColor: "#ffd700", duration: 0.15, yoyo: true, repeat: 1, ease: "back.inOut(2)" }
-      //         );
-      //       }
-      //     }
-      //   });
-      // });
-      // gsap.utils.toArray('.neon-card').forEach((card, i) => {
-      //   gsap.from(card, {
-      //     scrollTrigger: {
-      //       trigger: card,
-      //       start: "top 98%",
-      //     },
-      //     opacity: 0,
-      //     x: 30,
-      //     scale: 0.95,
-      //     duration: 0.3,
-      //     delay: i * 0.03,
-      //     ease: "back.out(1.5)"
-      //   });
-      // });
+      gsap.utils.toArray('.road-map-card').forEach((card, i) => {
+        const icon = card.querySelector('.card-icon');
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 98%",
+          },
+          opacity: 0,
+          x: 40,
+          scale: 0.93,
+          duration: 0.3,
+          delay: i * 0.03,
+          ease: "power2.out",
+          onStart: () => {
+            if (icon) {
+              gsap.fromTo(icon,
+                { scale: 0.7, backgroundColor: "#111" },
+                { scale: 1, backgroundColor: "#ffd700", duration: 0.15, yoyo: true, repeat: 1, ease: "back.inOut(2)" }
+              );
+            }
+          }
+        });
+      });
+      gsap.utils.toArray('.neon-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 98%",
+          },
+          opacity: 0,
+          x: 30,
+          scale: 0.95,
+          duration: 0.3,
+          delay: i * 0.03,
+          ease: "back.out(1.5)"
+        });
+      });
       gsap.utils.toArray('.skill-card').forEach((card, i) => {
         ScrollTrigger.create({
           trigger: card,
