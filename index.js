@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ========== ABOUT IMAGE FRAME ANIMATION ==========
   function animateAboutImageFrame() {
-    // Assumes .about-img-frame wraps your about image
     const frame = document.querySelector(".about-img-frame");
     if (frame) {
       frame.style.opacity = "1";
@@ -118,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
           duration: 1.1,
           ease: "elastic.out(1, 0.6)"
         });
-        // Subtle rotation/floating for attractiveness
         gsap.to(frame, {
           rotate: 2,
           y: "+=8",
@@ -257,23 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.isIntersecting) {
               gsap.to(card, {
                 opacity: 1, y: 0, duration: 0.4, ease: "power2.out",
-                onComplete: () => {
-                  const pct = parseInt(card.dataset.percentage) || 0;
-                  const circle = card.querySelector("circle.progress");
-                  const label = card.querySelector(".percentage");
-                  if (circle && label) {
-                    let cur = 0;
-                    const circ = 2 * Math.PI * +circle.getAttribute("r");
-                    circle.style.strokeDasharray = circ;
-                    const intv = setInterval(() => {
-                      if (cur <= pct) {
-                        label.textContent = cur + "%";
-                        circle.style.strokeDashoffset = circ - (circ * cur) / 100;
-                        cur++;
-                      } else clearInterval(intv);
-                    }, 10);
-                  }
-                }
+                onComplete: () => animateSkillCircle(card)
               });
               obs.unobserve(card);
             }
@@ -311,21 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
             gsap.fromTo(card, { opacity: 0, rotateY: 90 }, {
               opacity: 1, rotateY: 0, duration: 0.5, delay: i * 0.04, ease: "back.out(1.7)"
             });
-            const pct = parseInt(card.dataset.percentage) || 0;
-            const circle = card.querySelector("circle.progress");
-            const label = card.querySelector(".percentage");
-            if (circle && label) {
-              let cur = 0;
-              const circ = 2 * Math.PI * +circle.getAttribute("r");
-              circle.style.strokeDasharray = circ;
-              const intv = setInterval(() => {
-                if (cur <= pct) {
-                  label.textContent = cur + "%";
-                  circle.style.strokeDashoffset = circ - (circ * cur) / 100;
-                  cur++;
-                } else clearInterval(intv);
-              }, 10);
-            }
+            animateSkillCircle(card);
           }
         });
       });
@@ -344,10 +312,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // Animate about image frame on scroll
       animateAboutImageFrame();
     }
   }
+
+  function animateSkillCircle(card) {
+    const pct = parseInt(card.dataset.percentage) || 0;
+    const circle = card.querySelector("circle.progress");
+    const label = card.querySelector(".percentage");
+    if (circle && label) {
+      let cur = 0;
+      const circ = 2 * Math.PI * +circle.getAttribute("r");
+      circle.style.strokeDasharray = circ;
+      const intv = setInterval(() => {
+        if (cur <= pct) {
+          label.textContent = cur + "%";
+          circle.style.strokeDashoffset = circ - (circ * cur) / 100;
+          cur++;
+        } else clearInterval(intv);
+      }, 10);
+    }
+  }
+
   setupScroll();
   window.addEventListener("resize", debounce(() => {
     if (typeof ScrollTrigger !== "undefined" && !isMobile()) ScrollTrigger.refresh();
@@ -360,21 +346,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ========== PROJECT MODAL ==========
   const projects = {
-    FireApp: { title: "Champion Site", description: "...", github: "https://github.com/..." },
-    IgniteUI: { title: "Travel App", description: "...", github: "https://github.com/..." },
-    BlazeWeb: { title: "Stock Management", description: "...", github: "https://github.com/..." }
+    FireApp: {
+      title: "Champion Site",
+      description: "An all-in-one platform that lets users book services (like travel, appointments), order products (food, groceries, electronics), and manage stock market investments from a single dashboard.",
+      github: "https://github.com/Dhavaldave121002/Champions_Site_Flutter",
+    },
+    IgniteUI: {
+      title: "Travel App",
+      description: "A modern travel platform that lets users search destinations, explore tour packages, and book trips — all from a beautifully designed, responsive interface built for fast performance and smooth navigation.",
+      github: "https://github.com/Dhavaldave121002/Flutter_Travel_App",
+    },
+    BlazeWeb: {
+      title: "Stock Management",
+      description: "A lightweight, high-performance web app that allows users to track stock portfolios, view performance charts, and monitor investments in real-time — all within an animated, optimized dashboard interface.",
+      github: "https://github.com/Dhavaldave121002/Stock-Management",
+    },
   };
 
-  window.openModal = function(key) {
-    const p = projects[key];
+  window.openModal = function(projectKey) {
+    const p = projects[projectKey];
+    if (!p) return;
     const modal = document.getElementById("projectModal");
-    if (p && modal) {
-      document.getElementById("modalTitle").textContent = p.title;
-      document.getElementById("modalDescription").textContent = p.description;
-      document.getElementById("modalGithub").href = p.github;
-      modal.style.display = "block";
-      if (!isMobile() && typeof gsap !== "undefined") {
-        gsap.from("#projectModal .modal-content", { y: 20, opacity: 0, duration: 0.2, ease: "back.out(1.7)" });
+    if (!modal) return;
+    document.getElementById("modalTitle").textContent = p.title;
+    document.getElementById("modalDescription").textContent = p.description;
+    document.getElementById("modalGithub").href = p.github;
+    modal.style.display = "block";
+    if (!isMobile() && typeof gsap !== "undefined") {
+      gsap.from("#projectModal .modal-content", {
+        y: 40,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.3,
+        ease: "back.out(1.7)"
+      });
+    } else {
+      // Mobile: subtle fade-in
+      const content = modal.querySelector('.modal-content');
+      if (content) {
+        content.style.opacity = "1";
+        content.style.transform = "none";
       }
     }
   };
@@ -385,15 +396,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isMobile() || typeof gsap === "undefined") {
       modal.style.display = "none";
     } else {
-      gsap.to("#projectModal .modal-content", { y: 20, opacity: 0, duration: 0.15, ease: "power1.in", onComplete: () => {
-        modal.style.display = "none";
-      }});
+      gsap.to("#projectModal .modal-content", {
+        y: 20,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.15,
+        ease: "power1.in",
+        onComplete: () => {
+          modal.style.display = "none";
+        }
+      });
     }
   };
 
-  document.addEventListener("click", e => {
+  // Close modal when clicking outside content
+  document.addEventListener("click", (e) => {
     const modal = document.getElementById("projectModal");
-    if (modal?.style.display === "block" && !e.target.closest(".modal-content")) {
+    if (modal && modal.style.display === "block" && !e.target.closest(".modal-content")) {
       window.closeModal();
     }
   });
@@ -472,7 +491,6 @@ document.addEventListener("DOMContentLoaded", () => {
       el.style.opacity = "1";
       el.style.transform = "none";
     });
-    // About image frame on mobile
     const frame = document.querySelector(".about-img-frame");
     if (frame) {
       frame.style.opacity = "1";
