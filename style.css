@@ -410,6 +410,19 @@ main {
   position: relative;
   z-index: 0;
 }
+.form-control:focus {
+  box-shadow: none;
+  border-color: #000;
+}
+.mic-active i {
+  color: red;
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
 
 main::after {
   content: "";
@@ -1128,6 +1141,7 @@ main::after {
   color: rgba(245, 245, 245, 0.822);
   font-family: def;
 }
+
 
 /* ===================== Responsive Tweaks ===================== */
 

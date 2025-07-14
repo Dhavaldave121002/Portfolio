@@ -508,3 +508,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+  const recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+
+  const micButton = document.getElementById("startMic");
+  const micIcon = micButton.querySelector("i");
+
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const phoneField = document.getElementById("phone");
+  const messageField = document.getElementById("message");
+
+  micButton.addEventListener("click", () => {
+    recognition.start();
+    micButton.classList.add("mic-active");
+    micIcon.classList.replace("ri-mic-fill", "ri-mic-line");
+  });
+
+  recognition.onresult = function (event) {
+    const transcript = event.results[0][0].transcript.toLowerCase();
+    console.log("Transcript:", transcript);
+
+    // Extract name
+    const nameMatch = transcript.match(/(?:name is|my name is)\s+([a-zA-Z ]+)/);
+    if (nameMatch) nameField.value = nameMatch[1].trim();
+
+    // Extract email
+    const emailMatch = transcript.match(/(?:email is|my email is)\s+([\w\.-]+@[\w\.-]+\.\w+)/);
+    if (emailMatch) emailField.value = emailMatch[1];
+
+    // Extract phone
+    const phoneMatch = transcript.match(/(?:phone is|my phone number is|contact number is)\s+([\d ]{7,})/);
+    if (phoneMatch) phoneField.value = phoneMatch[1].replace(/\s+/g, '');
+
+    // Extract message
+    const messageMatch = transcript.match(/(?:message is|my message is|say)\s+(.+)/);
+    if (messageMatch) messageField.value = messageMatch[1].trim();
+  };
+
+  recognition.onend = () => {
+    micButton.classList.remove("mic-active");
+    micIcon.classList.replace("ri-mic-line", "ri-mic-fill");
+  };
+
+  recognition.onerror = (event) => {
+    alert("Speech recognition error: " + event.error);
+    micButton.classList.remove("mic-active");
+    micIcon.classList.replace("ri-mic-line", "ri-mic-fill");
+  };
+} else {
+  alert("Your browser does not support Speech Recognition.");
+}

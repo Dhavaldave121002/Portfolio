@@ -616,33 +616,34 @@
   </section>
 
 
-  <div id="contact" class="container-fluid contact-section d-flex justify-content-center align-items-center">
-    <div class="contact-card mt-5">
-      <h2 class="text-center">Let's Connect</h2>
-      <form id="contactForm">
-        <div class="mb-3">
-          <input type="text" class="form-control" id="name" placeholder="Your Name" required />
-        </div>
-        <div class="mb-3">
-          <input type="email" class="form-control" id="email" placeholder="Your Email" required />
-        </div>
-        <div class="mb-3">
-          <input type="tel" class="form-control" id="phone" placeholder="Your Phone Number" required />
-        </div>
-        <div class="mb-3">
-          <textarea class="form-control" id="message" rows="4" placeholder="Your Message" required></textarea>
-        </div>
-        <button type="submit" class="send-btn mb-3">
-          <i class="ri-send-plane-fill me-2"></i>Send Message
-        </button>
-  
-        <div class="icon-links">
-          <a href="#" id="emailLink" title="Send via Email"><i class="ri-mail-send-line"></i></a>
-          <a href="#" id="whatsappLink" title="Send via WhatsApp"><i class="ri-whatsapp-fill"></i></a>
-          <a href="#" id="callLink" title="Call Now"><i class="ri-phone-fill"></i></a>
-        </div>
-      </form>
-    </div>
+  <div class="container py-5">
+    <h2 class="text-center mb-4">
+      Let's Connect
+      <button type="button" id="startMic" class="btn btn-outline-dark ms-3" title="Speak to Fill">
+        <i class="ri-mic-fill"></i>
+      </button>
+    </h2>
+    <form id="contact-form" class="row g-3">
+      <div class="col-md-6">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+      </div>
+      <div class="col-md-6">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+      </div>
+      <div class="col-12">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" rows="4" placeholder="Type your message"></textarea>
+      </div>
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-dark">Send</button>
+      </div>
+    </form>
   </div>
   <footer class="footer-copy">
     <span>©</span> 2025 Dhaval Dave. All rights reserved.
