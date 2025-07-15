@@ -428,9 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========== CONTACT FORM ==========
-  function openGmailWithMessage() {
+  function openGmailWithMessage(name = "", email = "", phone = "", message = "") {
     const subject = encodeURIComponent("Contact From Portfolio");
-    // const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`, "_blank");
   }
 
@@ -440,6 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email")?.value.trim();
     const phone = document.getElementById("phone")?.value.trim();
     const message = document.getElementById("message")?.value.trim();
+
     if (!name || !email || !phone || !message) {
       alert("Please fill in all fields");
     } else {
@@ -449,21 +450,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
-    // const name = document.getElementById("name")?.value.trim() || " ";
-    openGmailWithMessage();
+    const subject = encodeURIComponent("Contact From Portfolio");
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}`, "_blank");
   });
 
   document.getElementById("whatsappLink")?.addEventListener("click", e => {
     e.preventDefault();
-    const name = document.getElementById("name")?.value.trim() || " ";
-    window.open(`https://wa.me/918511172099?text=${encodeURIComponent(`Hi,I saw your portfolio and want to connect.`)}`, "_blank");
+    window.open(`https://wa.me/918511172099?text=${encodeURIComponent("Hi, I saw your portfolio and want to connect.")}`, "_blank");
   });
 
   document.getElementById("callLink")?.addEventListener("click", e => {
     e.preventDefault();
     window.open("tel:8511172099");
   });
-
   // ========== MARQUEE & INFINITE ANIM ==========
   function initMarquee() {
     const track = document.querySelector(".marquee-track");
