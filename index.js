@@ -450,14 +450,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
     const name = document.getElementById("name")?.value.trim() || " ";
-    openGmailWithMessage(name,
-     document.getElementById("phone")?.value || " ", document.getElementById("message")?.value || " ");
+    openGmailWithMessage(name,document.getElementById("phone")?.value || " ", document.getElementById("message")?.value || " ");
   });
 
   document.getElementById("whatsappLink")?.addEventListener("click", e => {
     e.preventDefault();
-    const name = document.getElementById("name")?.value.trim() || "Visitor";
-    window.open(`https://wa.me/918511172099?text=${encodeURIComponent(`Hi, I'm ${name}. I saw your portfolio and want to connect.`)}`, "_blank");
+    const name = document.getElementById("name")?.value.trim() || " ";
+    window.open(`https://wa.me/918511172099?text=${encodeURIComponent(`Hi,I saw your portfolio and want to connect.`)}`, "_blank");
   });
 
   document.getElementById("callLink")?.addEventListener("click", e => {
