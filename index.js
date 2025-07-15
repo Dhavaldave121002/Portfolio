@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       ioAnimate(document.querySelectorAll(".road-map-card, .neon-card, .project-card"));
       ioAnimate(document.querySelectorAll(".about-heading, .about-intro"), { y: 20, duration: 0.4 });
-      ioAnimate(document.querySelectorAll(".contact-card"), { y: 20, duration: 0.3 });
+      // ioAnimate(document.querySelectorAll(".contact-card"), { y: 20, duration: 0.3 });
 
       document.querySelectorAll(".skill-card").forEach(card => {
         const obs = new IntersectionObserver(entries => {
