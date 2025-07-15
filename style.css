@@ -527,12 +527,6 @@ main::after {
   background-color: rgba(46, 45, 45, 0.747);
   backdrop-filter: blur(5px);
 }
-/* Hide .btnmobile on screens smaller than 576px */
-@media (max-width: 575.98px) {
-  .btnmobile {
-    display: none !important;
-  }
-}
 
 /* ===================== About Section ===================== */
 .about-section {
