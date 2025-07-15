@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      ["about-heading", "about-intro", "contact-card", "footer-copy"].forEach(sel => {
+      ["about-heading", "about-intro", "footer-copy"].forEach(sel => {
         gsap.from(`.${sel}`, {
           scrollTrigger: { trigger: `.${sel}`, start: sel === "footer-copy" ? "top 100%" : "top 90%", toggleActions: "play none none none" },
           opacity: 0, y: 20, duration: 0.5, ease: "power2.out"
