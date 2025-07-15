@@ -449,8 +449,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
-    const name = document.getElementById("name")?.value.trim() || "Visitor";
-    openGmailWithMessage(name, document.getElementById("email")?.value || "No email", document.getElementById("phone")?.value || "No phone", document.getElementById("message")?.value || "Hi, I'd like to connect with you.");
+    const name = document.getElementById("name")?.value.trim() || " ";
+    openGmailWithMessage(name, document.getElementById("email")?.value || " ", document.getElementById("phone")?.value || " ", document.getElementById("message")?.value || " ");
   });
 
   document.getElementById("whatsappLink")?.addEventListener("click", e => {
