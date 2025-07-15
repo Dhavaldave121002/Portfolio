@@ -450,11 +450,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   
-  // Email icon always opens Gmail (even on mobile)
+  // Email icon opens default mail app (Gmail/Apple Mail) with pre-filled email
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
     const subject = encodeURIComponent("Contact From Portfolio");
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}`, "_blank");
+    const mailtoLink = `mailto:dhavaldave121002@gmail.com?subject=${subject}`;
+    window.location.href = mailtoLink; // Opens default mail app
   });
   
   // WhatsApp icon opens WhatsApp
