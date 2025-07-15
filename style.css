@@ -171,34 +171,76 @@ header {
   width: 100%;
 }
 
-.main-nav {
-  list-style: none;
-  gap: 20px;
-  padding: 0;
-  margin: 10px 0;
-  justify-content: center;
-}
-
+/* Active Navigation State - Responsive */
 .nav-link {
-  color: rgba(245, 245, 245, 0.822);
-  font-size: clamp(12px, 1.5vw, 14px);
-  /* Adjusted with clamp */
-  text-decoration: none;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: all 0.5s ease;
-  font-family: abc;
+  position: relative;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
 }
 
-.nav-link:hover {
-  color: goldenrod;
-  transform: scale(1.2);
+/* Desktop/Tablet Styles */
+@media (min-width: 768px) {
+  .nav-link.active {
+    color: goldenrod !important;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 217, 0, 0.5);
+  }
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, goldenrod, transparent);
+    transform: scaleX(1);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 217, 0, 0.5);
+  }
 }
 
-.nav-link:focus,
-.nav-link:active {
-  color: goldenrod !important;
-  transform: scale(1.2);
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .main-nav .nav-link.active {
+    color: goldenrod !important;
+    font-weight: 600;
+    background-color: rgba(255, 215, 0, 0.1);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 217, 0, 0.3);
+  }
+
+  .main-nav .nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, goldenrod, transparent);
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 0 10px rgba(255, 217, 0, 0.5);
+  }
+}
+
+/* Animation for active state */
+@keyframes activePulse {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 217, 0, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 217, 0, 0.7);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 217, 0, 0.3);
+  }
+}
+
+.nav-link.active {
+  animation: activePulse 2s infinite ease-in-out;
 }
 
 .menu-icon {
