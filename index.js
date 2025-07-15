@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ========== UTILITY FUNCTIONS ==========
+  // ===== UTILITIES =====
   const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
   const debounce = (func, wait = 100) => {
     let timeout;
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // ========== TYPED SKILLS ==========
+  // ===== TYPED ANIMATION =====
   function initTypedSkills() {
     if (window.Typed) {
       try {
@@ -31,12 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ========== GSAP SETUP ==========
+  // ===== GSAP SETUP =====
   if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined" && !isMobile()) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  // ========== PRELOADER ==========
+  // ===== PRELOADER =====
   const preloader = document.querySelector(".preloader");
   let mainTimeline;
 
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     animateAboutImageFrame();
   }
 
-  // ========== .tog DESKTOP ANIMATION ==========
+  // ===== .tog ANIMATION FOR DESKTOP =====
   function animateTogDesktop() {
     if (!isMobile() && typeof gsap !== "undefined") {
       const togs = document.querySelectorAll(".tog");
@@ -78,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
       });
-      // Floating and glowing
       gsap.to(togs, {
         y: "+=6",
         repeat: -1,
@@ -96,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ========== ABOUT IMAGE FRAME ANIMATION ==========
+  // ===== ABOUT IMAGE FRAME =====
   function animateAboutImageFrame() {
     const frame = document.querySelector(".about-img-frame");
     if (frame) {
@@ -129,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ========== MAIN TIMELINE ==========
+  // ===== MAIN GSAP TIMELINE (Desktop) =====
   if (!isMobile() && typeof gsap !== "undefined") {
     mainTimeline = gsap.timeline({ paused: true });
     mainTimeline
@@ -145,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .add(animateAboutImageFrame, "start+=0.8");
   }
 
+  // ===== PRELOADER ANIMATION =====
   if (preloader && typeof gsap !== "undefined") {
     const timeline = gsap.timeline({ onComplete: runInit });
     if (isMobile()) {
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     runInit();
   }
 
-  // ========== NAVIGATION MENU ==========
+  // ===== NAVIGATION =====
   const menuIcon = document.querySelector(".menu-icon");
   const nav = document.querySelector(".main-nav");
   const togs = document.querySelectorAll(".tog");
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== SMOOTH SCROLL ==========
+  // ===== SMOOTH SCROLLING =====
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener("click", e => {
       const target = document.querySelector(link.getAttribute("href"));
@@ -222,12 +222,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ========== SECTION ANIMATIONS ==========
+  // ===== SECTION ANIMATIONS =====
   function setupScroll() {
     if (typeof gsap === "undefined") return;
 
+    // Mobile: Intersection Observer animations (lightweight)
     if (isMobile()) {
-      // Mobile: Intersection Observer
       const ioAnimate = (els, { x = 0, y = 30, scale = 1, duration = 0.5, delay = 0 } = {}) => {
         const obs = new IntersectionObserver(entries => {
           entries.forEach(e => {
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         obs.observe(card);
       });
     } else {
-      // Desktop GSAP/ScrollTrigger animations
+      // Desktop: GSAP ScrollTrigger
       gsap.utils.toArray(".road-map-card").forEach((card, i) => {
         const icon = card.querySelector(".card-icon");
         gsap.from(card, {
@@ -316,6 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // ===== SKILL CIRCLE ANIMATION =====
   function animateSkillCircle(card) {
     const pct = parseInt(card.dataset.percentage) || 0;
     const circle = card.querySelector("circle.progress");
@@ -344,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }));
 
-  // ========== PROJECT MODAL ==========
+  // ===== PROJECT MODAL LOGIC =====
   const projects = {
     FireApp: {
       title: "Champion Site",
@@ -381,13 +382,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "back.out(1.7)"
       });
     } else {
-      // Mobile: subtle fade-in
       const content = modal.querySelector('.modal-content');
       if (content) {
         content.style.opacity = "1";
         content.style.transform = "none";
       }
     }
+    // Accessibility focus trap could be added here for modals.
   };
 
   window.closeModal = function() {
@@ -409,17 +410,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Attach click listeners to project cards (data-project attribute)
   document.querySelectorAll('.project-card[data-project]').forEach(card => {
     card.addEventListener('click', function(e) {
-      // Prevent bubbling if the card contains links/buttons
       if (e.target.closest('a,button')) return;
       const key = card.dataset.project;
       window.openModal(key);
     });
   });
 
-  // Close modal when clicking outside content
   document.addEventListener("click", (e) => {
     const modal = document.getElementById("projectModal");
     if (modal && modal.style.display === "block" && !e.target.closest(".modal-content") && !e.target.closest('.project-card')) {
@@ -427,64 +425,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ========== CONTACT FORM ==========
+  // ===== CONTACT FORM LOGIC =====
   function isMobileDevice() {
     return /Mobi|Android|iPhone/i.test(navigator.userAgent);
   }
-  
   function openGmailWithMessage(name = "", email = "", phone = "", message = "") {
     const subject = encodeURIComponent("Contact From Portfolio");
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`, "_blank");
   }
-  
   function sendMessage(name, email, phone, message) {
     if (isMobileDevice()) {
-      // Open WhatsApp on mobile when using the Send button
       const whatsappMessage = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`;
       const whatsappURL = `https://wa.me/918511172099?text=${encodeURIComponent(whatsappMessage)}`;
       window.open(whatsappURL, "_blank");
     } else {
-      // Open Gmail on desktop when using the Send button
       openGmailWithMessage(name, email, phone, message);
     }
   }
-  
-  // Email icon opens default mail app (Gmail/Apple Mail) with pre-filled email
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
     const subject = encodeURIComponent("Contact From Portfolio");
     const mailtoLink = `mailto:dhavaldave121002@gmail.com?subject=${subject}`;
-    window.location.href = mailtoLink; // Opens default mail app
+    window.location.href = mailtoLink;
   });
-  
-  // WhatsApp icon opens WhatsApp
   document.getElementById("whatsappLink")?.addEventListener("click", e => {
     e.preventDefault();
     window.open(`https://wa.me/918511172099?text=${encodeURIComponent("Hi, I saw your portfolio and want to connect.")}`, "_blank");
   });
-  
-  // Call icon opens phone dialer
   document.getElementById("callLink")?.addEventListener("click", e => {
     e.preventDefault();
     window.open("tel:8511172099");
   });
-  
-  // Send button behavior (WhatsApp on mobile, Gmail on desktop)
   document.querySelector(".send-btn")?.addEventListener("click", e => {
     e.preventDefault();
     const name = document.getElementById("name")?.value.trim();
     const email = document.getElementById("email")?.value.trim();
     const phone = document.getElementById("phone")?.value.trim();
     const message = document.getElementById("message")?.value.trim();
-  
     if (!name || !email || !phone || !message) {
       alert("Please fill in all fields");
     } else {
       sendMessage(name, email, phone, message);
     }
   });
-  // ========== MARQUEE & INFINITE ANIM ==========
+
+  // ===== MARQUEE ANIMATION =====
   function initMarquee() {
     const track = document.querySelector(".marquee-track");
     if (!track) return;
@@ -515,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ========== INITIAL MOBILE SETUP ==========
+  // ===== MOBILE INITIAL STYLES =====
   if (isMobile()) {
     document.querySelectorAll(".part").forEach(el => {
       el.style.opacity = "1";
