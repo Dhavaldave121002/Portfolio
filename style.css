@@ -425,7 +425,12 @@ main::after {
   /* Lighter blur for slight depth effect */
   z-index: -1;
 }
-
+.btnpart{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
 .sec1 {
   gap: 20px;
   z-index: 11;
