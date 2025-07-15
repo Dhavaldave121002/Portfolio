@@ -428,9 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========== CONTACT FORM ==========
-  function openGmailWithMessage(name, email, phone, message) {
+  function openGmailWithMessage() {
     const subject = encodeURIComponent("Contact From Portfolio");
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
+    // const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`, "_blank");
   }
 
@@ -450,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
     // const name = document.getElementById("name")?.value.trim() || " ";
-    // openGmailWithMessage(name,document.getElementById("phone")?.value || " ", document.getElementById("message")?.value || " ");
+    openGmailWithMessage();
   });
 
   document.getElementById("whatsappLink")?.addEventListener("click", e => {
