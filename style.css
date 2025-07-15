@@ -159,7 +159,7 @@ header {
 
 /* Add padding to body to prevent content from being hidden behind header */
 body {
-  padding-top: 100px; /* Should match header height */
+  padding-top: 100px; /* Matches header height */
 }
 
 /* Optional: Header scroll effect */
@@ -169,7 +169,7 @@ header.scrolled {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
 }
 
-/* Logo styles */
+/* ===================== Logo ===================== */
 .logo {
   display: flex;
   align-items: center;
@@ -179,6 +179,7 @@ header.scrolled {
 .logo img {
   height: 80px;
   width: auto;
+  margin-right: 10px;
   transition: all 0.3s ease;
 }
 
@@ -190,46 +191,64 @@ header.scrolled .logo img {
   font-size: clamp(24px, 4vw, 30px);
   font-weight: 800;
   color: goldenrod;
-  margin-left: 15px;
   font-family: abc;
+  margin-left: 15px;
+  flex-shrink: 0;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-/* Navigation */
+/* ===================== Navigation ===================== */
 .nav-wrapper {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .main-nav {
   display: flex;
+  list-style: none;
   gap: 25px;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
 }
 
 .nav-link {
   color: rgba(245, 245, 245, 0.822);
   font-family: abc;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: clamp(12px, 1.5vw, 16px);
   text-decoration: none;
-  position: relative;
+  text-transform: uppercase;
   transition: all 0.3s ease;
   padding: 10px 0;
+  position: relative;
 }
 
-/* Mobile menu button */
+.nav-link:hover,
+.nav-link:focus,
+.nav-link:active {
+  color: goldenrod !important;
+  transform: scale(1.2);
+}
+
+/* ===================== Mobile Menu ===================== */
 .menu-icon {
   display: none;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   z-index: 1001;
 }
 
 .menu-icon i {
   font-size: 28px;
+  font-weight: bold;
   color: goldenrod;
+  padding: 8px;
 }
 
-/* Responsive adjustments */
+/* ===================== Responsive ===================== */
 @media (max-width: 992px) {
   .main-nav {
     position: fixed;
@@ -244,15 +263,15 @@ header.scrolled .logo img {
     transition: right 0.4s ease;
     z-index: 1000;
   }
-  
+
   .main-nav.active {
     right: 0;
   }
-  
+
   .menu-icon {
-    display: block;
+    display: flex;
   }
-  
+
   .nav-link {
     font-size: 1.3rem;
     padding: 15px 0;
@@ -264,20 +283,21 @@ header.scrolled .logo img {
     height: 80px;
     padding: 10px 15px;
   }
-  
+
   .logo img {
     height: 60px;
   }
-  
+
   .logo h1 {
     font-size: 1.2rem;
     margin-left: 10px;
   }
-  
+
   .main-nav {
     width: 100%;
   }
 }
+
 
 .tog {
   /* Remove these commented lines:
