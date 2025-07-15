@@ -1364,7 +1364,7 @@ main::after {
   .tog {
     height: 40px;
     width: 40px;
-    left: -40px;
+    left: -60px;
     border-radius: 20%;
 
   }
