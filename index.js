@@ -450,7 +450,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("emailLink")?.addEventListener("click", e => {
     e.preventDefault();
     const name = document.getElementById("name")?.value.trim() || " ";
-    openGmailWithMessage(name, document.getElementById("email")?.value || " ", document.getElementById("phone")?.value || " ", document.getElementById("message")?.value || " ");
+    openGmailWithMessage(name,
+     document.getElementById("phone")?.value || " ", document.getElementById("message")?.value || " ");
   });
 
   document.getElementById("whatsappLink")?.addEventListener("click", e => {
