@@ -428,10 +428,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========== CONTACT FORM ==========
+  function isMobileDevice() {
+    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  }
+
   function openGmailWithMessage(name = "", email = "", phone = "", message = "") {
     const subject = encodeURIComponent("Contact From Portfolio");
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`);
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=dhavaldave121002@gmail.com&su=${subject}&body=${body}`, "_blank");
+  }
+
+  function sendMessage(name, email, phone, message) {
+    if (isMobileDevice()) {
+      const whatsappMessage = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`;
+      const whatsappURL = `https://wa.me/918511172099?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappURL, "_blank");
+    } else {
+      openGmailWithMessage(name, email, phone, message);
+    }
   }
 
   document.querySelector(".send-btn")?.addEventListener("click", e => {
@@ -444,7 +458,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!name || !email || !phone || !message) {
       alert("Please fill in all fields");
     } else {
-      openGmailWithMessage(name, email, phone, message);
+      sendMessage(name, email, phone, message);
     }
   });
 
