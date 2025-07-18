@@ -349,17 +349,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const projects = {
     FireApp: {
       title: "Champion Site",
-      description: "An all-in-one platform that lets users book services (like travel, appointments), order products (food, groceries, electronics), and manage stock market investments from a single dashboard.",
+      description: "A multi-module web app including ecommerce, food delivery, booking, and stock market pages. Built with responsive design and user authentication.Tech Used: Flutter(Dart), Firebase",
       github: "https://github.com/Dhavaldave121002/Champions_Site_Flutter",
     },
     IgniteUI: {
       title: "Travel App",
-      description: "A modern travel platform that lets users search destinations, explore tour packages, and book trips — all from a beautifully designed, responsive interface built for fast performance and smooth navigation.",
+      description: "Mobile travel booking app showing destinations, pricing, and date filters. Designed using Flutter with a focus on user-friendly navigation.Tech Used: Flutter(Dart), Firebase",
       github: "https://github.com/Dhavaldave121002/Flutter_Travel_App",
     },
     BlazeWeb: {
       title: "Stock Management",
-      description: "A lightweight, high-performance web app that allows users to track stock portfolios, view performance charts, and monitor investments in real-time — all within an animated, optimized dashboard interface.",
+      description: "A desktop app to manage inventory, categories, users, and orders. Built with CRUD functionalities.Tech Used: ASP.NET",
       github: "https://github.com/Dhavaldave121002/Stock-Management",
     },
   };
