@@ -1115,7 +1115,7 @@ main::after {
       font-weight: bold;
       font-size: 0.85rem;
       background: linear-gradient(to right, rgba(255, 217, 0, 0.952), rgba(245, 245, 245, 0.822));
-      -webkit-background-clip: text;
+      /* -webkit-background-clip: text; */
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
     }
