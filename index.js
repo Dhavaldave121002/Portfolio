@@ -10,10 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // ===== GSAP SETUP =====
-  if (typeof gsap !== "undefined") {
-    if (typeof ScrollTrigger !== "undefined") {
-      gsap.registerPlugin(ScrollTrigger);
-    }
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
   }
 
   // ===== TYPED ANIMATION =====
@@ -193,24 +191,46 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== NAVIGATION =====
   const menuIcon = document.querySelector(".menu-icon");
   const nav = document.querySelector(".main-nav");
-  const togs = document.querySelectorAll(".tog");
+  const navItems = document.querySelectorAll(".nav-item");
+
+  // Initialize navigation items
+  if (!isMobile() && typeof gsap !== "undefined") {
+    gsap.set(navItems, { opacity: 1, x: 0 });
+  }
 
   if (menuIcon && nav) {
     menuIcon.addEventListener("click", () => {
       nav.classList.toggle("active");
-      document.body.style.overflow = nav.classList.contains("active") && isMobile() ? "hidden" : "auto";
-      if (!isMobile() && nav.classList.contains("active") && typeof gsap !== "undefined") {
-        gsap.fromTo(".nav .nav-item", { opacity: 0, x: 100 }, {
-          opacity: 1, x: 0, stagger: 0.08, duration: 0.15, ease: "power2.out"
-        });
-        document.body.style.overflow = "hidden";
-      } else if (!isMobile() && typeof gsap !== "undefined") {
-        gsap.to(".nav .nav-item", { opacity: 0, x: -50, duration: 0.15 });
+      document.body.style.overflow = nav.classList.contains("active") ? "hidden" : "auto";
+      
+      if (!isMobile() && typeof gsap !== "undefined") {
+        if (nav.classList.contains("active")) {
+          gsap.fromTo(navItems, 
+            { opacity: 0, x: 100 }, 
+            {
+              opacity: 1, 
+              x: 0, 
+              stagger: 0.08, 
+              duration: 0.15, 
+              ease: "power2.out"
+            }
+          );
+        } else {
+          gsap.to(navItems, { 
+            opacity: 0, 
+            x: -50, 
+            duration: 0.15,
+            onComplete: () => {
+              gsap.set(navItems, { opacity: 1, x: 0 });
+            }
+          });
+        }
       }
     });
 
-    document.querySelectorAll(".nav-item a").forEach(a => {
-      a.addEventListener("click", () => {
+    // Close mobile menu when clicking nav items
+    navItems.forEach(item => {
+      item.addEventListener("click", () => {
         if (isMobile() && nav.classList.contains("active")) {
           nav.classList.remove("active");
           document.body.style.overflow = "auto";
@@ -220,43 +240,46 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== SMOOTH SCROLLING WITH SCROLLTRIGGER SUPPORT =====
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", function(e) {
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        e.preventDefault();
-        
-        if (typeof gsap !== "undefined" && !isMobile()) {
-          // Use GSAP's scrollTo for better ScrollTrigger compatibility
-          gsap.to(window, {
-            duration: 0.8,
-            scrollTo: {
-              y: target,
-              offsetY: 80,
-              autoKill: false
-            },
-            onComplete: () => {
-              // Refresh ScrollTrigger after scroll completes
-              if (typeof ScrollTrigger !== "undefined") {
-                ScrollTrigger.refresh();
-              }
-            }
-          });
-        } else {
-          // Fallback for mobile or when GSAP isn't available
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        }
+  function handleNavClick(e) {
+    const targetId = this.getAttribute("href");
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    
+    e.preventDefault();
+    
+    // Close mobile menu if open
+    if (nav && nav.classList.contains("active")) {
+      nav.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
 
-        // Close mobile menu if open
-        if (isMobile() && nav && nav.classList.contains("active")) {
-          nav.classList.remove("active");
-          document.body.style.overflow = "auto";
+    // Scroll to target
+    if (typeof gsap !== "undefined") {
+      gsap.to(window, {
+        duration: 0.8,
+        scrollTo: {
+          y: target,
+          offsetY: 80,
+          autoKill: false
+        },
+        onComplete: () => {
+          if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.refresh();
+          }
         }
-      }
-    });
+      });
+    } else {
+      // Fallback for when GSAP isn't available
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }
+
+  // Apply click handlers to all navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", handleNavClick);
   });
 
   // ===== SCROLL ANIMATIONS =====
