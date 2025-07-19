@@ -1,95 +1,175 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+  // ======================
+  // === DEVICE DETECTION ===
+  // ======================
+  const Device = {
+    isMobile: () => window.matchMedia("(max-width: 767px)").matches,
+    isTablet: () => window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches,
+    isDesktop: () => window.matchMedia("(min-width: 1024px)").matches,
+    isReducedMotion: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    canHover: () => window.matchMedia("(hover: hover)").matches,
+    getType: function() {
+      if (this.isMobile()) return 'mobile';
+      if (this.isTablet()) return 'tablet';
+      return 'desktop';
+    }
+  };
+
+  // ======================
+  // === PERFORMANCE UTILS ===
+  // ======================
   const debounce = (func, wait = 100) => {
     let timeout;
-    return function (...args) {
+    return function(...args) {
       clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
   };
 
+  // ======================
   // === GSAP SETUP ===
+  // ======================
   if (typeof gsap !== "undefined") {
     if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
     if (typeof ScrollToPlugin !== "undefined") gsap.registerPlugin(ScrollToPlugin);
   }
 
-  // === NAVIGATION ELEMENTS ===
-  const nav = document.querySelector(".main-nav");
-  const menuIcon = document.querySelector(".menu-icon");
-  const navItems = document.querySelectorAll(".nav-item");
-  const navLinks = document.querySelectorAll('a[href^="#"]');
-
-  // === SMOOTH NAVIGATION SCROLL ===
-  function handleNavClick(e) {
-    e.preventDefault();
-
-    const targetId = this.getAttribute("href");
-    if (!targetId || targetId === "#") return;
-
-    const target = document.querySelector(targetId);
-    if (!target) {
-      console.warn("No matched section for:", targetId);
-      return;
-    }
-
-    // Close Mobile Nav if open
-    if (nav?.classList.contains("active")) {
-      nav.classList.remove("active");
-      document.body.style.overflow = "auto";
-    }
-
-    // Scroll using GSAP if available
-    if (typeof gsap !== "undefined" && gsap.plugins?.scrollTo) {
-      gsap.to(window, {
-        duration: 0.8,
-        scrollTo: { y: target, offsetY: 80, autoKill: false },
-        onComplete: () => {
-          if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
-        }
-      });
-    } else {
-      // Fallback to native smooth scroll
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-
-  // Initialize navigation links
-  navLinks.forEach(link => {
-    link.addEventListener("click", handleNavClick);
-  });
-
-  // === TYPED ANIMATION ===
-  function initTypedSkills() {
-    if (window.Typed) {
-      new Typed("#typed-skills", {
-        strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
-        typeSpeed: 60,
-        backSpeed: 30,
-        backDelay: 700,
-        loop: true
-      });
-    }
-  }
-
+  // ======================
   // === PRELOADER ===
+  // ======================
   const preloader = document.querySelector(".preloader");
   let mainTimeline;
 
   function runInit() {
     if (preloader) preloader.style.display = "none";
     document.body.style.overflow = "auto";
-    if (!isMobile() && mainTimeline) mainTimeline.play();
+    if (!Device.isMobile() && mainTimeline) mainTimeline.play();
     initTypedSkills();
     animateTogDesktop();
     animateAboutImageFrame();
     setupScrollAnimations();
   }
 
-  // ===== .tog ANIMATION =====
+  // Preloader animation
+  if (preloader && typeof gsap !== "undefined") {
+    const timeline = gsap.timeline({ onComplete: runInit });
+    
+    if (Device.isMobile()) {
+      timeline
+        .set(".preloader", { opacity: 1, display: "flex" })
+        .set([".ring1", ".ring2", ".ring3", ".core-logo"], { scale: 0.8, opacity: 0 })
+        .set(".loader-title", { y: 20, opacity: 0 })
+        .to([".ring1", ".ring2", ".ring3"], { 
+          scale: 1, 
+          opacity: 1, 
+          duration: 0.5, 
+          ease: "power2.out", 
+          stagger: 0.3 
+        })
+        .to(".core-logo", { 
+          scale: 1, 
+          opacity: 1, 
+          duration: 0.5, 
+          ease: "power2.out" 
+        })
+        .to(".loader-title", { 
+          y: 0, 
+          opacity: 1, 
+          duration: 0.4, 
+          ease: "power2.out" 
+        })
+        .to(".preloader", { 
+          opacity: 0, 
+          duration: 0.5, 
+          delay: 0.5, 
+          ease: "power2.out" 
+        });
+    } else {
+      timeline
+        .from(".ring1", { 
+          scale: 0, 
+          rotation: 0, 
+          opacity: 0, 
+          duration: 0.5, 
+          ease: "back.out(1.7)" 
+        })
+        .from(".ring2", { 
+          scale: 0, 
+          rotation: 180, 
+          opacity: 0, 
+          duration: 0.5, 
+          ease: "back.out(1.7)" 
+        }, "-=0.2")
+        .from(".ring3", { 
+          scale: 0, 
+          rotation: -180, 
+          opacity: 0, 
+          duration: 0.5, 
+          ease: "back.out(1.7)" 
+        }, "-=0.2")
+        .from(".core-logo", { 
+          scale: 0, 
+          rotateY: 360, 
+          opacity: 0, 
+          duration: 0.5, 
+          ease: "elastic.out(1, 0.5)" 
+        }, "-=0.2")
+        .from(".flare", { 
+          scale: 0, 
+          opacity: 0, 
+          duration: 0.5, 
+          ease: "power2.out" 
+        }, "-=0.4")
+        .from(".loader-title", { 
+          y: 40, 
+          opacity: 0, 
+          duration: 0.4, 
+          ease: "power2.out" 
+        }, "-=0.3")
+        .to(".preloader", { 
+          opacity: 0, 
+          duration: 0.5, 
+          delay: 0.1, 
+          ease: "power4.out" 
+        });
+    }
+  } else {
+    runInit();
+  }
+
+  // ======================
+  // === TYPED ANIMATION ===
+  // ======================
+  function initTypedSkills() {
+    const typedElement = document.getElementById("typed-skills");
+    if (!typedElement) return;
+    
+    // Check if Typed.js is loaded
+    if (typeof Typed !== "undefined") {
+      new Typed("#typed-skills", {
+        strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
+        typeSpeed: 60,
+        backSpeed: 30,
+        backDelay: 700,
+        loop: true,
+        showCursor: true,
+        cursorChar: "|",
+        autoInsertCss: true
+      });
+    } else {
+      // Fallback if Typed.js isn't available
+      typedElement.textContent = "Web Developer";
+    }
+  }
+
+  // ======================
+  // === SPECIAL ANIMATIONS ===
+  // ======================
   function animateTogDesktop() {
-    if (!isMobile() && typeof gsap !== "undefined") {
-      const togs = document.querySelectorAll(".tog");
+    const togs = document.querySelectorAll(".tog");
+    if (!togs.length) return;
+
+    if (!Device.isMobile() && typeof gsap !== "undefined") {
       gsap.set(togs, { opacity: 1, x: 0, scale: 1, pointerEvents: "auto" });
       gsap.fromTo(togs, {
         opacity: 0,
@@ -129,8 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         duration: 2.5,
         ease: "sine.inOut"
       });
-    } else if (isMobile()) {
-      const togs = document.querySelectorAll(".tog");
+    } else {
       togs.forEach(tog => {
         tog.style.opacity = "1";
         tog.style.transform = "none";
@@ -138,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===== ABOUT IMAGE FRAME =====
   function animateAboutImageFrame() {
     const frame = document.querySelector(".about-img-frame");
     if (!frame) return;
@@ -147,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     frame.style.visibility = "visible";
     
     if (typeof gsap !== "undefined") {
-      if (!isMobile()) {
+      if (!Device.isMobile()) {
         gsap.set(frame, { scale: 0.85, filter: "blur(6px)", opacity: 0 });
         gsap.to(frame, {
           scrollTrigger: {
@@ -171,7 +249,6 @@ document.addEventListener("DOMContentLoaded", () => {
           ease: "sine.inOut"
         });
       } else {
-        // Mobile animation
         gsap.from(frame, {
           opacity: 0,
           scale: 0.9,
@@ -182,55 +259,120 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===== MAIN GSAP TIMELINE (Desktop) =====
-  if (!isMobile() && typeof gsap !== "undefined") {
+  // ======================
+  // === MAIN TIMELINE ===
+  // ======================
+  if (!Device.isMobile() && typeof gsap !== "undefined") {
     mainTimeline = gsap.timeline({ paused: true });
     mainTimeline
-      .from(".logo", { y: -80, opacity: 0, duration: 0.7, ease: "bounce.out", scale: 0.5 }, "start")
-      .from(".logo img", { rotation: 360, duration: 0.7, ease: "power2.out" }, "start")
-      .from(".nav .nav-item", { x: 80, opacity: 0, duration: 0.3, ease: "back.out", scale: 0.5, stagger: 0.07 }, "start+=0.2")
-      .from(".sec1", { x: -100, opacity: 0, duration: 0.7, ease: "power2.out" }, "start+=0.2")
-      .from(".sec2 img", { x: 100, opacity: 0, duration: 0.6, ease: "power2.out" }, "start+=0.3")
-      .from(".hero h1", { y: -50, opacity: 0, duration: 0.7, ease: "power3.out", delay: 0.1 }, "start+=0.4")
-      .from(".hero p", { y: 30, opacity: 0, duration: 0.5, ease: "power2.out", delay: 0.15 }, "start+=0.5")
-      .from(".btn", { scale: 0.8, opacity: 0, duration: 0.6, ease: "back.out(1.7)", delay: 0.2 }, "start+=0.6")
+      .from(".logo", { 
+        y: -80, 
+        opacity: 0, 
+        duration: 0.7, 
+        ease: "bounce.out", 
+        scale: 0.5 
+      }, "start")
+      .from(".logo img", { 
+        rotation: 360, 
+        duration: 0.7, 
+        ease: "power2.out" 
+      }, "start")
+      .from(".nav .nav-item", { 
+        x: 80, 
+        opacity: 0, 
+        duration: 0.3, 
+        ease: "back.out", 
+        scale: 0.5, 
+        stagger: 0.07 
+      }, "start+=0.2")
+      .from(".sec1", { 
+        x: -100, 
+        opacity: 0, 
+        duration: 0.7, 
+        ease: "power2.out" 
+      }, "start+=0.2")
+      .from(".sec2 img", { 
+        x: 100, 
+        opacity: 0, 
+        duration: 0.6, 
+        ease: "power2.out" 
+      }, "start+=0.3")
+      .from(".hero h1", { 
+        y: -50, 
+        opacity: 0, 
+        duration: 0.7, 
+        ease: "power3.out", 
+        delay: 0.1 
+      }, "start+=0.4")
+      .from(".hero p", { 
+        y: 30, 
+        opacity: 0, 
+        duration: 0.5, 
+        ease: "power2.out", 
+        delay: 0.15 
+      }, "start+=0.5")
+      .from(".btn", { 
+        scale: 0.8, 
+        opacity: 0, 
+        duration: 0.6, 
+        ease: "back.out(1.7)", 
+        delay: 0.2 
+      }, "start+=0.6")
       .add(animateTogDesktop, "start+=0.7")
       .add(animateAboutImageFrame, "start+=0.8");
   }
 
-  // ===== PRELOADER ANIMATION =====
-  if (preloader && typeof gsap !== "undefined") {
-    const timeline = gsap.timeline({ onComplete: runInit });
-    if (isMobile()) {
-      timeline
-        .set(".preloader", { opacity: 1, display: "flex" })
-        .set([".ring1", ".ring2", ".ring3", ".core-logo"], { scale: 0.8, opacity: 0 })
-        .set(".loader-title", { y: 20, opacity: 0 })
-        .to([".ring1", ".ring2", ".ring3"], { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out", stagger: 0.3 })
-        .to(".core-logo", { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" })
-        .to(".loader-title", { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" })
-        .to(".preloader", { opacity: 0, duration: 0.5, delay: 0.5, ease: "power2.out" });
-    } else {
-      timeline
-        .from(".ring1", { scale: 0, rotation: 0, opacity: 0, duration: 0.5, ease: "back.out(1.7)" })
-        .from(".ring2", { scale: 0, rotation: 180, opacity: 0, duration: 0.5, ease: "back.out(1.7)" }, "-=0.2")
-        .from(".ring3", { scale: 0, rotation: -180, opacity: 0, duration: 0.5, ease: "back.out(1.7)" }, "-=0.2")
-        .from(".core-logo", { scale: 0, rotateY: 360, opacity: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" }, "-=0.2")
-        .from(".flare", { scale: 0, opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.4")
-        .from(".loader-title", { y: 40, opacity: 0, duration: 0.4, ease: "power2.out" }, "-=0.3")
-        .to(".preloader", { opacity: 0, duration: 0.5, delay: 0.1, ease: "power4.out" });
+  // ======================
+  // === NAVIGATION ===
+  // ======================
+  const nav = document.querySelector(".main-nav");
+  const menuIcon = document.querySelector(".menu-icon");
+  const navItems = document.querySelectorAll(".nav-item");
+  const navLinks = document.querySelectorAll('a[href^="#"]');
+
+  function handleNavClick(e) {
+    e.preventDefault();
+
+    const targetId = this.getAttribute("href");
+    if (!targetId || targetId === "#") return;
+
+    const target = document.querySelector(targetId);
+    if (!target) {
+      console.warn("No matched section for:", targetId);
+      return;
     }
-  } else {
-    runInit();
+
+    // Close Mobile Nav if open
+    if (nav?.classList.contains("active")) {
+      nav.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+
+    // Scroll using GSAP if available
+    if (typeof gsap !== "undefined" && gsap.plugins?.scrollTo) {
+      gsap.to(window, {
+        duration: 0.8,
+        scrollTo: { y: target, offsetY: 80, autoKill: false },
+        onComplete: () => {
+          if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+        }
+      });
+    } else {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
-  // ===== NAVIGATION TOGGLE =====
+  // Initialize navigation links
+  navLinks.forEach(link => {
+    link.addEventListener("click", handleNavClick);
+  });
+
   if (menuIcon && nav) {
     menuIcon.addEventListener("click", () => {
       nav.classList.toggle("active");
       document.body.style.overflow = nav.classList.contains("active") ? "hidden" : "auto";
       
-      if (!isMobile() && typeof gsap !== "undefined") {
+      if (!Device.isMobile() && typeof gsap !== "undefined") {
         if (nav.classList.contains("active")) {
           gsap.fromTo(navItems, 
             { opacity: 0, x: 100 }, 
@@ -258,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close mobile menu when clicking nav items
     navItems.forEach(item => {
       item.addEventListener("click", () => {
-        if (isMobile() && nav.classList.contains("active")) {
+        if (Device.isMobile() && nav.classList.contains("active")) {
           nav.classList.remove("active");
           document.body.style.overflow = "auto";
         }
@@ -266,12 +408,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== SCROLL ANIMATIONS =====
+  // ======================
+  // === SCROLL ANIMATIONS ===
+  // ======================
   function setupScrollAnimations() {
     if (typeof gsap === "undefined") return;
 
     // Mobile: Intersection Observer animations (lightweight)
-    if (isMobile()) {
+    if (Device.isMobile()) {
       const ioAnimate = (els, { x = 0, y = 30, scale = 1, duration = 0.5, delay = 0 } = {}) => {
         const obs = new IntersectionObserver(entries => {
           entries.forEach(e => {
@@ -360,7 +504,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===== SKILL CIRCLE ANIMATION =====
   function animateSkillCircle(card) {
     const pct = +card.dataset.percentage || 0;
     const fill = card.querySelector(".progress-fill");
@@ -369,7 +512,9 @@ document.addEventListener("DOMContentLoaded", () => {
     gsap.to(fill, { width: `${pct}%`, duration: 1.5, ease: "power2.out" });
   }
 
-  // ===== PROJECT MODAL LOGIC =====
+  // ======================
+  // === PROJECT MODALS ===
+  // ======================
   const projects = {
     FireApp: {
       title: "Champion Site",
@@ -397,7 +542,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("modalDescription").textContent = p.description;
     document.getElementById("modalGithub").href = p.github;
     modal.style.display = "block";
-    if (!isMobile() && typeof gsap !== "undefined") {
+    if (!Device.isMobile() && typeof gsap !== "undefined") {
       gsap.from("#projectModal .modal-content", {
         y: 40,
         opacity: 0,
@@ -417,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.closeModal = function() {
     const modal = document.getElementById("projectModal");
     if (!modal) return;
-    if (isMobile() || typeof gsap === "undefined") {
+    if (Device.isMobile() || typeof gsap === "undefined") {
       modal.style.display = "none";
     } else {
       gsap.to("#projectModal .modal-content", {
@@ -448,7 +593,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===== CONTACT FORM LOGIC =====
+  // ======================
+  // === CONTACT FORM ===
+  // ======================
   function isMobileDevice() {
     return /Mobi|Android|iPhone/i.test(navigator.userAgent);
   }
@@ -499,11 +646,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ===== MARQUEE ANIMATION =====
+  // ======================
+  // === MARQUEE ===
+  // ======================
   function initMarquee() {
     const track = document.querySelector(".marquee-track");
     if (!track) return;
-    if (isMobile()) {
+    if (Device.isMobile()) {
       track.style.animation = "marquee 20s linear infinite";
       if (!document.getElementById("marquee-style")) {
         const style = document.createElement("style");
@@ -521,18 +670,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   initMarquee();
 
-  // ===== RESIZE HANDLER =====
+  // ======================
+  // === RESIZE HANDLER ===
+  // ======================
   window.addEventListener("resize", debounce(() => {
     if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
     setupScrollAnimations();
-    if (!isMobile()) {
+    if (!Device.isMobile()) {
       animateTogDesktop();
       animateAboutImageFrame();
     }
   }));
 
-  // ===== MOBILE INITIAL STYLES =====
-  if (isMobile()) {
+  // ======================
+  // === MOBILE FALLBACK ===
+  // ======================
+  if (Device.isMobile()) {
     document.querySelectorAll(".part").forEach(el => {
       el.style.opacity = "1";
       el.style.transform = "none";
