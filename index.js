@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== UTILITIES =====
   const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
   const debounce = (func, wait = 100) => {
     let timeout;
@@ -9,34 +8,71 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   };
 
-  // ===== GSAP SETUP =====
-  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
+  // === GSAP SETUP ===
+  if (typeof gsap !== "undefined") {
+    if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
+    if (typeof ScrollToPlugin !== "undefined") gsap.registerPlugin(ScrollToPlugin);
   }
 
-  // ===== TYPED ANIMATION =====
-  function initTypedSkills() {
-    if (window.Typed) {
-      try {
-        new Typed("#typed-skills", {
-          strings: [
-            "Web Developer",
-            "App Developer",
-            "Frontend Developer",
-            "UI/UX Designer"
-          ],
-          typeSpeed: 60,
-          backSpeed: 30,
-          backDelay: 700,
-          loop: true,
-        });
-      } catch (e) {
-        console.error("Typed.js initialization error:", e);
-      }
+  // === NAVIGATION ELEMENTS ===
+  const nav = document.querySelector(".main-nav");
+  const menuIcon = document.querySelector(".menu-icon");
+  const navItems = document.querySelectorAll(".nav-item");
+  const navLinks = document.querySelectorAll('a[href^="#"]');
+
+  // === SMOOTH NAVIGATION SCROLL ===
+  function handleNavClick(e) {
+    e.preventDefault();
+
+    const targetId = this.getAttribute("href");
+    if (!targetId || targetId === "#") return;
+
+    const target = document.querySelector(targetId);
+    if (!target) {
+      console.warn("No matched section for:", targetId);
+      return;
+    }
+
+    // Close Mobile Nav if open
+    if (nav?.classList.contains("active")) {
+      nav.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+
+    // Scroll using GSAP if available
+    if (typeof gsap !== "undefined" && gsap.plugins?.scrollTo) {
+      gsap.to(window, {
+        duration: 0.8,
+        scrollTo: { y: target, offsetY: 80, autoKill: false },
+        onComplete: () => {
+          if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+        }
+      });
+    } else {
+      // Fallback to native smooth scroll
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
-  // ===== PRELOADER =====
+  // Initialize navigation links
+  navLinks.forEach(link => {
+    link.addEventListener("click", handleNavClick);
+  });
+
+  // === TYPED ANIMATION ===
+  function initTypedSkills() {
+    if (window.Typed) {
+      new Typed("#typed-skills", {
+        strings: ["Web Developer", "App Developer", "Frontend Developer", "UI/UX Designer"],
+        typeSpeed: 60,
+        backSpeed: 30,
+        backDelay: 700,
+        loop: true
+      });
+    }
+  }
+
+  // === PRELOADER ===
   const preloader = document.querySelector(".preloader");
   let mainTimeline;
 
@@ -188,16 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     runInit();
   }
 
-  // ===== NAVIGATION =====
-  const menuIcon = document.querySelector(".menu-icon");
-  const nav = document.querySelector(".main-nav");
-  const navItems = document.querySelectorAll(".nav-item");
-
-  // Initialize navigation items
-  if (!isMobile() && typeof gsap !== "undefined") {
-    gsap.set(navItems, { opacity: 1, x: 0 });
-  }
-
+  // ===== NAVIGATION TOGGLE =====
   if (menuIcon && nav) {
     menuIcon.addEventListener("click", () => {
       nav.classList.toggle("active");
@@ -238,49 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
-  // ===== SMOOTH SCROLLING WITH SCROLLTRIGGER SUPPORT =====
-  function handleNavClick(e) {
-    const targetId = this.getAttribute("href");
-    const target = document.querySelector(targetId);
-    if (!target) return;
-    
-    e.preventDefault();
-    
-    // Close mobile menu if open
-    if (nav && nav.classList.contains("active")) {
-      nav.classList.remove("active");
-      document.body.style.overflow = "auto";
-    }
-
-    // Scroll to target
-    if (typeof gsap !== "undefined") {
-      gsap.to(window, {
-        duration: 0.8,
-        scrollTo: {
-          y: target,
-          offsetY: 80,
-          autoKill: false
-        },
-        onComplete: () => {
-          if (typeof ScrollTrigger !== "undefined") {
-            ScrollTrigger.refresh();
-          }
-        }
-      });
-    } else {
-      // Fallback for when GSAP isn't available
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-  }
-
-  // Apply click handlers to all navigation links
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", handleNavClick);
-  });
 
   // ===== SCROLL ANIMATIONS =====
   function setupScrollAnimations() {
