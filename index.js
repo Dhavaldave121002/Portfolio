@@ -218,46 +218,106 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function animateAboutImageFrame() {
-    const frame = document.querySelector(".about-img-frame");
-    if (!frame) return;
-    
-    frame.style.opacity = "1";
-    frame.style.visibility = "visible";
-    
-    if (typeof gsap !== "undefined") {
-      if (!Device.isMobile()) {
-        gsap.set(frame, { scale: 0.85, filter: "blur(6px)", opacity: 0 });
-        gsap.to(frame, {
-          scrollTrigger: {
-            trigger: frame,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          },
-          scale: 1,
-          filter: "blur(0px)",
-          opacity: 1,
-          boxShadow: "0 8px 32px 0 #ffd70033",
-          duration: 1.1,
-          ease: "elastic.out(1, 0.6)"
-        });
-        gsap.to(frame, {
-          rotate: 2,
-          y: "+=8",
-          repeat: -1,
-          yoyo: true,
-          duration: 2.6,
-          ease: "sine.inOut"
-        });
-      } else {
-        gsap.from(frame, {
-          opacity: 0,
-          scale: 0.9,
-          duration: 0.8,
-          ease: "back.out(1.7)"
-        });
-      }
+    const wrapper = document.querySelector(".about-img-wrapper");
+    const frame = document.querySelector(".image-frame");
+    const img = document.querySelector(".about-img");
+    const decorTop = document.querySelector(".decor-top-left");
+    const decorBottom = document.querySelector(".decor-bottom-right");
+
+    if (!wrapper || !frame || !img) {
+        console.error("About image elements not found!");
+        return;
     }
-  }
+
+    // Reset styles to ensure elements are visible
+    wrapper.style.opacity = "1";
+    frame.style.opacity = "1";
+    img.style.opacity = "1";
+    frame.style.transform = "none";
+    img.style.transform = "none";
+
+    if (typeof gsap !== "undefined") {
+        if (!Device.isMobile()) {
+            // Desktop animation
+            gsap.set([frame, img], {
+                scale: 0.85,
+                filter: "blur(6px)",
+                opacity: 0
+            });
+
+            gsap.set([decorTop, decorBottom], {
+                scale: 0,
+                opacity: 0
+            });
+
+            // Main image animation
+            gsap.to([frame, img], {
+                scrollTrigger: {
+                    trigger: wrapper,
+                    start: "top 80%",
+                    toggleActions: "play none none none",
+                    markers: false // Set to true for debugging
+                },
+                scale: 1,
+                filter: "blur(0px)",
+                opacity: 1,
+                duration: 1.1,
+                ease: "elastic.out(1, 0.6)"
+            });
+
+            // Corner decorations animation
+            gsap.to([decorTop, decorBottom], {
+                scrollTrigger: {
+                    trigger: wrapper,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                scale: 1,
+                opacity: 1,
+                duration: 0.8,
+                ease: "back.out(1.7)",
+                stagger: 0.2
+            });
+
+            // Subtle floating animation
+            gsap.to([frame, img], {
+                y: "+=6",
+                rotate: "+=1",
+                repeat: -1,
+                yoyo: true,
+                duration: 3,
+                ease: "sine.inOut"
+            });
+
+        } else {
+            // Mobile animation
+            gsap.set([frame, img], { opacity: 0, scale: 0.9 });
+            gsap.set([decorTop, decorBottom], { scale: 0, opacity: 0 });
+
+            gsap.to([frame, img], {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.7)"
+            });
+
+            gsap.to([decorTop, decorBottom], {
+                scale: 1,
+                opacity: 1,
+                duration: 0.6,
+                ease: "power2.out",
+                delay: 0.3,
+                stagger: 0.1
+            });
+        }
+    } else {
+        // Fallback if GSAP isn't available
+        frame.style.opacity = "1";
+        img.style.opacity = "1";
+        decorTop.style.opacity = "1";
+        decorBottom.style.opacity = "1";
+    }
+}
 
   // ======================
   // === MAIN TIMELINE ===
